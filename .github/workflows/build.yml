@@ -1,0 +1,20 @@
+name: Build & Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+    - name: run cake
+      uses: ecampidoglio/cake-action@v1.1.1
+      with:
+        target: Pack
+        cake-version: 0.35.0
