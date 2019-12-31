@@ -1,0 +1,87 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyTitle>codessentials.CGM.Tests</AssemblyTitle>
+    <Product>codessentials.CGM.Tests</Product>
+    <Copyright>Copyright © 2020</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.9.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+  </ItemGroup>
+  
+  <ItemGroup>   
+    <EmbeddedResource Include="Files\1STPRIZE.CGM" />
+    <EmbeddedResource Include="Files\2MANSAW.CGM" />
+    <EmbeddedResource Include="Files\3-5DISKS.CGM" />
+    <EmbeddedResource Include="Files\35MM-CAM.CGM" />
+    <EmbeddedResource Include="Files\727PLANE.CGM" />
+    <EmbeddedResource Include="Files\AIR-TERM.CGM" />
+    <EmbeddedResource Include="Files\AIRBRUSH.CGM" />
+    <EmbeddedResource Include="Files\AIRCOMPR.CGM" />
+    <EmbeddedResource Include="Files\AIRPORT.CGM" />
+    <EmbeddedResource Include="Files\AIRWRENC.CGM" />
+    <EmbeddedResource Include="Files\ANTENNA.CGM" />
+    <EmbeddedResource Include="Files\ARMYKNIF.CGM" />
+    <EmbeddedResource Include="Files\AXE.CGM" />
+    <EmbeddedResource Include="Files\BACGND02.CGM" />
+    <EmbeddedResource Include="Files\BACGND03.CGM" />
+    <EmbeddedResource Include="Files\BACGND04.CGM" />
+    <EmbeddedResource Include="Files\BACGND05.CGM" />
+    <EmbeddedResource Include="Files\BACGND06.CGM" />
+    <EmbeddedResource Include="Files\BACGND07.CGM" />
+    <EmbeddedResource Include="Files\col_disassembly.cgm" />
+    <EmbeddedResource Include="Files\col_nav.cgm" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-D000000-0-U8025-00502-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-D000000-0-U8025-00536-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-D000000-0-U8025-00536-B-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-D000000-0-U8025-00537-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA00000-0-U8025-00504-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA00000-0-U8025-00504-B-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA00000-0-U8025-00505-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA00000-0-U8025-00506-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA00000-0-U8025-00507-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA01010-0-U8025-00508-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA01010-0-U8025-00509-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA01010-0-U8025-00510-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA01010-0-U8025-00511-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA10000-0-U8025-00512-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA10000-0-U8025-00513-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA10000-0-U8025-00514-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA10000-0-U8025-00515-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA10000-0-U8025-00516-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA21000-0-U8025-00529-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA21000-0-U8025-00530-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA21000-0-U8025-00531-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA22000-0-U8025-00517-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA22000-0-U8025-00518-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA23000-0-U8025-00532-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA23000-0-U8025-00533-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA24000-0-C0419-12345-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA30000-0-U8025-00503-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA30000-0-U8025-00534-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA41000-0-U8025-00528-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA51000-0-U8025-00519-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA51000-0-U8025-00520-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA51000-0-U8025-00521-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA51000-0-U8025-00522-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA52000-0-U8025-00523-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA52000-0-U8025-00524-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA53000-0-U8025-00525-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA53000-0-U8025-00526-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA53000-0-U8025-00527-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\illustrations\ICN-S1000DBIKE-AAA-DA53000-0-U8025-00535-A-04-1.CGM" />
+    <EmbeddedResource Include="Files\items.cgm" />
+    <EmbeddedResource Include="Files\nav1.cgm" />
+    <EmbeddedResource Include="Files\sheet1_nav.cgm" />
+    <EmbeddedResource Include="Files\techdraw.cgm" />
+    <EmbeddedResource Include="Files\tool.cgm" />
+  </ItemGroup>  
+  <ItemGroup>
+    <ProjectReference Include="..\src\codessentials.CGM.csproj" />
+  </ItemGroup>
+</Project>
