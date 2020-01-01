@@ -25,11 +25,11 @@ namespace codessentials.CGM
             else
                 _cgm = new ClearTextCGMFile();
 
-            if (!string.IsNullOrEmpty(graphicName))
-            AddCommand(new BeginMetafile(_cgm, graphicName));
+            if (graphicName != null)
+                AddCommand(new BeginMetafile(_cgm, graphicName));
 
             AddCommand(new MetafileVersion(_cgm, version));
-        }    
+        }
 
         public void SetDescription(string description)
         {

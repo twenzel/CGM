@@ -60,7 +60,7 @@ namespace codessentials.CGM.Tests
         [TestCase("ATextWithAVeryLongContentByDoublingAllSentencesLikeATextWithAVeryLongContentBy")]
         public void Floating_String_Test(string data)
         {
-            var writer = new CGMWriter(FileFormat.Binary);            
+            var writer = new CGMWriter(FileFormat.Binary, "");            
             writer.SetDescription(data);
             writer.Finish();
 
@@ -78,7 +78,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void ComposeTest()
         {
-            var writer = new CGMWriter(FileFormat.Binary);           
+            var writer = new CGMWriter(FileFormat.Binary, "");           
             writer.SetDescription("Created By UnitTest");
             writer.SetElementList("DRAWINGPLUS");
             writer.SetFontList(new[] { "Arial", "Arial Bold" });

@@ -2,6 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/codessentials.CGM.svg)](https://nuget.org/packages/codessentials.CGM/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fhttps%3A%2F%2Fgithub.com%2Ftwenzel%2FCGM%2Fbadge&style=flat)](https://actions-badge.atrox.dev/https://github.com/twenzel/CGM/goto)
 
 This library reads CGM (Computer Graphics Metafile) in binary and clear text format. Read graphics can be modified, analyzed and exported. Creating new graphics is also supported.
 It implements the `ISO/IEC 8632-3:1999` and `ISO/IEC 8632-4:1999` specification.
