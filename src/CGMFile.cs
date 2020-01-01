@@ -223,7 +223,7 @@ namespace codessentials.CGM
         }
 
         /// <summary>
-        /// Gets the title of the illustration
+        /// Gets the title of the illustration.
         /// </summary>
         /// <returns></returns>
         public string GetGraphicName()
@@ -240,7 +240,7 @@ namespace codessentials.CGM
         }
 
         /// <summary>
-        /// Gets all texts of the "Ortszahlen"
+        /// Gets all texts of the figure items.
         /// </summary>
         /// <returns></returns>
         public List<string> GetFigureItemTexts(bool ignoreColor)
@@ -249,7 +249,7 @@ namespace codessentials.CGM
         }
 
         /// <summary>
-        /// Determines whether CGM contains a specific figure item text
+        /// Determines whether CGM contains a specific figure item text.
         /// </summary>
         /// <param name="textToCheck">The text to check.</param>
         /// <returns></returns>

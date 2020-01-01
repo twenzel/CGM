@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using codessentials.CGM.Export;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using codessentials.CGM.Commands;
-using codessentials.CGM.Export;
 
 namespace codessentials.CGM
 {
@@ -13,8 +8,13 @@ namespace codessentials.CGM
     /// Represents a CGM file in CleanText mode
     /// </summary>
     public class ClearTextCGMFile : CGMFile
-    { 
+    {
         private string _fileName;
+
+        public ClearTextCGMFile()
+        {
+            ResetMetaDefinitions();
+        }
 
         public ClearTextCGMFile(BinaryCGMFile binaryfile)
         {
@@ -70,7 +70,7 @@ namespace codessentials.CGM
 
                 return Encoding.Default.GetString(stream.ToArray());
             }
-        }      
+        }
 
         /// <summary>
         /// The original file name.

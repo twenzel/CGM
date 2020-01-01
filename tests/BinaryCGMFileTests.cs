@@ -11,7 +11,8 @@ namespace codessentials.CGM.Tests
     [TestFixture]
     class BinaryCGMFileTests : CGMTest
     {
-        [Test]
+        [Ignore("Not yet ready")]
+        [Test]        
         public void ReadBinary_WriteAsBinary_ReadBinaryAgain_And_Compare()
         {
             var assembly = GetType().Assembly;
@@ -59,8 +60,7 @@ namespace codessentials.CGM.Tests
         [TestCase("ATextWithAVeryLongContentByDoublingAllSentencesLikeATextWithAVeryLongContentBy")]
         public void Floating_String_Test(string data)
         {
-            var writer = new CGMWriter();
-            writer.NewBinaryCgm("");
+            var writer = new CGMWriter(FileFormat.Binary);            
             writer.SetDescription(data);
             writer.Finish();
 
@@ -78,8 +78,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void ComposeTest()
         {
-            var writer = new CGMWriter();
-            writer.NewBinaryCgm("");
+            var writer = new CGMWriter(FileFormat.Binary);           
             writer.SetDescription("Created By UnitTest");
             writer.SetElementList("DRAWINGPLUS");
             writer.SetFontList(new[] { "Arial", "Arial Bold" });

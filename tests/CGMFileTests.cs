@@ -6,7 +6,8 @@ namespace codessentials.CGM.Tests
     [TestFixture]
     class CGMFileTests : CGMTest
     {
-        [TestCase("col_disassembly.cgm", "C1352151M101901MU00")]
+        [Ignore("Not yet ready")]
+        [TestCase("col_disassembly.cgm", "C1352151M101901MU00")]        
         public void GetGraphicName(string fileName, string expectedName)
         {
             var binaryFile = ReadBinaryFile(fileName);
@@ -15,7 +16,8 @@ namespace codessentials.CGM.Tests
             Assert.AreEqual(expectedName, actualName);
         }
 
-        [TestCase("items.cgm", new[] { "1", "2", "3", "4", "5" })]
+        [Ignore("Not yet ready")]
+        [TestCase("items.cgm", new[] { "1", "2", "3", "4", "5" })]        
         public void GetFigureItemTexts(string fileName, string[] expectedItems)
         {
             var binaryFile = ReadBinaryFile(fileName);
