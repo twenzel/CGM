@@ -1,9 +1,6 @@
 ﻿using codessentials.CGM.Commands;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Classes
 {
@@ -13,7 +10,7 @@ namespace codessentials.CGM.Classes
     public class GeometryRecognitionEngine
     {
         /// <summary>
-        /// Gets all rectangles of the given file
+        /// Gets all rectangles of the given file.
         /// </summary>
         /// <param name="file">The file.</param>
         /// <returns></returns>
@@ -45,8 +42,8 @@ namespace codessentials.CGM.Classes
             var rectangleCanditates = polylines.Where(l => l.Points.Length == 5);
 
             result.AddRange(FindRectangleInSimpleLines(simpleLines));
-            result.AddRange(FindRectangleInPolygons(rectangleCanditates));   
-          
+            result.AddRange(FindRectangleInPolygons(rectangleCanditates));
+
 
             return result;
         }
@@ -117,7 +114,7 @@ namespace codessentials.CGM.Classes
             return CGMPoint.IsSame(a.X, b.X) && !CGMPoint.IsSame(a.Y, b.Y);
         }
 
-       
+
         public static CGMRectangle GetRectangle(Polyline polyline)
         {
             if (polyline.Points.Length == 5)

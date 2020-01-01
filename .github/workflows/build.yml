@@ -18,3 +18,5 @@ jobs:
       with:
         target: Pack
         cake-version: 0.35.0
+      env: 
+        CODECOV_TOKEN: ${{ secrets.codeCovToken }}

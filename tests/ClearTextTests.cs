@@ -12,7 +12,7 @@ namespace codessentials.CGM.Tests
     [TestFixture]
     class ClearTextTests : CGMTest
     {
-        [Test]
+        [Test]        
         public void CompareFiles()
         {
             var assembly = this.GetType().Assembly;
@@ -39,7 +39,8 @@ namespace codessentials.CGM.Tests
             }
         }
 
-        [Test]
+        [Ignore("Not yet ready")]
+        [Test]        
         public void ConvertFiles_ToClearText()
         {
             var assembly = this.GetType().Assembly;
