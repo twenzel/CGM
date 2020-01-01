@@ -1,7 +1,9 @@
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=nuget.commandline&version=5.3.0"
+#tool "nuget:?package=Codecov&version=1.9.0"
 
 #addin "nuget:?package=Cake.Coverlet&version=2.3.4"
+#addin "nuget:?package=Cake.Codecov&version=0.7.0"
 
 var target = Argument("target", "Default");
 var nugetApiKey = Argument("nugetApiKey", EnvironmentVariable("nugetApiKey"));
@@ -112,6 +114,15 @@ Task("Test")
         };
 	
 		DotNetCoreTest("./tests/codessentials.CGM.Tests.csproj", settings, coveletSettings);	
+
+		var codecovSettings = new CodecovSettings{
+			Branch = versionInfo.BranchName,
+			Build = versionInfo.FullSemVer,
+			Commit = versionInfo.Sha,	
+			Files = new List<string>(new[]{outputDir.CombineWithFilePath(codeCoverageResultFile).ToString()})	
+		};
+		
+		Codecov(codecovSettings);
 	});
 
 
