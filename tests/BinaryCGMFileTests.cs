@@ -1,10 +1,10 @@
-﻿using codessentials.CGM.Commands;
-using FluentAssertions;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using codessentials.CGM.Commands;
+using FluentAssertions;
+using NUnit.Framework;
 
 namespace codessentials.CGM.Tests
 {
@@ -12,7 +12,7 @@ namespace codessentials.CGM.Tests
     class BinaryCGMFileTests : CGMTest
     {
         [Ignore("Not yet ready")]
-        [Test]        
+        [Test]
         public void ReadBinary_WriteAsBinary_ReadBinaryAgain_And_Compare()
         {
             var assembly = GetType().Assembly;
@@ -42,13 +42,11 @@ namespace codessentials.CGM.Tests
             var binaryFile = ReadBinaryFile("1STPRIZE.CGM", assembly);
             var expected = ConvertToClearText(binaryFile);
 
-            using (var stream = new MemoryStream(binaryFile.GetContent()))
-            {
-                var newBinary = new BinaryCGMFile(stream);
-                var actual = ConvertToClearText(newBinary);
+            using var stream = new MemoryStream(binaryFile.GetContent());
+            var newBinary = new BinaryCGMFile(stream);
+            var actual = ConvertToClearText(newBinary);
 
-                actual.Should().Be(expected);
-            }
+            actual.Should().Be(expected);
         }
 
         [TestCase("Any")]
@@ -60,7 +58,7 @@ namespace codessentials.CGM.Tests
         [TestCase("ATextWithAVeryLongContentByDoublingAllSentencesLikeATextWithAVeryLongContentBy")]
         public void Floating_String_Test(string data)
         {
-            var writer = new CGMWriter(FileFormat.Binary, "");            
+            var writer = new CGMWriter(FileFormat.Binary, "");
             writer.SetDescription(data);
             writer.Finish();
 
@@ -78,7 +76,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void ComposeTest()
         {
-            var writer = new CGMWriter(FileFormat.Binary, "");           
+            var writer = new CGMWriter(FileFormat.Binary, "");
             writer.SetDescription("Created By UnitTest");
             writer.SetElementList("DRAWINGPLUS");
             writer.SetFontList(new[] { "Arial", "Arial Bold" });

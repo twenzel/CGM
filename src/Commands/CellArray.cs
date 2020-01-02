@@ -1,5 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System.Text;
+﻿using System.Text;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -62,7 +62,7 @@ namespace codessentials.CGM.Commands
 
             RepresentationFlag = reader.ReadEnum();
 
-            readColorList(localColorPrecision, reader);
+            ReadColorList(localColorPrecision, reader);
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -116,56 +116,68 @@ namespace codessentials.CGM.Commands
             return sb.ToString();
         }
 
-        private void readColorList(int localColorPrecision, IBinaryReader reader)
+        private void ReadColorList(int localColorPrecision, IBinaryReader reader)
         {
-            var nColor = Nx * Ny;
-            Colors = new CGMColor[nColor];
-
             if (RepresentationFlag == 0)
             {
-                // run length list mode
-                var c = 0;
-                while (c < nColor)
-                {
-                    var numColors = reader.ReadInt();
-                    var color = reader.ReadColor(localColorPrecision);
-
-                    // don't directly fill the array with numColors in case we
-                    // encounter a erroneous CGM file, e.g. SCHEMA03.CGM that
-                    // returns an incorrect number of colors; only fill at most
-                    // the number of colors left in the array
-                    var maxIndex = System.Math.Min(numColors, nColor - c);
-                    for (var i = 0; i < maxIndex; i++)
-                    {
-                        Colors[c++] = color;
-                    }
-
-                    if (c > 0 && c % Nx == 0)
-                    {
-                        // align on word at the end of a line
-                        reader.AlignOnWord();
-                    }
-                }
+                ReadColorsInRunLengthListMode(localColorPrecision, reader);
             }
             else if (RepresentationFlag == 1)
             {
-                // packed list mode
-                var i = 0;
-                for (var row = 0; row < Ny; row++)
-                {
-                    for (var col = 0; col < Nx; col++)
-                    {
-                        Colors[i++] = reader.ReadColor(localColorPrecision);
-                    }
-                    // align on word
-                    reader.AlignOnWord();
-                }
+                ReadColorsInPackedListMode(localColorPrecision, reader);
             }
             else
             {
                 reader.Unsupported("unsupported representation flag " + RepresentationFlag);
             }
 
+        }
+
+        private void ReadColorsInPackedListMode(int localColorPrecision, IBinaryReader reader)
+        {
+            Colors = new CGMColor[Nx * Ny];
+
+            // packed list mode
+            var i = 0;
+            for (var row = 0; row < Ny; row++)
+            {
+                for (var col = 0; col < Nx; col++)
+                {
+                    Colors[i++] = reader.ReadColor(localColorPrecision);
+                }
+                // align on word
+                reader.AlignOnWord();
+            }
+        }
+
+        private void ReadColorsInRunLengthListMode(int localColorPrecision, IBinaryReader reader)
+        {
+            var nColor = Nx * Ny;
+            Colors = new CGMColor[nColor];
+
+            // run length list mode
+            var c = 0;
+            while (c < nColor)
+            {
+                var numColors = reader.ReadInt();
+                var color = reader.ReadColor(localColorPrecision);
+
+                // don't directly fill the array with numColors in case we
+                // encounter a erroneous CGM file, e.g. SCHEMA03.CGM that
+                // returns an incorrect number of colors; only fill at most
+                // the number of colors left in the array
+                var maxIndex = System.Math.Min(numColors, nColor - c);
+                for (var i = 0; i < maxIndex; i++)
+                {
+                    Colors[c++] = color;
+                }
+
+                if (c > 0 && c % Nx == 0)
+                {
+                    // align on word at the end of a line
+                    reader.AlignOnWord();
+                }
+            }
         }
 
         private void WriteColorList(int localColorPrecision, IBinaryWriter writer)

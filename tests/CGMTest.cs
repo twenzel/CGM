@@ -18,10 +18,8 @@ namespace codessentials.CGM.Tests
             if (!resourceName.StartsWith("codessentials.CGM.Tests.Files"))
                 resourceName = $"codessentials.CGM.Tests.Files.{resourceName}";
 
-            using (var stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                return new BinaryCGMFile(stream, resourceName);
-            }
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            return new BinaryCGMFile(stream, resourceName);
         }
 
         protected byte[] GetResourceData(string resourceName)
@@ -34,11 +32,9 @@ namespace codessentials.CGM.Tests
             if (!resourceName.StartsWith("codessentials.CGM.Tests.Files"))
                 resourceName = $"codessentials.CGM.Tests.Files.{resourceName}";
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                assembly.GetManifestResourceStream(resourceName).CopyTo(ms);
-                return ms.ToArray();
-            }
+            using var ms = new MemoryStream();
+            assembly.GetManifestResourceStream(resourceName).CopyTo(ms);
+            return ms.ToArray();
         }
 
         protected string ConvertToClearText(BinaryCGMFile binaryFile)

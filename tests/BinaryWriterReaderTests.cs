@@ -1,15 +1,12 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.IO;
+using System.Linq;
 using codessentials.CGM.Commands;
 using codessentials.CGM.Export;
 using codessentials.CGM.Import;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Tests
 {
@@ -20,7 +17,7 @@ namespace codessentials.CGM.Tests
         protected DefaultBinaryWriter _writer;
         protected MemoryStream _stream;
         protected Mock<ICommandFactory> _commandFactory;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -30,7 +27,7 @@ namespace codessentials.CGM.Tests
 
             _writer = new DefaultBinaryWriter(_stream, cgm);
             _reader = new DefaultBinaryReader(_stream, cgm, _commandFactory.Object);
-        } 
+        }
 
         [Test]
         public void Bool()
@@ -42,14 +39,15 @@ namespace codessentials.CGM.Tests
         [Test]
         public void FixedString()
         {
-            Test(w => w.WriteFixedString("test"), r => _reader.ReadFixedString().Should().Be("test"));            
+            Test(w => w.WriteFixedString("test"), r => _reader.ReadFixedString().Should().Be("test"));
         }
 
         [Test]
         public void FixedString_Long()
         {
             var testString = "".PadLeft(10000, 'a');
-            Test(w => w.WriteFixedString(testString), r => {
+            Test(w => w.WriteFixedString(testString), r =>
+            {
                 var actual = _reader.ReadFixedString();
                 actual.Length.Should().Be(testString.Length);
                 actual.Should().Be(testString);
@@ -77,7 +75,8 @@ namespace codessentials.CGM.Tests
         public void String_Long()
         {
             var testString = "".PadLeft(10000, 'a');
-            Test(w => w.WriteString(testString), r => {
+            Test(w => w.WriteString(testString), r =>
+            {
                 var actual = _reader.ReadString();
                 actual.Length.Should().Be(testString.Length);
                 actual.Should().Be(testString);
@@ -98,24 +97,24 @@ namespace codessentials.CGM.Tests
         [Test]
         public void UInt1_1()
         {
-            Test(w => w.WriteUInt(1, 1), r => _reader.ReadUInt(1).Should().Be(1));            
+            Test(w => w.WriteUInt(1, 1), r => _reader.ReadUInt(1).Should().Be(1));
         }
 
         [Test]
         public void UInt1_0()
-        {            
+        {
             Test(w => w.WriteUInt(0, 1), r => _reader.ReadUInt(1).Should().Be(0));
         }
 
         [Test]
         public void UInt2()
         {
-            Test(w => w.WriteUInt(2, 2), r => _reader.ReadUInt(2).Should().Be(2));            
+            Test(w => w.WriteUInt(2, 2), r => _reader.ReadUInt(2).Should().Be(2));
         }
 
         [Test]
         public void UInt2_1()
-        {            
+        {
             Test(w => w.WriteUInt(1, 2), r => _reader.ReadUInt(2).Should().Be(1));
         }
 
@@ -127,13 +126,13 @@ namespace codessentials.CGM.Tests
 
         [Test]
         public void UInt4_13()
-        {           
-            Test(w => w.WriteUInt(13, 4), r => { _reader.ReadUInt(4).Should().Be(13); });            
+        {
+            Test(w => w.WriteUInt(13, 4), r => { _reader.ReadUInt(4).Should().Be(13); });
         }
 
         [Test]
         public void UInt4_5()
-        {            
+        {
             Test(w => w.WriteUInt(5, 4), r => { _reader.ReadUInt(4).Should().Be(5); });
         }
 
@@ -160,7 +159,7 @@ namespace codessentials.CGM.Tests
         {
             Test(w => w.WriteUInt(55, 32), r => _reader.ReadUInt(32).Should().Be(55));
             Test(w => w.WriteUInt(0, 32), r => _reader.ReadUInt(32).Should().Be(0));
-            Test(w => w.WriteUInt(System.Int32.MaxValue, 32), r => _reader.ReadUInt(32).Should().Be(System.Int32.MaxValue));
+            Test(w => w.WriteUInt(int.MaxValue, 32), r => _reader.ReadUInt(32).Should().Be(int.MaxValue));
         }
 
         private void Test(Action<IBinaryWriter> writerAction, Action<IBinaryReader> readerAction)
@@ -174,17 +173,17 @@ namespace codessentials.CGM.Tests
 
             _reader.ReadCommands();
             if (_reader.Messages.Any())
-                Assert.Fail(System.String.Join("\r\n", _reader.Messages.Select(m => m.ToString()).ToArray()));
+                Assert.Fail(string.Join("\r\n", _reader.Messages.Select(m => m.ToString()).ToArray()));
         }
     }
 
     public class TestCommand : Command
     {
-        private Action<IBinaryWriter> _writerAction;
-        private Action<IBinaryReader> _readerAction;
+        private readonly Action<IBinaryWriter> _writerAction;
+        private readonly Action<IBinaryReader> _readerAction;
 
         public TestCommand(Action<IBinaryWriter> writerAction, Action<IBinaryReader> readerAction)
-            :base(new CommandConstructorArguments(ClassCode.AttributeElements, 1, null))
+            : base(new CommandConstructorArguments(ClassCode.AttributeElements, 1, null))
         {
             _writerAction = writerAction;
             _readerAction = readerAction;

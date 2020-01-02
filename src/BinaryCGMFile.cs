@@ -10,6 +10,11 @@ namespace codessentials.CGM
     /// </summary>
     public class BinaryCGMFile : CGMFile
     {
+        /// <summary>
+        /// The binary file name
+        /// </summary>
+        public string FileName { get; }
+
         public BinaryCGMFile()
         {
             Name = "new";
@@ -55,10 +60,8 @@ namespace codessentials.CGM
         /// <param name="fileName">The file name to write the content to.</param>
         public void WriteFile(string fileName)
         {
-            using (var stream = File.Create(fileName))
-            {
-                WriteFile(stream);
-            }
+            using var stream = File.Create(fileName);
+            WriteFile(stream);
         }
 
         /// <summary>
@@ -69,13 +72,11 @@ namespace codessentials.CGM
         {
             ResetMetaDefinitions();
 
-            using (var writer = new DefaultBinaryWriter(stream, this))
-            {
-                foreach (var command in _commands)
-                    writer.WriteCommand(command);
+            using var writer = new DefaultBinaryWriter(stream, this);
+            foreach (var command in _commands)
+                writer.WriteCommand(command);
 
-                _messages.AddRange(writer.Messages);
-            }
+            _messages.AddRange(writer.Messages);
         }
 
         /// <summary>
@@ -84,36 +85,25 @@ namespace codessentials.CGM
         /// <returns></returns>
         public byte[] GetContent()
         {
-            using (var stream = new MemoryStream())
-            {
-                WriteFile(stream);
+            using var stream = new MemoryStream();
+            WriteFile(stream);
 
-                return stream.ToArray();
-            }
+            return stream.ToArray();
         }
 
         private void ReadData(Stream stream)
         {
             ResetMetaDefinitions();
-            using (var reader = new DefaultBinaryReader(stream, this, new DefaultCommandFactory()))
-            {
-                reader.ReadCommands();
+            using var reader = new DefaultBinaryReader(stream, this, new DefaultCommandFactory());
+            reader.ReadCommands();
 
-                _messages.AddRange(reader.Messages);
-            }
+            _messages.AddRange(reader.Messages);
         }
 
         private void ReadData(string fileName)
         {
-            using (var stream = File.OpenRead(fileName))
-            {
-                ReadData(stream);
-            }
+            using var stream = File.OpenRead(fileName);
+            ReadData(stream);
         }
-
-        /// <summary>
-        /// The binary file name
-        /// </summary>
-        public string FileName { get; }
     }
 }

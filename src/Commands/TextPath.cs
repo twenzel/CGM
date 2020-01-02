@@ -27,24 +27,14 @@
         public override void ReadFromBinary(IBinaryReader reader)
         {
             var enumValue = reader.ReadEnum();
-            switch (enumValue)
+            Path = enumValue switch
             {
-                case 0:
-                    Path = Type.RIGHT;
-                    break;
-                case 1:
-                    Path = Type.LEFT;
-                    break;
-                case 2:
-                    Path = Type.UP;
-                    break;
-                case 3:
-                    Path = Type.DOWN;
-                    break;
-                default:
-                    Path = Type.RIGHT;
-                    break;
-            }
+                0 => Type.RIGHT,
+                1 => Type.LEFT,
+                2 => Type.UP,
+                3 => Type.DOWN,
+                _ => Type.RIGHT,
+            };
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

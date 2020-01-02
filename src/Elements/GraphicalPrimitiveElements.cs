@@ -6,69 +6,39 @@ namespace codessentials.CGM.Elements
     {
         public static Command CreateCommand(int elementId, int elementClass, CGMFile container)
         {
-            switch ((GraphicalPrimitiveElement)elementId)
+            return ((GraphicalPrimitiveElement)elementId) switch
             {
-                case GraphicalPrimitiveElement.POLYLINE:
-                    return new Polyline(container);
-                case GraphicalPrimitiveElement.DISJOINT_POLYLINE:
-                    return new DisjointPolyline(container);
-                case GraphicalPrimitiveElement.POLYMARKER:
-                    return new PolyMarker(container);
-                case GraphicalPrimitiveElement.TEXT:
-                    return new Text(container);
-                case GraphicalPrimitiveElement.RESTRICTED_TEXT:
-                    return new RestrictedText(container);
-                case GraphicalPrimitiveElement.APPEND_TEXT:
-                    return new AppendText(container);
-                case GraphicalPrimitiveElement.POLYGON:
-                    return new PolygonElement(container);
-                case GraphicalPrimitiveElement.POLYGON_SET:
-                    return new PolygonSet(container);
-                case GraphicalPrimitiveElement.CELL_ARRAY:
-                    return new CellArray(container);
-                case GraphicalPrimitiveElement.GENERALIZED_DRAWING_PRIMITIVE:
-                    return new GeneralizedDrawingPrimitive(container);
-                case GraphicalPrimitiveElement.RECTANGLE:
-                    return new RectangleElement(container);
-                case GraphicalPrimitiveElement.CIRCLE:
-                    return new CircleElement(container);
-                case GraphicalPrimitiveElement.CIRCULAR_ARC_3_POINT:
-                    return new CircularArc3Point(container);
-                case GraphicalPrimitiveElement.CIRCULAR_ARC_3_POINT_CLOSE:
-                    return new CircularArc3PointClose(container);
-                case GraphicalPrimitiveElement.CIRCULAR_ARC_CENTRE:
-                    return new CircularArcCentre(container);
-                case GraphicalPrimitiveElement.CIRCULAR_ARC_CENTRE_CLOSE:
-                    return new CircularArcCentreClose(container);
-                case GraphicalPrimitiveElement.ELLIPSE:
-                    return new EllipseElement(container);
-                case GraphicalPrimitiveElement.ELLIPTICAL_ARC:
-                    return new EllipticalArc(container);
-                case GraphicalPrimitiveElement.ELLIPTICAL_ARC_CLOSE:
-                    return new EllipticalArcClose(container);
-                case GraphicalPrimitiveElement.CIRCULAR_ARC_CENTRE_REVERSED:
-                    return new CircularArcCentreReversed(container);
-                case GraphicalPrimitiveElement.CONNECTING_EDGE:
-                    return new ConnectingEdge(container);
-                case GraphicalPrimitiveElement.HYPERBOLIC_ARC:
-                    return new HyperbolicArc(container);
-                case GraphicalPrimitiveElement.PARABOLIC_ARC:
-                    return new ParabolicArc(container);
-                case GraphicalPrimitiveElement.NON_UNIFORM_B_SPLINE:
-                    return new NonUniformBSpline(container);
-                case GraphicalPrimitiveElement.NON_UNIFORM_RATIONAL_B_SPLINE:
-                    return new NonUniformRationalBSpline(container);
-                case GraphicalPrimitiveElement.POLYBEZIER:
-                    return new PolyBezier(container);
-                case GraphicalPrimitiveElement.POLYSYMBOL:
-                    return new PolySymbol(container);
-                case GraphicalPrimitiveElement.BITONAL_TILE:
-                    return new BitonalTile(container);
-                case GraphicalPrimitiveElement.TILE:
-                    return new Tile(container);
-                default:
-                    return new UnknownCommand(elementId, elementClass, container);
-            }
+                GraphicalPrimitiveElement.POLYLINE => new Polyline(container),
+                GraphicalPrimitiveElement.DISJOINT_POLYLINE => new DisjointPolyline(container),
+                GraphicalPrimitiveElement.POLYMARKER => new PolyMarker(container),
+                GraphicalPrimitiveElement.TEXT => new Text(container),
+                GraphicalPrimitiveElement.RESTRICTED_TEXT => new RestrictedText(container),
+                GraphicalPrimitiveElement.APPEND_TEXT => new AppendText(container),
+                GraphicalPrimitiveElement.POLYGON => new PolygonElement(container),
+                GraphicalPrimitiveElement.POLYGON_SET => new PolygonSet(container),
+                GraphicalPrimitiveElement.CELL_ARRAY => new CellArray(container),
+                GraphicalPrimitiveElement.GENERALIZED_DRAWING_PRIMITIVE => new GeneralizedDrawingPrimitive(container),
+                GraphicalPrimitiveElement.RECTANGLE => new RectangleElement(container),
+                GraphicalPrimitiveElement.CIRCLE => new CircleElement(container),
+                GraphicalPrimitiveElement.CIRCULAR_ARC_3_POINT => new CircularArc3Point(container),
+                GraphicalPrimitiveElement.CIRCULAR_ARC_3_POINT_CLOSE => new CircularArc3PointClose(container),
+                GraphicalPrimitiveElement.CIRCULAR_ARC_CENTRE => new CircularArcCentre(container),
+                GraphicalPrimitiveElement.CIRCULAR_ARC_CENTRE_CLOSE => new CircularArcCentreClose(container),
+                GraphicalPrimitiveElement.ELLIPSE => new EllipseElement(container),
+                GraphicalPrimitiveElement.ELLIPTICAL_ARC => new EllipticalArc(container),
+                GraphicalPrimitiveElement.ELLIPTICAL_ARC_CLOSE => new EllipticalArcClose(container),
+                GraphicalPrimitiveElement.CIRCULAR_ARC_CENTRE_REVERSED => new CircularArcCentreReversed(container),
+                GraphicalPrimitiveElement.CONNECTING_EDGE => new ConnectingEdge(container),
+                GraphicalPrimitiveElement.HYPERBOLIC_ARC => new HyperbolicArc(container),
+                GraphicalPrimitiveElement.PARABOLIC_ARC => new ParabolicArc(container),
+                GraphicalPrimitiveElement.NON_UNIFORM_B_SPLINE => new NonUniformBSpline(container),
+                GraphicalPrimitiveElement.NON_UNIFORM_RATIONAL_B_SPLINE => new NonUniformRationalBSpline(container),
+                GraphicalPrimitiveElement.POLYBEZIER => new PolyBezier(container),
+                GraphicalPrimitiveElement.POLYSYMBOL => new PolySymbol(container),
+                GraphicalPrimitiveElement.BITONAL_TILE => new BitonalTile(container),
+                GraphicalPrimitiveElement.TILE => new Tile(container),
+                _ => new UnknownCommand(elementId, elementClass, container),
+            };
         }
     }
 }

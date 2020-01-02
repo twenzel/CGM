@@ -6,113 +6,61 @@ namespace codessentials.CGM.Elements
     {
         public static Command CreateCommand(int elementId, int elementClass, CGMFile container)
         {
-            switch ((AttributeElement)elementId)
+            return ((AttributeElement)elementId) switch
             {
-                case AttributeElement.LINE_BUNDLE_INDEX:
-                    return new LineBundleIndex(container);
-                case AttributeElement.LINE_TYPE:
-                    return new LineType(container);
-                case AttributeElement.LINE_WIDTH:
-                    return new LineWidth(container);
-                case AttributeElement.LINE_COLOUR:
-                    return new LineColour(container);
-                case AttributeElement.MARKER_BUNDLE_INDEX:
-                    return new MarkerBundleIndex(container);
-                case AttributeElement.MARKER_TYPE:
-                    return new MarkerType(container);
-                case AttributeElement.MARKER_SIZE:
-                    return new MarkerSize(container);
-                case AttributeElement.MARKER_COLOUR:
-                    return new MarkerColour(container);
-                case AttributeElement.TEXT_BUNDLE_INDEX:
-                    return new TextBundleIndex(container);
-                case AttributeElement.TEXT_FONT_INDEX:
-                    return new TextFontIndex(container);
-                case AttributeElement.TEXT_PRECISION:
-                    return new TextPrecision(container);
-                case AttributeElement.CHARACTER_EXPANSION_FACTOR:
-                    return new CharacterExpansionFactor(container);
-                case AttributeElement.CHARACTER_SPACING:
-                    return new CharacterSpacing(container);
-                case AttributeElement.TEXT_COLOUR:
-                    return new TextColour(container);
-                case AttributeElement.CHARACTER_HEIGHT:
-                    return new CharacterHeight(container);
-                case AttributeElement.CHARACTER_ORIENTATION:
-                    return new CharacterOrientation(container);
-                case AttributeElement.TEXT_PATH:
-                    return new TextPath(container);
-                case AttributeElement.TEXT_ALIGNMENT:
-                    return new TextAlignment(container);
-                case AttributeElement.CHARACTER_SET_INDEX:
-                    return new CharacterSetIndex(container);
-                case AttributeElement.ALTERNATE_CHARACTER_SET_INDEX:
-                    return new AlternateCharacterSetIndex(container);
-                case AttributeElement.FILL_BUNDLE_INDEX:
-                    return new FillBundleIndex(container);
-                case AttributeElement.INTERIOR_STYLE:
-                    return new InteriorStyle(container);
-                case AttributeElement.FILL_COLOUR:
-                    return new FillColour(container);
-                case AttributeElement.HATCH_INDEX:
-                    return new HatchIndex(container);
-                case AttributeElement.PATTERN_INDEX:
-                    return new PatternIndex(container);
-                case AttributeElement.EDGE_BUNDLE_INDEX:
-                    return new EdgeBundleIndex(container);
-                case AttributeElement.EDGE_TYPE:
-                    return new EdgeType(container);
-                case AttributeElement.EDGE_WIDTH:
-                    return new EdgeWidth(container);
-                case AttributeElement.EDGE_COLOUR:
-                    return new EdgeColour(container);
-                case AttributeElement.EDGE_VISIBILITY:
-                    return new EdgeVisibility(container);
-                case AttributeElement.FILL_REFERENCE_POINT:
-                    return new FillReferencePoint(container);
-                case AttributeElement.PATTERN_TABLE:
-                    return new PatternTable(container);
-                case AttributeElement.PATTERN_SIZE:
-                    return new PatternSize(container);
-                case AttributeElement.COLOUR_TABLE:
-                    return new ColourTable(container);
-                case AttributeElement.ASPECT_SOURCE_FLAGS:
-                    return new AspectSourceFlags(container);
-                case AttributeElement.PICK_IDENTIFIER:
-                    return new PickIdentifier(container);
-                case AttributeElement.LINE_CAP:
-                    return new LineCap(container);
-                case AttributeElement.LINE_JOIN:
-                    return new LineJoin(container);
-                case AttributeElement.LINE_TYPE_CONTINUATION:
-                    return new LineTypeContinuation(container);
-                case AttributeElement.LINE_TYPE_INITIAL_OFFSET:
-                    return new LineTypeInitialOffset(container);
-                case AttributeElement.TEXT_SCORE_TYPE:
-                    return new TextScoreType(container);
-                case AttributeElement.RESTRICTED_TEXT_TYPE:
-                    return new RestrictedTextType(container);
-                case AttributeElement.INTERPOLATED_INTERIOR:
-                    return new InterpolatedInterior(container);
-                case AttributeElement.EDGE_CAP:
-                    return new EdgeCap(container);
-                case AttributeElement.EDGE_JOIN:
-                    return new EdgeJoin(container);
-                case AttributeElement.EDGE_TYPE_CONTINUATION:
-                    return new EdgeTypeContinuation(container);
-                case AttributeElement.EDGE_TYPE_INITIAL_OFFSET:
-                    return new EdgeTypeInitialOffset(container);
-                case AttributeElement.SYMBOL_LIBRARY_INDEX:
-                    return new SymbolLibraryIndex(container);
-                case AttributeElement.SYMBOL_COLOUR:
-                    return new SymbolColour(container);
-                case AttributeElement.SYMBOL_SIZE:
-                    return new SymbolSize(container);
-                case AttributeElement.SYMBOL_ORIENTATION:
-                    return new SymbolOrientation(container);
-                default:
-                    return new UnknownCommand(elementId, elementClass, container);
-            }
+                AttributeElement.LINE_BUNDLE_INDEX => new LineBundleIndex(container),
+                AttributeElement.LINE_TYPE => new LineType(container),
+                AttributeElement.LINE_WIDTH => new LineWidth(container),
+                AttributeElement.LINE_COLOUR => new LineColour(container),
+                AttributeElement.MARKER_BUNDLE_INDEX => new MarkerBundleIndex(container),
+                AttributeElement.MARKER_TYPE => new MarkerType(container),
+                AttributeElement.MARKER_SIZE => new MarkerSize(container),
+                AttributeElement.MARKER_COLOUR => new MarkerColour(container),
+                AttributeElement.TEXT_BUNDLE_INDEX => new TextBundleIndex(container),
+                AttributeElement.TEXT_FONT_INDEX => new TextFontIndex(container),
+                AttributeElement.TEXT_PRECISION => new TextPrecision(container),
+                AttributeElement.CHARACTER_EXPANSION_FACTOR => new CharacterExpansionFactor(container),
+                AttributeElement.CHARACTER_SPACING => new CharacterSpacing(container),
+                AttributeElement.TEXT_COLOUR => new TextColour(container),
+                AttributeElement.CHARACTER_HEIGHT => new CharacterHeight(container),
+                AttributeElement.CHARACTER_ORIENTATION => new CharacterOrientation(container),
+                AttributeElement.TEXT_PATH => new TextPath(container),
+                AttributeElement.TEXT_ALIGNMENT => new TextAlignment(container),
+                AttributeElement.CHARACTER_SET_INDEX => new CharacterSetIndex(container),
+                AttributeElement.ALTERNATE_CHARACTER_SET_INDEX => new AlternateCharacterSetIndex(container),
+                AttributeElement.FILL_BUNDLE_INDEX => new FillBundleIndex(container),
+                AttributeElement.INTERIOR_STYLE => new InteriorStyle(container),
+                AttributeElement.FILL_COLOUR => new FillColour(container),
+                AttributeElement.HATCH_INDEX => new HatchIndex(container),
+                AttributeElement.PATTERN_INDEX => new PatternIndex(container),
+                AttributeElement.EDGE_BUNDLE_INDEX => new EdgeBundleIndex(container),
+                AttributeElement.EDGE_TYPE => new EdgeType(container),
+                AttributeElement.EDGE_WIDTH => new EdgeWidth(container),
+                AttributeElement.EDGE_COLOUR => new EdgeColour(container),
+                AttributeElement.EDGE_VISIBILITY => new EdgeVisibility(container),
+                AttributeElement.FILL_REFERENCE_POINT => new FillReferencePoint(container),
+                AttributeElement.PATTERN_TABLE => new PatternTable(container),
+                AttributeElement.PATTERN_SIZE => new PatternSize(container),
+                AttributeElement.COLOUR_TABLE => new ColourTable(container),
+                AttributeElement.ASPECT_SOURCE_FLAGS => new AspectSourceFlags(container),
+                AttributeElement.PICK_IDENTIFIER => new PickIdentifier(container),
+                AttributeElement.LINE_CAP => new LineCap(container),
+                AttributeElement.LINE_JOIN => new LineJoin(container),
+                AttributeElement.LINE_TYPE_CONTINUATION => new LineTypeContinuation(container),
+                AttributeElement.LINE_TYPE_INITIAL_OFFSET => new LineTypeInitialOffset(container),
+                AttributeElement.TEXT_SCORE_TYPE => new TextScoreType(container),
+                AttributeElement.RESTRICTED_TEXT_TYPE => new RestrictedTextType(container),
+                AttributeElement.INTERPOLATED_INTERIOR => new InterpolatedInterior(container),
+                AttributeElement.EDGE_CAP => new EdgeCap(container),
+                AttributeElement.EDGE_JOIN => new EdgeJoin(container),
+                AttributeElement.EDGE_TYPE_CONTINUATION => new EdgeTypeContinuation(container),
+                AttributeElement.EDGE_TYPE_INITIAL_OFFSET => new EdgeTypeInitialOffset(container),
+                AttributeElement.SYMBOL_LIBRARY_INDEX => new SymbolLibraryIndex(container),
+                AttributeElement.SYMBOL_COLOUR => new SymbolColour(container),
+                AttributeElement.SYMBOL_SIZE => new SymbolSize(container),
+                AttributeElement.SYMBOL_ORIENTATION => new SymbolOrientation(container),
+                _ => new UnknownCommand(elementId, elementClass, container),
+            };
         }
     }
 }

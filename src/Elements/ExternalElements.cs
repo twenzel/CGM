@@ -6,15 +6,12 @@ namespace codessentials.CGM.Elements
     {
         public static Command CreateCommand(int elementId, int elementClass, CGMFile container)
         {
-            switch ((ExternalElement)elementId)
+            return ((ExternalElement)elementId) switch
             {
-                case ExternalElement.MESSAGE:
-                    return new MessageCommand(container);
-                case ExternalElement.APPLICATION_DATA:
-                    return new ApplicationData(container);
-                default:
-                    return new UnknownCommand(elementId, elementClass, container);
-            }
+                ExternalElement.MESSAGE => new MessageCommand(container),
+                ExternalElement.APPLICATION_DATA => new ApplicationData(container),
+                _ => new UnknownCommand(elementId, elementClass, container),
+            };
         }
     }
 }

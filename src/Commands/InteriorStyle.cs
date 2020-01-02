@@ -29,33 +29,17 @@
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            switch (reader.ReadEnum())
+            Value = (reader.ReadEnum()) switch
             {
-                case 0:
-                    Value = Style.HOLLOW;
-                    break;
-                case 1:
-                    Value = Style.SOLID;
-                    break;
-                case 2:
-                    Value = Style.PATTERN;
-                    break;
-                case 3:
-                    Value = Style.HATCH;
-                    break;
-                case 4:
-                    Value = Style.EMPTY;
-                    break;
-                case 5:
-                    Value = Style.GEOMETRIC_PATTERN;
-                    break;
-                case 6:
-                    Value = Style.INTERPOLATED;
-                    break;
-                default:
-                    Value = Style.HOLLOW;
-                    break;
-            }
+                0 => Style.HOLLOW,
+                1 => Style.SOLID,
+                2 => Style.PATTERN,
+                3 => Style.HATCH,
+                4 => Style.EMPTY,
+                5 => Style.GEOMETRIC_PATTERN,
+                6 => Style.INTERPOLATED,
+                _ => Style.HOLLOW,
+            };
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

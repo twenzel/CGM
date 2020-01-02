@@ -116,9 +116,35 @@ namespace codessentials.CGM.Classes
 
         public static CGMRectangle GetRectangle(Polyline polyline)
         {
-            if (polyline.Points.Length == 5)
+            if (IsRectangle(polyline))
             {
                 var points = polyline.Points;
+
+                // rectangle is descriped counter clock-wise starting right
+                if (CGMPoint.IsSame(points[0].Y, points[1].Y) && CGMPoint.IsSame(points[1].X, points[2].X) && CGMPoint.IsSame(points[2].Y, points[3].Y))
+                {
+                    if (points[1].Y < points[2].Y)
+                        return CGMRectangle.FromPoints(points[1], points[0], points[2], points[3]);
+                    else if (points[0].X < points[1].X) // starting left
+                        return CGMRectangle.FromPoints(points[3], points[2], points[0], points[1]);
+                    else
+                        return CGMRectangle.FromPoints(points[2], points[3], points[1], points[0]);
+                }
+
+                // rectangle is described clock wise 
+                if (CGMPoint.IsSame(points[0].X, points[1].X) && CGMPoint.IsSame(points[1].Y, points[2].Y) && CGMPoint.IsSame(points[2].X, points[3].X))
+                {
+                    return CGMRectangle.FromPoints(points[4], points[0], points[3], points[1]);
+                }
+            }
+
+            return CGMRectangle.Empty;
+        }
+
+        private static bool IsRectangle(Polyline polyline)
+        {
+            if (polyline.Points.Length == 5)
+            {
 
                 // internaly we see all points in a sorted way like that
                 // (81.3296,95.3243)
@@ -130,28 +156,10 @@ namespace codessentials.CGM.Classes
                 // this example (5 points) above describes a rectangle (third line can be ommited)
 
                 // last should close the path
-                if (points[0].Equals(points[4]))
-                {
-                    // rectangle is descriped counter clock-wise starting right
-                    if (CGMPoint.IsSame(points[0].Y, points[1].Y) && CGMPoint.IsSame(points[1].X, points[2].X) && CGMPoint.IsSame(points[2].Y, points[3].Y))
-                    {
-                        if (points[1].Y < points[2].Y)
-                            return CGMRectangle.FromPoints(points[1], points[0], points[2], points[3]);
-                        else if (points[0].X < points[1].X) // starting left
-                            return CGMRectangle.FromPoints(points[3], points[2], points[0], points[1]);
-                        else
-                            return CGMRectangle.FromPoints(points[2], points[3], points[1], points[0]);
-                    }
-
-                    // rectangle is described clock wise 
-                    if (CGMPoint.IsSame(points[0].X, points[1].X) && CGMPoint.IsSame(points[1].Y, points[2].Y) && CGMPoint.IsSame(points[2].X, points[3].X))
-                    {
-                        return CGMRectangle.FromPoints(points[4], points[0], points[3], points[1]);
-                    }
-                }
+                return (polyline.Points[0].Equals(polyline.Points[4]));
             }
 
-            return CGMRectangle.Empty;
+            return false;
         }
 
         /// <summary>

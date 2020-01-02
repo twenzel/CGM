@@ -72,15 +72,15 @@ namespace codessentials.CGM
                 return binary.GetContent();
             else if (_cgm is ClearTextCGMFile clearText)
             {
-                using (var stream = new MemoryStream())
-                {
-                    clearText.WriteFile(stream);
+                using var stream = new MemoryStream();
+                clearText.WriteFile(stream);
 
-                    return stream.ToArray();
-                }
+                return stream.ToArray();
             }
             else
+            {
                 throw new InvalidOperationException("Unknown CGM format!");
+            }
         }
     }
 }
