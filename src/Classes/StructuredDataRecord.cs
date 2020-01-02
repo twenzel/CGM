@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Classes
 {
@@ -46,9 +42,9 @@ namespace codessentials.CGM.Classes
         {
             public StructuredDataType Type { get; private set; }
             public int Count { get; private set; }
-            public List<Object> Data { get; private set; }
+            public List<object> Data { get; private set; }
 
-            public Member(StructuredDataType type, int count, List<Object> data)
+            public Member(StructuredDataType type, int count, List<object> data)
             {
                 Type = type;
                 Count = count;
@@ -56,13 +52,11 @@ namespace codessentials.CGM.Classes
             }
         }
 
-        private List<Member> _members = new List<Member>();
+        public List<Member> Members { get; } = new List<Member>();
 
-        public List<Member> Members { get { return _members; } }
-
-        public void Add(StructuredDataType type, int count, List<Object> data)
+        public void Add(StructuredDataType type, int count, List<object> data)
         {
-            _members.Add(new Member(type, count, data));
+            Members.Add(new Member(type, count, data));
         }
 
         public void Add(StructuredDataType type, object[] data)

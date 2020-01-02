@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -8,15 +7,17 @@ namespace codessentials.CGM.Commands
     /// </remarks>
     public class DeviceViewport : Command
     {
+        public ViewportPoint FirstCorner { get; set; }
+        public ViewportPoint SecondCorner { get; set; }
 
-        public DeviceViewport(CGMFile container) 
+        public DeviceViewport(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 8, container))
         {
-           
+
         }
 
         public DeviceViewport(CGMFile container, ViewportPoint firstCorner, ViewportPoint secondCorder)
-            :this(container)
+            : this(container)
         {
             FirstCorner = firstCorner;
             SecondCorner = secondCorder;
@@ -25,7 +26,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             FirstCorner = reader.ReadViewportPoint();
-            SecondCorner = reader.ReadViewportPoint();            
+            SecondCorner = reader.ReadViewportPoint();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -38,9 +39,5 @@ namespace codessentials.CGM.Commands
         {
             writer.WriteLine($" DEVVP {WriteViewportPoint(FirstCorner)} {WriteViewportPoint(SecondCorner)};");
         }
-
-        public ViewportPoint FirstCorner { get; set; }
-
-        public ViewportPoint SecondCorner { get; set; }
     }
 }

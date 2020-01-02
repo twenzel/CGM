@@ -1,7 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
+﻿using System;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -10,43 +8,41 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class Polyline : Command, IComparable<Polyline>
     {
-        private CGMPoint[] _points;
-
         public Polyline(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 1, container))
         {
-            
+
         }
 
         public Polyline(CGMFile container, CGMPoint[] points)
-            :this(container)
+            : this(container)
         {
-            _points = points;
+            Points = points;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int n = reader.Arguments.Length / reader.SizeOfPoint();
+            var n = reader.Arguments.Length / reader.SizeOfPoint();
 
-            _points = new CGMPoint[n];
+            Points = new CGMPoint[n];
 
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
             {
-                _points[i] = reader.ReadPoint();
-            }            
+                Points[i] = reader.ReadPoint();
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            foreach(var p in _points)
-                writer.WritePoint(p);            
+            foreach (var p in Points)
+                writer.WritePoint(p);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.Write("  LINE");
 
-            foreach(var points in _points)
+            foreach (var points in Points)
                 writer.Write($" {WritePoint(points)}");
 
             writer.WriteLine(";");
@@ -54,26 +50,23 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            return "Polyline " + string.Join<CGMPoint>(", ", _points);
+            return "Polyline " + string.Join<CGMPoint>(", ", Points);
         }
 
         public bool IsSimpleLine
         {
-            get { return _points.Length == 2; }
+            get { return Points.Length == 2; }
         }
 
-        public CGMPoint[] Points
-        {
-            get { return _points; }
-        }      
+        public CGMPoint[] Points { get; private set; }
 
         public int CompareTo(Polyline other)
         {
-            if (_points.Length == other._points.Length)
+            if (Points.Length == other.Points.Length)
             {
-                for (int i = 0; i < _points.Length; i++)
+                for (var i = 0; i < Points.Length; i++)
                 {
-                    var compareResult = _points[i].CompareTo(other._points[i]);
+                    var compareResult = Points[i].CompareTo(other.Points[i]);
                     if (compareResult != 0)
                         return compareResult;
                 }
@@ -81,7 +74,7 @@ namespace codessentials.CGM.Commands
                 return 0;
             }
             else
-                return _points.Length.CompareTo(other._points.Length);
+                return Points.Length.CompareTo(other.Points.Length);
         }
     }
 }

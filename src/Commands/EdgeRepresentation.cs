@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,14 +12,14 @@ namespace codessentials.CGM.Commands
         public double EdgeWidth { get; set; }
         public CGMColor EdgeColor { get; set; }
 
-        public EdgeRepresentation(CGMFile container) 
+        public EdgeRepresentation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 15, container))
         {
-           
+
         }
 
         public EdgeRepresentation(CGMFile container, int index, int type, double width, CGMColor color)
-            :this(container)
+            : this(container)
         {
             BundleIndex = index;
             EdgeType = type;

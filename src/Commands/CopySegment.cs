@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// ClassId=8, ElementId=1
@@ -10,28 +6,23 @@ namespace codessentials.CGM.Commands
     public class CopySegment : Command
     {
         public int Id { get; set; }
-
         public double XScale { get; set; }
-
         public double XRotation { get; set; }
-
         public double YRotation { get; set; }
-
         public double YScale { get; set; }
-
         public double XTranslation { get; set; }
         public double YTranslation { get; set; }
 
         public bool Flag { get; set; }
 
-        public CopySegment(CGMFile container) 
+        public CopySegment(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 1, container))
         {
-            
+
         }
 
         public CopySegment(CGMFile container, int id, double xScale, double xRotation, double yRotation, double yScale, double xTranslation, double yTranslation, bool flag)
-            :this(container)
+            : this(container)
         {
             Id = id;
             XScale = xScale;
@@ -54,7 +45,7 @@ namespace codessentials.CGM.Commands
             XTranslation = reader.ReadVdc();
             YTranslation = reader.ReadVdc();
 
-            Flag = reader.ReadBool();            
+            Flag = reader.ReadBool();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

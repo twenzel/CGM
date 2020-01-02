@@ -1,43 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=6
     /// </remarks>
     public class BeginSegment : Command
     {
-        private int _id;
+        public int Id { get; private set; }
 
-        public BeginSegment(CGMFile container) 
+        public BeginSegment(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 6, container))
         {
-           
+
         }
 
         public BeginSegment(CGMFile container, int id)
-            :this(container)
+            : this(container)
         {
-            _id = id;
+            Id = id;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _id = reader.ReadName();            
+            Id = reader.ReadName();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteName(_id);
+            writer.WriteName(Id);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" BEGSEG {WriteName(_id)};");
+            writer.WriteLine($" BEGSEG {WriteName(Id)};");
         }
-
-        public int Id => _id;
     }
 }

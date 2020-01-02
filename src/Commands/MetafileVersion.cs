@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=1, Element=1
     /// </remarks>
     public class MetafileVersion : Command
     {
-        private int _version;
-
-        public int Version
-        {
-            get { return _version; }
-        }
+        public int Version { get; private set; }
 
         public MetafileVersion(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 1, container))
@@ -24,28 +15,28 @@ namespace codessentials.CGM.Commands
         public MetafileVersion(CGMFile container, int version)
             : this(container)
         {
-            _version = version;
+            Version = version;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _version = reader.ReadInt();
+            Version = reader.ReadInt();
 
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteInt(_version);
+            writer.WriteInt(Version);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" mfversion {_version};");
+            writer.WriteLine($" mfversion {Version};");
         }
 
         public override string ToString()
         {
-            return $"MetafileVersion {_version}";
+            return $"MetafileVersion {Version}";
         }
     }
 }

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=2, Element=9
@@ -20,35 +12,35 @@ namespace codessentials.CGM.Commands
             PHYDEVCOORD //PhysicalDeviceCoordinates
         }
 
-        private Mode _mode;
-        private double _metricScaleFactor;
+        public Mode Value { get; private set; }
+        public double MetricScaleFactor { get; private set; }
 
         public DeviceViewportSpecificationMode(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 9, container))
         {
-            
+
         }
 
         public DeviceViewportSpecificationMode(CGMFile container, Mode mode, double factor)
-            :this(container)
+            : this(container)
         {
-            _mode = mode;
-            _metricScaleFactor = factor;
+            Value = mode;
+            MetricScaleFactor = factor;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int enumValue = reader.ReadEnum();
+            var enumValue = reader.ReadEnum();
             switch (enumValue)
             {
                 case 0:
-                    _mode = Mode.FRACTION;
+                    Value = Mode.FRACTION;
                     break;
                 case 1:
-                    _mode = Mode.MM;
+                    Value = Mode.MM;
                     break;
                 case 2:
-                    _mode = Mode.PHYDEVCOORD;
+                    Value = Mode.PHYDEVCOORD;
                     break;
                 default:
                     reader.Unsupported("unsupported mode " + enumValue);
@@ -56,35 +48,32 @@ namespace codessentials.CGM.Commands
             }
 
             if (_container.RealPrecisionProcessed)
-                _metricScaleFactor = reader.ReadReal();
+                MetricScaleFactor = reader.ReadReal();
             else
-                _metricScaleFactor = reader.ReadFloatingPoint32();
+                MetricScaleFactor = reader.ReadFloatingPoint32();
 
-            _container.DeviceViewportSpecificationMode = _mode;            
+            _container.DeviceViewportSpecificationMode = Value;
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
-        {    
-            writer.WriteEnum((int)_mode);
-            _container.DeviceViewportSpecificationMode = _mode;
+        {
+            writer.WriteEnum((int)Value);
+            _container.DeviceViewportSpecificationMode = Value;
 
             if (_container.RealPrecisionProcessed)
-                writer.WriteReal(_metricScaleFactor);
+                writer.WriteReal(MetricScaleFactor);
             else
-                writer.WriteFloatingPoint32(_metricScaleFactor);
+                writer.WriteFloatingPoint32(MetricScaleFactor);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" DEVVPMODE {WriteEnum(_mode)} {WriteReal(_metricScaleFactor)}");
+            writer.WriteLine($" DEVVPMODE {WriteEnum(Value)} {WriteReal(MetricScaleFactor)}");
         }
 
         public override string ToString()
         {
-            return $"DeviceViewportSpecificationMode [mode={_mode}, metricScaleFactor={_metricScaleFactor}]";
+            return $"DeviceViewportSpecificationMode [mode={Value}, metricScaleFactor={MetricScaleFactor}]";
         }
-
-        public Mode Value => _mode;
-        public double MetricScaleFactor => _metricScaleFactor;
     }
 }

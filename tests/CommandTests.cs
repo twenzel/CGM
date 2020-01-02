@@ -32,8 +32,8 @@ namespace codessentials.CGM.Tests
         [Test]
         public void AppendText_Write_Binary()
         {
-            TestCommand(cgm => new AppendText(cgm, AppendText.FinalEnum.FINAL, "test"), cmd => cmd.Final == AppendText.FinalEnum.FINAL && cmd.Text == "test");
-            TestCommand(cgm => new AppendText(cgm, AppendText.FinalEnum.NOTFINAL, "test2"), cmd => cmd.Final == AppendText.FinalEnum.NOTFINAL && cmd.Text == "test2");
+            TestCommand(cgm => new AppendText(cgm, AppendText.FinalType.FINAL, "test"), cmd => cmd.Final == AppendText.FinalType.FINAL && cmd.Text == "test");
+            TestCommand(cgm => new AppendText(cgm, AppendText.FinalType.NOTFINAL, "test2"), cmd => cmd.Final == AppendText.FinalType.NOTFINAL && cmd.Text == "test2");
         }
 
         [Test]

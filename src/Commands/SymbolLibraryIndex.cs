@@ -4,14 +4,14 @@
     /// Class=5, ElementId=48
     /// </summary>
     public class SymbolLibraryIndex : GenericIndexCommand
-    {       
+    {
         public SymbolLibraryIndex(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 48, container), "SYMBOLINDEX")
-        {           
+        {
         }
 
         public SymbolLibraryIndex(CGMFile container, int index)
-            :this(container)
+            : this(container)
         {
             SetValue(index);
         }

@@ -1,7 +1,11 @@
-name: Build & Test
+name: Build
 
-on: [push, pull_request]
-
+on:
+  push:
+  pull_request:
+  release:    
+    types: [published,edited]
+    
 jobs:
   build:
 
@@ -16,7 +20,9 @@ jobs:
     - name: run cake
       uses: ecampidoglio/cake-action@v1.1.1
       with:
-        target: Pack
+        target: Default
         cake-version: 0.35.0
       env: 
         sonarLogin: ${{ secrets.sonarLogin }}
+        nugetApiKey: ${{ secrets.nugetApiKey }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  

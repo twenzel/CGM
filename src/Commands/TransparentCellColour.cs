@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -14,11 +13,11 @@ namespace codessentials.CGM.Commands
         public TransparentCellColour(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 20, container))
         {
-           
+
         }
 
         public TransparentCellColour(CGMFile container, bool indicator, CGMColor color)
-            :this(container)
+            : this(container)
         {
             Indicator = indicator;
             Color = color;
@@ -27,7 +26,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             Indicator = reader.ReadBool();
-            Color = reader.ReadColor();            
+            Color = reader.ReadColor();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

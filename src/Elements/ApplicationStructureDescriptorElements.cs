@@ -1,12 +1,7 @@
 ﻿using codessentials.CGM.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Elements
-{ 
+{
     public static class ApplicationStructureDescriptorElements
     {
         public static Command CreateCommand(int elementId, int elementClass, CGMFile container)

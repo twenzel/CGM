@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -14,15 +11,14 @@ namespace codessentials.CGM.Commands
         public double DeltaHeight { get; set; }
         public bool Final { get; set; }
 
-        public RestrictedText(CGMFile container) 
+        public RestrictedText(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 5, container))
         {
 
-           
         }
 
         public RestrictedText(CGMFile container, string data, CGMPoint position, double deltaWidth, double deltaHeight, bool final)
-            :this(container)
+            : this(container)
         {
             DeltaWidth = deltaWidth;
             DeltaHeight = deltaHeight;
@@ -34,11 +30,11 @@ namespace codessentials.CGM.Commands
         {
             DeltaWidth = reader.ReadVdc();
             DeltaHeight = reader.ReadVdc();
-            _position = reader.ReadPoint();
+            Position = reader.ReadPoint();
 
             Final = reader.ReadBool();
 
-            _string = reader.ReadString();            
+            Text = reader.ReadString();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -55,21 +51,21 @@ namespace codessentials.CGM.Commands
             writer.Write($"  RESTRTEXT");
             writer.Write(" " + WriteDouble(DeltaWidth));
             writer.Write(" " + WriteDouble(DeltaHeight));
-            writer.Write("  " + WritePoint(_position));
+            writer.Write("  " + WritePoint(Position));
 
             if (Final)
                 writer.Write($" final");
             else
                 writer.Write($" notfinal");
 
-            writer.Write($" {WriteString(_string)}");
+            writer.Write($" {WriteString(Text)}");
 
             writer.WriteLine(";");
         }
 
         public override string ToString()
         {
-            return $"RestrictedText {_string} deltaWidth={DeltaWidth} deltaHeight={DeltaHeight} textPosition.x={_position.X} textPosition.y={_position.Y}";
+            return $"RestrictedText {Text} deltaWidth={DeltaWidth} deltaHeight={DeltaHeight} textPosition.x={Position.X} textPosition.y={Position.Y}";
         }
     }
 }

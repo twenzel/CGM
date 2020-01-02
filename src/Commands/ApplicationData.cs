@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=7, Element=2
@@ -12,14 +8,14 @@ namespace codessentials.CGM.Commands
         private int _identifier;
         private string _data;
 
-        public ApplicationData(CGMFile container) 
+        public ApplicationData(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ExternalElements, 2, container))
         {
-           
+
         }
 
         public ApplicationData(CGMFile container, int id, string data)
-            :this(container)
+            : this(container)
         {
             _identifier = id;
             _data = data;
@@ -28,7 +24,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             _identifier = reader.ReadInt();
-            _data = reader.ReadString();            
+            _data = reader.ReadString();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -24,14 +24,14 @@ namespace codessentials.CGM.Commands
         public List<int> GapWidths { get; set; } = new List<int>();
         public List<int> LineTypes { get; set; } = new List<int>();
 
-        public HatchStyleDefinition(CGMFile container) 
+        public HatchStyleDefinition(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 18, container))
         {
-           
+
         }
 
         public HatchStyleDefinition(CGMFile container, int index, HatchStyle style, double firstX, double firstY, double secondX, double secondY, double cycleLength, int[] gapWidths, int[] lineTypes)
-            :this(container)
+            : this(container)
         {
             Index = index;
             Style = style;
@@ -59,11 +59,11 @@ namespace codessentials.CGM.Commands
 
             var numberOfLines = reader.ReadInt();
 
-            for (int i = 0; i < numberOfLines; i++)
+            for (var i = 0; i < numberOfLines; i++)
                 GapWidths.Add(reader.ReadInt());
 
-            for (int i = 0; i < numberOfLines; i++)
-                LineTypes.Add(reader.ReadInt());            
+            for (var i = 0; i < numberOfLines; i++)
+                LineTypes.Add(reader.ReadInt());
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -80,7 +80,7 @@ namespace codessentials.CGM.Commands
             if (GapWidths.Count != LineTypes.Count)
                 throw new InvalidOperationException("Amount of GapWidths does not match with LineTypes!");
 
-            foreach(var val in GapWidths)
+            foreach (var val in GapWidths)
                 writer.WriteInt(val);
 
             foreach (var val in LineTypes)

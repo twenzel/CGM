@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=3, ElementId=18
@@ -10,7 +8,7 @@ namespace codessentials.CGM.Commands
         public enum TextPathMode
         {
             OFF = 0,
-            NONAXIS ,
+            NONAXIS,
             AXIS
         }
 
@@ -18,18 +16,18 @@ namespace codessentials.CGM.Commands
 
         public GeneralizedTextPathMode(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 18, container))
-        {            
+        {
         }
 
         public GeneralizedTextPathMode(CGMFile container, TextPathMode mode)
-            :this(container)
+            : this(container)
         {
             Mode = mode;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Mode = (TextPathMode)reader.ReadEnum();            
+            Mode = (TextPathMode)reader.ReadEnum();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

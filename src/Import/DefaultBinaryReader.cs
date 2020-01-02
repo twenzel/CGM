@@ -1,31 +1,28 @@
-﻿using codessentials.CGM.Classes;
-using codessentials.CGM.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
+using codessentials.CGM.Classes;
+using codessentials.CGM.Commands;
 
 namespace codessentials.CGM.Import
 {
     public class DefaultBinaryReader : IBinaryReader, IDisposable
     {
-        private BinaryReader _reader;
-        private CGMFile _cgm;
+        private readonly BinaryReader _reader;
+        private readonly CGMFile _cgm;
         private int _positionInCurrentArgument;
         private byte[] _arguments;
-        /// <summary>
-        /// The current command parameter we're reading
-        /// </summary>
-        private int _currentArg = 0;
         private Command _currentCommand;
-        private List<Message> _messages = new List<Message>();
-        private ICommandFactory _commandFactory;
+        private readonly List<Message> _messages = new List<Message>();
+        private readonly ICommandFactory _commandFactory;
+        private bool _isDisposed;
 
-        private static double Two_Ex_16 = Math.Pow(2, 16);
-        private static double Two_Ex_32 = Math.Pow(2, 32);
+        internal static readonly double Two_Ex_16 = Math.Pow(2, 16);
+        internal static readonly double Two_Ex_32 = Math.Pow(2, 32);
 
-        public int CurrentArg => _currentArg;
+        public int CurrentArg { get; private set; } = 0;
         public byte[] Arguments => _arguments;
 
         public int ArgumentsCount => _arguments.Length;
@@ -39,6 +36,25 @@ namespace codessentials.CGM.Import
             _reader = new BinaryReader(stream);
             _cgm = cgm ?? throw new ArgumentNullException(nameof(cgm));
             _commandFactory = commandFactory ?? throw new ArgumentNullException(nameof(commandFactory));
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+                return;
+
+            if (disposing)
+            {
+                _reader.Dispose();
+            }
+
+            _isDisposed = true;
         }
 
         public void ReadCommands()
@@ -96,11 +112,11 @@ namespace codessentials.CGM.Import
             return new string(c);
         }
 
-        public string ReadFixedStringWithFallback(int argLength)
+        public string ReadFixedStringWithFallback(int length)
         {
-            var length = GetStringCount();
-            var c = new char[length];
-            for (var i = 0; i < length; i++)
+            var textLength = GetStringCount();
+            var c = new char[textLength];
+            for (var i = 0; i < textLength; i++)
             {
                 try
                 {
@@ -108,8 +124,8 @@ namespace codessentials.CGM.Import
                 }
                 catch (InvalidOperationException)
                 {
-                    if (argLength < length)
-                        return new string(c, 0, argLength);
+                    if (length < textLength)
+                        return new string(c, 0, length);
                 }
             }
 
@@ -120,8 +136,8 @@ namespace codessentials.CGM.Import
         {
             var ret = new StructuredDataRecord();
             var sdrLength = GetStringCount();
-            var startPos = _currentArg;
-            while (_currentArg < (startPos + sdrLength))
+            var startPos = CurrentArg;
+            while (CurrentArg < (startPos + sdrLength))
             {
                 var dataType = (StructuredDataRecord.StructuredDataType)ReadIndex();
                 var dataCount = ReadInt();
@@ -208,7 +224,7 @@ namespace codessentials.CGM.Import
 
         protected void EnsureAllArgumentsWereRead()
         {
-            Command.Assert(_currentArg == _arguments.Length || (_currentArg == 0 && _positionInCurrentArgument > 0), GetErrorMessage());
+            Command.Assert(CurrentArg == _arguments.Length || (CurrentArg == 0 && _positionInCurrentArgument > 0), GetErrorMessage());
         }
 
         public Command ReadEmbeddedCommand()
@@ -238,8 +254,8 @@ namespace codessentials.CGM.Import
             while (c < argumentCount)
                 commandArguments[c++] = ReadByte();
 
-            var oldCurrentArg = _currentArg;
-            _currentArg = 0;
+            var oldCurrentArg = CurrentArg;
+            CurrentArg = 0;
             var oldArguments = _arguments;
             _arguments = commandArguments;
 
@@ -263,7 +279,7 @@ namespace codessentials.CGM.Import
             var result = _currentCommand;
             _currentCommand = oldCommand;
             _arguments = oldArguments;
-            _currentArg = oldCurrentArg;
+            CurrentArg = oldCurrentArg;
 
             AlignOnWord();
 
@@ -297,11 +313,11 @@ namespace codessentials.CGM.Import
 
             var oldCommand = _currentCommand;
             var oldArguments = _arguments;
-            var oldCurrentArg = _currentArg;
+            var oldCurrentArg = CurrentArg;
 
             _currentCommand = _commandFactory.CreateCommand(elementId, elementClass, _cgm);
             _arguments = null;
-            _currentArg = 0;
+            CurrentArg = 0;
             ReadArguments(argumentCount, _reader);
             try
             {
@@ -329,7 +345,7 @@ namespace codessentials.CGM.Import
             var result = _currentCommand;
             _currentCommand = oldCommand;
             _arguments = oldArguments;
-            _currentArg = oldCurrentArg;
+            CurrentArg = oldCurrentArg;
 
             return result;
         }
@@ -368,7 +384,7 @@ namespace codessentials.CGM.Import
                 {
                     try
                     {
-                        int skip = reader.ReadByte();
+                        reader.ReadByte();
                     }
                     catch (EndOfStreamException)
                     {
@@ -379,9 +395,9 @@ namespace codessentials.CGM.Import
             }
             else
             {
-                // this is a long form command
-                var done = true;
                 var a = 0;
+                // this is a long form command
+                bool done;
                 do
                 {
                     argumentsCount = ReadInt16Direct(reader);
@@ -393,7 +409,7 @@ namespace codessentials.CGM.Import
                         // data is partitioned and it's not the last partition
                         done = false;
                         // clear bit 15
-                        argumentsCount = argumentsCount & ~(1 << 15);
+                        argumentsCount &= ~(1 << 15);
                     }
                     else
                     {
@@ -415,8 +431,7 @@ namespace codessentials.CGM.Import
                     // align on a word if necessary
                     if (argumentsCount % 2 == 1)
                     {
-                        int skip = reader.ReadByte();
-                        //Command.Assert(skip == 0, "skipping data");
+                        reader.ReadByte();
                     }
                 }
                 while (!done);
@@ -451,43 +466,41 @@ namespace codessentials.CGM.Import
         public byte ReadByte()
         {
             SkipBits();
-            Command.Assert(_currentArg < _arguments.Length, GetErrorMessage());
-            return (byte)_arguments[_currentArg++];
+            Command.Assert(CurrentArg < _arguments.Length, GetErrorMessage());
+            return _arguments[CurrentArg++];
         }
 
         protected char ReadChar()
         {
             SkipBits();
-            Command.Assert(_currentArg < _arguments.Length, GetErrorMessage());
-            return (char)_arguments[_currentArg++];
+            Command.Assert(CurrentArg < _arguments.Length, GetErrorMessage());
+            return (char)_arguments[CurrentArg++];
         }
 
         protected int ReadSignedInt8()
         {
-            SkipBits();
-            Command.Assert(_currentArg < _arguments.Length, GetErrorMessage());
-            return _arguments[_currentArg++];
+            return ReadByte();
         }
 
         protected int ReadSignedInt16()
         {
             SkipBits();
-            Command.Assert(_currentArg + 1 < _arguments.Length, GetErrorMessage());
-            return ((short)(_arguments[_currentArg++] << 8) + _arguments[_currentArg++]);
+            Command.Assert(CurrentArg + 1 < _arguments.Length, GetErrorMessage());
+            return ((short)(_arguments[CurrentArg++] << 8) + _arguments[CurrentArg++]);
         }
 
         protected int ReadSignedInt24()
         {
             SkipBits();
-            Command.Assert(_currentArg + 2 < _arguments.Length, GetErrorMessage());
-            return (_arguments[_currentArg++] << 16) + (_arguments[_currentArg++] << 8) + _arguments[_currentArg++];
+            Command.Assert(CurrentArg + 2 < _arguments.Length, GetErrorMessage());
+            return (_arguments[CurrentArg++] << 16) + (_arguments[CurrentArg++] << 8) + _arguments[CurrentArg++];
         }
 
         protected int ReadSignedInt32()
         {
             SkipBits();
-            Command.Assert(_currentArg + 3 < _arguments.Length, GetErrorMessage());
-            return (_arguments[_currentArg++] << 24) + (_arguments[_currentArg++] << 16) + (_arguments[_currentArg++] << 8) + _arguments[_currentArg++];
+            Command.Assert(CurrentArg + 3 < _arguments.Length, GetErrorMessage());
+            return (_arguments[CurrentArg++] << 24) + (_arguments[CurrentArg++] << 16) + (_arguments[CurrentArg++] << 8) + _arguments[CurrentArg++];
         }
 
         public int SizeOfInt()
@@ -538,7 +551,7 @@ namespace codessentials.CGM.Import
                 return ReadUInt24();
 
             if (precision == 32)
-                return (int)ReadUInt32();
+                return ReadUInt32();
 
             LogWarning("unsupported uint precision " + precision);
 
@@ -548,32 +561,28 @@ namespace codessentials.CGM.Import
 
         private int ReadUInt32()
         {
-            SkipBits();
-            Command.Assert(_currentArg + 3 < _arguments.Length, GetErrorMessage());
-            return (_arguments[_currentArg++] << 24) + (_arguments[_currentArg++] << 16) + (_arguments[_currentArg++] << 8) + _arguments[_currentArg++];
+            return ReadSignedInt32();
         }
 
         private int ReadUInt24()
         {
-            SkipBits();
-            Command.Assert(_currentArg + 2 < _arguments.Length, GetErrorMessage());
-            return (_arguments[_currentArg++] << 16) + (_arguments[_currentArg++] << 8) + _arguments[_currentArg++];
+            return ReadSignedInt24();
         }
 
         private int ReadUInt16()
         {
             SkipBits();
 
-            if (_currentArg + 1 < _arguments.Length)
+            if (CurrentArg + 1 < _arguments.Length)
             {
                 // this is the default, two bytes
-                return (_arguments[_currentArg++] << 8) + _arguments[_currentArg++];
+                return (_arguments[CurrentArg++] << 8) + _arguments[CurrentArg++];
             }
 
             // some CGM files request a 16 bit precision integer when there are only 8 bits left
-            if (_currentArg < _arguments.Length)
+            if (CurrentArg < _arguments.Length)
             {
-                return _arguments[_currentArg++];
+                return _arguments[CurrentArg++];
             }
 
             Command.Assert(false, GetErrorMessage());
@@ -582,9 +591,7 @@ namespace codessentials.CGM.Import
 
         private int ReadUInt8()
         {
-            SkipBits();
-            Command.Assert(_currentArg < _arguments.Length, GetErrorMessage());
-            return _arguments[_currentArg++];
+            return ReadSignedInt8();
         }
 
         private int ReadUInt4()
@@ -604,17 +611,17 @@ namespace codessentials.CGM.Import
 
         private int ReadUIntBit(int numBits)
         {
-            Command.Assert(_currentArg < _arguments.Length, GetErrorMessage());
+            Command.Assert(CurrentArg < _arguments.Length, GetErrorMessage());
 
             var bitsPosition = 8 - numBits - _positionInCurrentArgument;
             var mask = ((1 << numBits) - 1) << bitsPosition;
-            var ret = ((_arguments[_currentArg] & mask) >> bitsPosition);
+            var ret = ((_arguments[CurrentArg] & mask) >> bitsPosition);
             _positionInCurrentArgument += numBits;
             if (_positionInCurrentArgument % 8 == 0)
             {
                 // advance to next byte
                 _positionInCurrentArgument = 0;
-                _currentArg++;
+                CurrentArg++;
             }
             return ret;
         }
@@ -697,7 +704,6 @@ namespace codessentials.CGM.Import
                 case DeviceViewportSpecificationMode.Mode.PHYDEVCOORD:
                     result.ValueInt = ReadInt();
                     break;
-                case DeviceViewportSpecificationMode.Mode.FRACTION:
                 default:
                     result.ValueReal = ReadReal();
                     break;
@@ -852,9 +858,9 @@ namespace codessentials.CGM.Import
             return ReadUInt(precision);
         }
 
-        public int ReadColorIndex(int precision)
+        public int ReadColorIndex(int localColorPrecision)
         {
-            return ReadUInt(precision == -1 ? _cgm.ColourIndexPrecision : precision);
+            return ReadUInt(localColorPrecision == -1 ? _cgm.ColourIndexPrecision : localColorPrecision);
         }
 
         public CGMColor ReadColor()
@@ -880,7 +886,7 @@ namespace codessentials.CGM.Import
             {
                 // we read some bits from the current arg but aren't done, skip the rest
                 _positionInCurrentArgument = 0;
-                _currentArg++;
+                CurrentArg++;
             }
         }
 
@@ -1041,9 +1047,9 @@ MODE                            HATCH STYLE DEFINITION          duty cycle lengt
 								INTERPOLATED INTERIOR           reference geometry
 */
 
-        public double ReadSizeSpecification(SpecificationMode specificationMode)
+        public double ReadSizeSpecification(SpecificationMode edgeWidthSpecificationMode)
         {
-            if (specificationMode == SpecificationMode.ABS)
+            if (edgeWidthSpecificationMode == SpecificationMode.ABS)
                 return ReadVdc();
 
             return ReadReal();
@@ -1069,28 +1075,23 @@ MODE                            HATCH STYLE DEFINITION          duty cycle lengt
 	 */
         public void AlignOnWord()
         {
-            if (_currentArg >= _arguments.Length)
+            if (CurrentArg >= _arguments.Length)
             {
                 // we reached the end of the array, nothing to skip
                 return;
             }
 
-            if (_currentArg % 2 == 0 && _positionInCurrentArgument > 0)
+            if (CurrentArg % 2 == 0 && _positionInCurrentArgument > 0)
             {
                 _positionInCurrentArgument = 0;
-                _currentArg += 2;
+                CurrentArg += 2;
             }
-            else if (_currentArg % 2 == 1)
+            else if (CurrentArg % 2 == 1)
             {
                 _positionInCurrentArgument = 0;
-                _currentArg++;
+                CurrentArg++;
             }
         }
 
-
-        public void Dispose()
-        {
-            _reader.Dispose();
-        }
     }
 }

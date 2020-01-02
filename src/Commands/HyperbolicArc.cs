@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -19,11 +18,11 @@ namespace codessentials.CGM.Commands
         public HyperbolicArc(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 22, container))
         {
-           
+
         }
 
         public HyperbolicArc(CGMFile container, CGMPoint center, CGMPoint transverseRadius, CGMPoint conjugateRadius, double startX, double startY, double endX, double endY)
-            :this(container)
+            : this(container)
         {
             Center = center;
             TransverseRadius = transverseRadius;
@@ -42,7 +41,7 @@ namespace codessentials.CGM.Commands
             StartX = reader.ReadVdc();
             StartY = reader.ReadVdc();
             EndX = reader.ReadVdc();
-            EndY = reader.ReadVdc();            
+            EndY = reader.ReadVdc();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -1,33 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace codessentials.CGM
 {
     public class Message
     {
-        private Severity _severity;
-	    private string _message;
-	    private ClassCode _elementClass;
-        private int _elementId;
-        private string _commandDescription;
+        public string Text { get; }
+        public string CommandDescription { get; }
 
-        public ClassCode ElementClass
-        {
-            get { return _elementClass; }
-        }
+        public ClassCode ElementClass { get; private set; }
 
-        public int ElementId
-        {
-            get { return _elementId; }
-        }
+        public int ElementId { get; private set; }
 
-        public Severity Severity
-        {
-            get { return _severity; }
-        }
+        public Severity Severity { get; private set; }
 
         /// <summary>
         /// Initialize a new message
@@ -37,29 +21,29 @@ namespace codessentials.CGM
         /// <param name="elementId">The corresponding element ID</param>
         /// <param name="message">A message</param>
         /// <param name="commandDescription">The command description (optional), typically the output of the <code>ToString()</code> method for the command</param>
-        public Message(Severity severity, ClassCode elementClass, int elementId, String message, String commandDescription)
+        public Message(Severity severity, ClassCode elementClass, int elementId, string message, string commandDescription)
         {
-            _severity = severity;
-            _elementClass = elementClass;
-            _elementId = elementId;
-            _message = message;
-            _commandDescription = commandDescription;
+            Severity = severity;
+            ElementClass = elementClass;
+            ElementId = elementId;
+            Text = message;
+            CommandDescription = commandDescription;
         }
 
         public override string ToString()
-        {           
-            if (_severity == Severity.Info)            
-                return $"{_severity}: {_message}";
+        {
+            if (Severity == Severity.Info)
+                return $"{Severity}: {Text}";
             else
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append($"{_severity}:( {_elementClass} {_elementId}) {_message}");
+                var sb = new StringBuilder();
+                sb.Append($"{Severity}:( {ElementClass} {ElementId}) {Text}");
 
-                if (_commandDescription != null)
-                    sb.Append($" {{{_commandDescription}}}");
-                
+                if (CommandDescription != null)
+                    sb.Append($" {{{CommandDescription}}}");
+
                 return sb.ToString();
-            }            
+            }
         }
     }
 }

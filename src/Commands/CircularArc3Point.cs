@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -14,14 +11,14 @@ namespace codessentials.CGM.Commands
         public CGMPoint P2 { get; set; }
         public CGMPoint P3 { get; set; }
 
-        public CircularArc3Point(CGMFile container) 
+        public CircularArc3Point(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 13, container))
         {
-          
+
         }
 
         public CircularArc3Point(CGMFile container, CGMPoint p1, CGMPoint p2, CGMPoint p3)
-            :this(container)
+            : this(container)
         {
             P1 = p1;
             P2 = p2;
@@ -31,7 +28,7 @@ namespace codessentials.CGM.Commands
         public CircularArc3Point(CommandConstructorArguments args)
            : base(args)
         {
-           
+
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
@@ -56,6 +53,6 @@ namespace codessentials.CGM.Commands
         protected string WriteThreePointArcSpec()
         {
             return $"{WritePoint(P1)} {WritePoint(P2)} {WritePoint(P2)}";
-        }   
+        }
     }
 }

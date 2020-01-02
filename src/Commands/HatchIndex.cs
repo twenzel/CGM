@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class HatchIndex : Command
     {
@@ -18,21 +14,21 @@ namespace codessentials.CGM.Commands
 
         public HatchType Type { get; set; } = HatchType.HORIZONTAL_LINES;
 
-        public HatchIndex(CGMFile container) 
+        public HatchIndex(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 24, container))
         {
-           
+
         }
 
         public HatchIndex(CGMFile container, HatchType type)
-            :this(container)
+            : this(container)
         {
             Type = type;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int indexValue = reader.ReadIndex();
+            var indexValue = reader.ReadIndex();
             switch (indexValue)
             {
                 case 1:

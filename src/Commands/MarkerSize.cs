@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using codessentials.CGM.Commands;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=7
@@ -12,21 +7,21 @@ namespace codessentials.CGM.Commands
     {
         public double Width { get; set; }
 
-        public MarkerSize(CGMFile container) 
+        public MarkerSize(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 7, container))
         {
-                
+
         }
 
         public MarkerSize(CGMFile container, double width)
-            :this(container)
+            : this(container)
         {
             Width = width;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Width = reader.ReadSizeSpecification(_container.MarkerSizeSpecificationMode);            
+            Width = reader.ReadSizeSpecification(_container.MarkerSizeSpecificationMode);
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

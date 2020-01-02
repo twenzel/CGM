@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=7, ElementId=1
@@ -18,14 +14,14 @@ namespace codessentials.CGM.Commands
         public ActionType Action { get; set; }
         public string Message { get; set; }
 
-        public MessageCommand(CGMFile container) 
+        public MessageCommand(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ExternalElements, 1, container))
         {
-            
+
         }
 
         public MessageCommand(CGMFile container, ActionType action, string message)
-            :this(container)
+            : this(container)
         {
             Action = action;
             Message = message;

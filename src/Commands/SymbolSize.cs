@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=50
@@ -12,18 +10,18 @@ namespace codessentials.CGM.Commands
             HEIGHT, WIDTH, BOTH
         }
 
-        public ScaleIndicator Indicator;
-        public double Height;
-        public double Width;
+        public ScaleIndicator Indicator { get; set; }
+        public double Height { get; set; }
+        public double Width { get; set; }
 
         public SymbolSize(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 50, container))
         {
-           
+
         }
 
         public SymbolSize(CGMFile container, ScaleIndicator indicator, double width, double height)
-            :this(container)
+            : this(container)
         {
             Indicator = indicator;
             Width = width;
@@ -34,7 +32,7 @@ namespace codessentials.CGM.Commands
         {
             Indicator = (ScaleIndicator)reader.ReadEnum();
             Height = reader.ReadVdc();
-            Width = reader.ReadVdc();            
+            Width = reader.ReadVdc();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

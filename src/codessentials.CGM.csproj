@@ -17,8 +17,14 @@
     <RepositoryType>github</RepositoryType>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <LangVersion>latest</LangVersion>
+    <ProjectGuid>{56E1F6C9-610E-4FF4-BBCD-43EBD535C4AF}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.1.0.13383">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>

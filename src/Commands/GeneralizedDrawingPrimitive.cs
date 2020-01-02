@@ -1,6 +1,5 @@
 ﻿using codessentials.CGM.Classes;
 using System.Collections.Generic;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -16,13 +15,13 @@ namespace codessentials.CGM.Commands
         public GeneralizedDrawingPrimitive(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 10, container))
         {
-           
+
         }
 
         public GeneralizedDrawingPrimitive(CGMFile container, int id, CGMPoint[] points, string data)
-            :this(container)
+            : this(container)
         {
-            Identifier = id;            
+            Identifier = id;
             Points.AddRange(points);
             DataRecord = data;
         }
@@ -32,19 +31,19 @@ namespace codessentials.CGM.Commands
             Identifier = reader.ReadInt();
             var numberOfPoints = reader.ReadInt();
 
-            for (int i = 0; i < numberOfPoints; i++)
+            for (var i = 0; i < numberOfPoints; i++)
             {
                 Points.Add(reader.ReadPoint());
             }
 
-            DataRecord = reader.ReadString();            
+            DataRecord = reader.ReadString();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
             writer.WriteInt(Identifier);
             writer.WriteInt(Points.Count);
-            foreach(var p in Points)
+            foreach (var p in Points)
                 writer.WritePoint(p);
             writer.WriteString(DataRecord);
         }

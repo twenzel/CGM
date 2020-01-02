@@ -1,45 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class CharacterSpacing : Command
     {
-        private double _additionalInterCharacterSpace;
+        public double Space { get; private set; }
 
-        public CharacterSpacing(CGMFile container) 
+        public CharacterSpacing(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 13, container))
         {
-            
+
         }
 
         public CharacterSpacing(CGMFile container, double space)
-            :this(container)
+            : this(container)
         {
-            _additionalInterCharacterSpace = space;
+            Space = space;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _additionalInterCharacterSpace = reader.ReadReal();            
+            Space = reader.ReadReal();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteReal(_additionalInterCharacterSpace);
+            writer.WriteReal(Space);
         }
 
         public override string ToString()
         {
-            return $"CharacterSpacing {_additionalInterCharacterSpace}";
+            return $"CharacterSpacing {Space}";
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" CHARSPACE {WriteReal(_additionalInterCharacterSpace)};");
+            writer.WriteLine($" CHARSPACE {WriteReal(Space)};");
         }
-
-        public double Space => _additionalInterCharacterSpace;
     }
 }

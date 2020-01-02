@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,14 +12,14 @@ namespace codessentials.CGM.Commands
         public double LineWidth { get; set; }
         public CGMColor Color { get; set; }
 
-        public LineRepresentation(CGMFile container) 
+        public LineRepresentation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 11, container))
         {
-            
+
         }
 
         public LineRepresentation(CGMFile container, int index, int lineType, double width, CGMColor color)
-            :this(container)
+            : this(container)
         {
             Index = index;
             LineType = lineType;
@@ -33,7 +32,7 @@ namespace codessentials.CGM.Commands
             Index = reader.ReadIndex();
             LineType = reader.ReadIndex();
             LineWidth = reader.ReadSizeSpecification(_container.LineWidthSpecificationMode);
-            Color = reader.ReadColor();            
+            Color = reader.ReadColor();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

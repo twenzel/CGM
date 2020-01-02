@@ -1,40 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
+﻿using System.Drawing;
 
 namespace codessentials.CGM.Commands
 {
     public class ColourTable : Command
     {
-        private int _startIndex;
-        private Color[] _colors;
+        public int StartIndex { get; private set; }
+        public Color[] Colors { get; private set; }
 
-        public ColourTable(CGMFile container) 
+        public ColourTable(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 34, container))
         {
-           
+
         }
 
 
         public ColourTable(CGMFile container, int startIndex, Color[] colors)
-            :this(container)
+            : this(container)
         {
-            _startIndex = startIndex;
-            _colors = colors;
+            StartIndex = startIndex;
+            Colors = colors;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _startIndex = reader.ReadColorIndex();
+            StartIndex = reader.ReadColorIndex();
 
             // don't assert here: there can be extra parameters. Why?!?
 
             var n = (reader.ArgumentsCount - reader.CurrentArg) / reader.SizeOfDirectColor();
-            _colors = new Color[n];
+            Colors = new Color[n];
             for (var i = 0; i < n; i++)
             {
-                _colors[i] = reader.ReadDirectColor();
+                Colors[i] = reader.ReadDirectColor();
             }
 
             // don't ensure here -> see above
@@ -42,25 +39,25 @@ namespace codessentials.CGM.Commands
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteColorIndex(_startIndex);
-            foreach (var col in _colors)
+            writer.WriteColorIndex(StartIndex);
+            foreach (var col in Colors)
                 writer.WriteDirectColor(col);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.Write($"  colrtable {_startIndex} ");
+            writer.Write($"  colrtable {StartIndex} ");
 
             var first = true;
-            foreach (var col in _colors)
+            foreach (var col in Colors)
             {
                 if (!first)
                     writer.Write(",\n              ");
 
                 if (first)
                     first = false;
-                
-                writer.Write(" "+WriteColor(col, _container.ColourModel));
+
+                writer.Write(" " + WriteColor(col, _container.ColourModel));
             }
 
             writer.WriteLine(";");
@@ -68,10 +65,7 @@ namespace codessentials.CGM.Commands
 
         public Color GetColor(int index)
         {
-            return _colors[index + _startIndex];
+            return Colors[index + StartIndex];
         }
-
-        public int StartIndex => _startIndex;
-        public Color[] Colors => _colors;
     }
 }

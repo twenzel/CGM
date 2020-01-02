@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace codessentials.CGM.Commands
 {
@@ -17,52 +15,52 @@ namespace codessentials.CGM.Commands
             EXTENDED_8_BIT,
         }
 
-        private Type _type;
+        public Type Value { get; private set; }
 
-        public CharacterCodingAnnouncer(CGMFile container) 
+        public CharacterCodingAnnouncer(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 15, container))
         {
-            
+
         }
 
         public CharacterCodingAnnouncer(CGMFile container, Type type)
             : this(container)
         {
-            _type = type;
+            Value = type;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int type = reader.ReadEnum();
+            var type = reader.ReadEnum();
             switch (type)
             {
                 case 0:
-                    _type = Type.BASIC_7_BIT;
+                    Value = Type.BASIC_7_BIT;
                     break;
                 case 1:
-                    _type = Type.BASIC_8_BIT;
+                    Value = Type.BASIC_8_BIT;
                     break;
                 case 2:
-                    _type = Type.EXTENDED_7_BIT;
+                    Value = Type.EXTENDED_7_BIT;
                     break;
                 case 3:
-                    _type = Type.EXTENDED_8_BIT;
+                    Value = Type.EXTENDED_8_BIT;
                     break;
                 default:
                     reader.Unsupported("unsupported character coding type " + type);
-                    _type = Type.BASIC_7_BIT;
+                    Value = Type.BASIC_7_BIT;
                     break;
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteEnum((int)_type);
+            writer.WriteEnum((int)Value);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            switch (_type)
+            switch (Value)
             {
                 case Type.BASIC_7_BIT:
                     writer.WriteLine($" charcoding BASIC7BIT;");
@@ -77,15 +75,13 @@ namespace codessentials.CGM.Commands
                     writer.WriteLine($" charcoding EXTD8BIT;");
                     break;
                 default:
-                    throw new NotSupportedException($"CharacterCoding {_type} not supported.");
-            }            
+                    throw new NotSupportedException($"CharacterCoding {Value} not supported.");
+            }
         }
 
         public override string ToString()
         {
-            return $"CharacterCodingAnnouncer type={_type}";
+            return $"CharacterCodingAnnouncer type={Value}";
         }
-
-        public Type Value => _type;
     }
 }

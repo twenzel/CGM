@@ -1,43 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=13
     /// </remarks>
     public class BeginProtectionRegion : Command
     {
-        private int _regionIndex;
+        public int RegionIndex { get; private set; }
 
-        public BeginProtectionRegion(CGMFile container) 
+        public BeginProtectionRegion(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 13, container))
         {
-            
+
         }
 
         public BeginProtectionRegion(CGMFile container, int index)
-            :this(container)
+            : this(container)
         {
-            _regionIndex = index;
+            RegionIndex = index;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _regionIndex = reader.ReadIndex();            
+            RegionIndex = reader.ReadIndex();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteIndex(_regionIndex);           
+            writer.WriteIndex(RegionIndex);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" BEGPROTREGION {WriteIndex(_regionIndex)};");
+            writer.WriteLine($" BEGPROTREGION {WriteIndex(RegionIndex)};");
         }
-
-        public int RegionIndex => _regionIndex;
     }
 }

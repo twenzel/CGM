@@ -1,6 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
 
 namespace codessentials.CGM.Commands
 {
@@ -9,55 +7,53 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class CircularArcCentreClose : CircularArcCentre
     {
-        private ClosureType _closureType;
+        public ClosureType Type { get; private set; }
 
-        public CircularArcCentreClose(CGMFile container) 
+        public CircularArcCentreClose(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 16, container))
         {
-           
+
         }
 
         public CircularArcCentreClose(CGMFile container, CGMPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius, ClosureType closure)
-            :this(container)
+            : this(container)
         {
             SetValues(center, startDeltaX, startDeltaY, endDeltaX, endDeltaY, radius);
-            _closureType = closure;
+            Type = closure;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
             base.ReadFromBinary(reader);
 
-            int type = reader.ReadEnum();
+            var type = reader.ReadEnum();
             if (type == 0)
             {
-                _closureType = ClosureType.PIE;
+                Type = ClosureType.PIE;
             }
             else if (type == 1)
             {
-                _closureType = ClosureType.CHORD;
+                Type = ClosureType.CHORD;
             }
             else
             {
                 reader.Unsupported("unsupported closure type " + type);
-                _closureType = ClosureType.CHORD;
+                Type = ClosureType.CHORD;
             }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
             base.WriteAsBinary(writer);
-            writer.WriteEnum((int)_closureType);
+            writer.WriteEnum((int)Type);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.Write("  ARCCTRCLOSE ");
             WriteValues(writer);
-            writer.Write($" {WriteEnum(_closureType)}");
+            writer.Write($" {WriteEnum(Type)}");
             writer.WriteLine(";");
         }
-
-        public ClosureType Type => _closureType;
     }
 }

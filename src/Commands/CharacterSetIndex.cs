@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class CharacterSetIndex : GenericIndexCommand
-    {      
-        public CharacterSetIndex(CGMFile container) 
+    {
+        public CharacterSetIndex(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 19, container), "charsetindex")
         {
-           
+
         }
 
         public CharacterSetIndex(CGMFile container, int index)
-            :this(container)
+            : this(container)
         {
             Index = index;
         }

@@ -1,6 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
 
 namespace codessentials.CGM.Commands
 {
@@ -11,14 +9,14 @@ namespace codessentials.CGM.Commands
     {
         public ClosureType ClosureType { get; set; }
 
-        public EllipticalArcClose(CGMFile container) 
+        public EllipticalArcClose(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 19, container))
         {
-           
+
         }
 
         public EllipticalArcClose(CGMFile container, ClosureType type, double startX, double startY, double endX, double endY, CGMPoint center, CGMPoint first, CGMPoint second)
-            :this(container)
+            : this(container)
         {
             ClosureType = type;
             SetValues(startX, startY, endX, endY, center, first, second);
@@ -28,7 +26,7 @@ namespace codessentials.CGM.Commands
         {
             base.ReadFromBinary(reader);
 
-            int type = reader.ReadEnum();
+            var type = reader.ReadEnum();
             if (type == 0)
             {
                 ClosureType = ClosureType.PIE;

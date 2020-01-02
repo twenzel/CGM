@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=51
@@ -15,11 +13,11 @@ namespace codessentials.CGM.Commands
         public SymbolOrientation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 51, container))
         {
-           
+
         }
 
         public SymbolOrientation(CGMFile container, double upX, double upY, double baseX, double baseY)
-            :this(container)
+            : this(container)
         {
             UpX = upX;
             UpY = upY;
@@ -32,7 +30,7 @@ namespace codessentials.CGM.Commands
             UpX = reader.ReadVdc();
             UpY = reader.ReadVdc();
             BaseX = reader.ReadVdc();
-            BaseY = reader.ReadVdc();            
+            BaseY = reader.ReadVdc();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class TextAlignment : Command
     {
@@ -14,14 +10,14 @@ namespace codessentials.CGM.Commands
         public double ContinuousHorizontalAlignment { get; set; }
         public double ContinuousVerticalAlignment { get; set; }
 
-        public TextAlignment(CGMFile container) 
+        public TextAlignment(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 18, container))
         {
-            
+
         }
 
         public TextAlignment(CGMFile container, HorizontalAlignmentType horz, VerticalAlignmentType vert, double continousHorz, double continousVert)
-            :this(container)
+            : this(container)
         {
             HorizontalAlignment = horz;
             VerticalAlignment = vert;
@@ -31,7 +27,7 @@ namespace codessentials.CGM.Commands
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int enumValueHorz = reader.ReadEnum();
+            var enumValueHorz = reader.ReadEnum();
             switch (enumValueHorz)
             {
                 case 0:
@@ -55,7 +51,7 @@ namespace codessentials.CGM.Commands
                     break;
             }
 
-            int enumValueVert = reader.ReadEnum();
+            var enumValueVert = reader.ReadEnum();
             switch (enumValueVert)
             {
                 case 0:
@@ -86,7 +82,7 @@ namespace codessentials.CGM.Commands
             }
 
             ContinuousHorizontalAlignment = reader.ReadReal();
-            ContinuousVerticalAlignment = reader.ReadReal();            
+            ContinuousVerticalAlignment = reader.ReadReal();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -101,6 +97,6 @@ namespace codessentials.CGM.Commands
         {
             writer.WriteLine($"  textalign {WriteEnum(HorizontalAlignment)}, {WriteEnum(VerticalAlignment)}, {WriteDouble(ContinuousHorizontalAlignment)}, {WriteDouble(ContinuousVerticalAlignment)};");
         }
-        
+
     }
 }

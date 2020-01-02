@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using codessentials.CGM.Classes;
+using System;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using codessentials.CGM.Elements;
-using System.Runtime.CompilerServices;
-using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -19,12 +13,12 @@ namespace codessentials.CGM.Commands
 	public abstract class Command
 	{
 		protected ClassCode _elementClass;
-		protected int _elementId;			
+		protected int _elementId;
 		protected CGMFile _container;
 
-		private static string ZERO_DOUBLE = WriteDouble(0d);
-    
-        public ClassCode ElementClass
+		private static readonly string ZERO_DOUBLE = WriteDouble(0d);
+
+		public ClassCode ElementClass
 		{
 			get { return _elementClass; }
 		}
@@ -34,41 +28,35 @@ namespace codessentials.CGM.Commands
 			get { return _elementId; }
 		}
 
-		public Command(CommandConstructorArguments arguments)
+		protected Command(CommandConstructorArguments arguments)
 		{
 			_elementClass = arguments.ElementClass;
 			_elementId = arguments.ElementId;
 			_container = arguments.Container;
 		}
 
-        /// <summary>
-        /// Reads the binary data from the reader
-        /// </summary>
-        /// <param name="reader"></param>
-        public abstract void ReadFromBinary(IBinaryReader reader);
+		/// <summary>
+		/// Reads the binary data from the reader
+		/// </summary>
+		/// <param name="reader"></param>
+		public abstract void ReadFromBinary(IBinaryReader reader);
 
 		/// <summary>
 		/// Writes/exports the command as clear text mode
 		/// </summary>
 		/// <param name="writer">The text writer to write the clear text to.</param>
-		public abstract void WriteAsClearText(IClearTextWriter writer);
-        //{
-        //    Assert(false, "Not implemented WriteAsCleanText -> " + this.ToString());
-        //}        
+		public abstract void WriteAsClearText(IClearTextWriter writer);     
 
-        /// <summary>
-        /// Writes/exports the command as binary mode
-        /// </summary>
-        /// <param name="writer">The writer to write the binary content to.</param>
-        public abstract void WriteAsBinary(IBinaryWriter writer);
-		//{
-		//	Assert(false, "Not implemented WriteAsBinary -> " + this.ToString());            
-		//}
+		/// <summary>
+		/// Writes/exports the command as binary mode
+		/// </summary>
+		/// <param name="writer">The writer to write the binary content to.</param>
+		public abstract void WriteAsBinary(IBinaryWriter writer);
 
 		public override string ToString()
 		{
 			return GetType().Name;
-		}					
+		}
 
 		/// <summary>
 		/// Returns the double value as string with 4 digits
@@ -77,7 +65,7 @@ namespace codessentials.CGM.Commands
 		/// <returns></returns>
 		protected static string WriteDouble(double value)
 		{
-			return value.ToString("f4", CultureInfo.InvariantCulture);           
+			return value.ToString("f4", CultureInfo.InvariantCulture);
 		}
 
 		protected string WriteReal(double value)
@@ -118,7 +106,7 @@ namespace codessentials.CGM.Commands
 
 		protected string WritePoint(double x, double y)
 		{
-			var signCharY = "";            
+			var signCharY = "";
 
 			if (WriteDouble(y) == ZERO_DOUBLE && x < 0)
 				signCharY = "-";
@@ -138,11 +126,11 @@ namespace codessentials.CGM.Commands
 
 		protected string WriteString(string value)
 		{
-            // remove non-printable elements
-            value = new string(value.Where(c => !char.IsControl(c) || c == 13 || c == 10 || c == 9).ToArray());
-            //string result = new string(value.Where(c => char.IsLetterOrDigit(c) || (c >= ' ' && c <= byte.MaxValue)).ToArray());
+			// remove non-printable elements
+			value = new string(value.Where(c => !char.IsControl(c) || c == 13 || c == 10 || c == 9).ToArray());
+			//string result = new string(value.Where(c => char.IsLetterOrDigit(c) || (c >= ' ' && c <= byte.MaxValue)).ToArray());
 
-            return $"'{value}'";
+			return $"'{value}'";
 		}
 
 		protected string WriteEnum(object value)
@@ -195,7 +183,7 @@ namespace codessentials.CGM.Commands
 		protected string WriteObject(object value, StructuredDataRecord.StructuredDataType type)
 		{
 			switch (type)
-			{                
+			{
 				case StructuredDataRecord.StructuredDataType.N:
 					return WriteName(Convert.ToInt32(value));
 				case StructuredDataRecord.StructuredDataType.E:
@@ -267,8 +255,8 @@ namespace codessentials.CGM.Commands
 
 			for (var i = 0; i < value.Length; i++)
 			{
-				var length = i+4 > value.Length? value.Length - i: 4;
-							   
+				var length = i + 4 > value.Length ? value.Length - i : 4;
+
 				if (sb.Length > 0)
 					sb.Append(" ");
 
@@ -288,12 +276,12 @@ namespace codessentials.CGM.Commands
 				foreach (var val in member.Data)
 					writer.Write($" {WriteObject(val, member.Type)}");
 			}
-		}	
+		}
 
-        public static void Assert(bool isCorrect, string errorMessage)
-        {
-            if (!isCorrect)
-                throw new InvalidOperationException(errorMessage);
-        }
+		public static void Assert(bool isCorrect, string errorMessage)
+		{
+			if (!isCorrect)
+				throw new InvalidOperationException(errorMessage);
+		}
 	}
 }

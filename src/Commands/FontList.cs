@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace codessentials.CGM.Commands
 {
@@ -26,13 +22,13 @@ namespace codessentials.CGM.Commands
         //    _fontMapping.Add("times-italic", new FontWrapper(new Font(FontFamily.GenericSerif, DEFAULT_FONT_SIZE, FontStyle.Italic), false));
         //    _fontMapping.Add("times-bolditalic", new FontWrapper(new Font(FontFamily.GenericSerif, DEFAULT_FONT_SIZE, FontStyle.Bold | FontStyle.Italic), false));
         //    _fontMapping.Add("times-bold-italic", new FontWrapper(new Font(FontFamily.GenericSerif, DEFAULT_FONT_SIZE, FontStyle.Bold | FontStyle.Italic), false));
-                         
+
         //    _fontMapping.Add("helvetica", new FontWrapper(new Font(FontFamily.GenericSansSerif, DEFAULT_FONT_SIZE, FontStyle.Regular), false));
         //    _fontMapping.Add("helvetica-bold", new FontWrapper(new Font(FontFamily.GenericSansSerif, DEFAULT_FONT_SIZE, FontStyle.Bold), false));
         //    _fontMapping.Add("helvetica-oblique", new FontWrapper(new Font(FontFamily.GenericSansSerif, DEFAULT_FONT_SIZE, FontStyle.Italic), false));
         //    _fontMapping.Add("helvetica-boldoblique", new FontWrapper(new Font(FontFamily.GenericSansSerif, DEFAULT_FONT_SIZE, FontStyle.Bold | FontStyle.Italic), false));
         //    _fontMapping.Add("helvetica-bold-oblique", new FontWrapper(new Font(FontFamily.GenericSansSerif, DEFAULT_FONT_SIZE, FontStyle.Bold | FontStyle.Italic), false));
-                        
+
         //    _fontMapping.Add("courier", new FontWrapper(new Font(FontFamily.GenericMonospace, DEFAULT_FONT_SIZE, FontStyle.Regular), false));
         //    _fontMapping.Add("courier-bold", new FontWrapper(new Font(FontFamily.GenericMonospace, DEFAULT_FONT_SIZE, FontStyle.Bold), false));
         //    _fontMapping.Add("courier-italic", new FontWrapper(new Font(FontFamily.GenericMonospace, DEFAULT_FONT_SIZE, FontStyle.Italic), false));
@@ -46,14 +42,14 @@ namespace codessentials.CGM.Commands
         //    _fontMapping.Add("symbol", new FontWrapper(new Font(FontFamily.GenericSerif, DEFAULT_FONT_SIZE, FontStyle.Regular), true));
         //}
 
-        public FontList(CGMFile container) 
+        public FontList(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 13, container))
         {
-            
+
         }
 
         public FontList(CGMFile container, string[] fonts)
-            :this(container)
+            : this(container)
         {
             FontNames.AddRange(fonts);
         }
@@ -140,11 +136,6 @@ namespace codessentials.CGM.Commands
                 writer.WriteFixedString(name);
         }
 
-        private string normalizeFontName(string fontName)
-        {
-            return fontName.ToLower().Replace('_', '-');
-        }
-
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.WriteLine($" fontlist '{string.Join("', '", FontNames)}';");
@@ -152,7 +143,7 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            return "FontList " + string.Join(", ", FontNames);            
-        }   
+            return "FontList " + string.Join(", ", FontNames);
+        }
     }
 }

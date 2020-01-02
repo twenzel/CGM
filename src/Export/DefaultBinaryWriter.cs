@@ -1,11 +1,10 @@
-﻿using codessentials.CGM.Classes;
-using codessentials.CGM.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using codessentials.CGM.Classes;
+using codessentials.CGM.Commands;
+using codessentials.CGM.Import;
 
 namespace codessentials.CGM.Export
 {
@@ -13,13 +12,11 @@ namespace codessentials.CGM.Export
     {
         private Stream _stream;
         private WriterBucket _bucket = new WriterBucket();
-        private CGMFile _cgm;
-        private List<Message> _messages = new List<Message>();
+        private readonly CGMFile _cgm;
+        private readonly List<Message> _messages = new List<Message>();
         private Command _currentCommand;
-        int _positionInCurrentArgument = 0;
-
-        private static double Two_Ex_16 = Math.Pow(2, 16);
-        private static double Two_Ex_32 = Math.Pow(2, 32);
+        private int _positionInCurrentArgument = 0;
+        private bool _isDisposed;
 
         public IEnumerable<Message> Messages => _messages;
 
@@ -31,7 +28,21 @@ namespace codessentials.CGM.Export
 
         public void Dispose()
         {
-            _stream = null;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+                return;
+
+            if (disposing)
+            {
+                _stream = null;
+            }
+
+            _isDisposed = true;
         }
 
         /// <summary>
@@ -66,7 +77,7 @@ namespace codessentials.CGM.Export
                         WriteUInt16(32767);
                         length -= 32767;
 
-                        WriteUInt16(UInt16.MaxValue);
+                        WriteUInt16(ushort.MaxValue);
                     }
                     else
                     {
@@ -130,7 +141,7 @@ namespace codessentials.CGM.Export
 
         public void WriteReal(double data)
         {
-            Precision precision = _cgm.RealPrecision;
+            var precision = _cgm.RealPrecision;
             if (precision == Precision.Fixed_32)
                 WriteFixedPoint32(data);
             else if (precision == Precision.Fixed_64)
@@ -311,14 +322,14 @@ namespace codessentials.CGM.Export
 
         public void WriteEmbeddedCommand(Commands.Command command)
         {
-            using (var stream = new MemoryStream())
+            using var stream = new MemoryStream();
+
+            using (var writer = new DefaultBinaryWriter(stream, _cgm))
             {
-                using (var writer = new DefaultBinaryWriter(stream, _cgm))
-                {
-                    writer.WriteCommand(command);
-                }
-                _bucket.AddRange(stream.ToArray());
+                writer.WriteCommand(command);
             }
+            _bucket.AddRange(stream.ToArray());
+
         }
 
         #region internal write helper
@@ -440,9 +451,9 @@ namespace codessentials.CGM.Export
                 _positionInCurrentArgument = 0;
             }
 
-            int bitsPosition = 8 - numBits - _positionInCurrentArgument;
-            int mask = ((1 << numBits) - 1) << bitsPosition;
-            byte currentVal = _bucket[_bucket.Count - 1];
+            var bitsPosition = 8 - numBits - _positionInCurrentArgument;
+
+            var currentVal = _bucket[_bucket.Count - 1];
 
             _bucket[_bucket.Count - 1] = (byte)(currentVal | (byte)(data << bitsPosition));
 
@@ -454,31 +465,27 @@ namespace codessentials.CGM.Export
             }
         }
 
-        public static byte SetBit(byte b, int BitNumber)
+        public static byte SetBit(byte b, int bitNumber)
         {
-            //Kleine Fehlerbehandlung
-            if (BitNumber < 8 && BitNumber > -1)
+            if (bitNumber < 8 && bitNumber > -1)
             {
-                return (byte)(b | (byte)(0x01 << BitNumber));
+                return (byte)(b | (byte)(0x01 << bitNumber));
             }
             else
             {
-                throw new InvalidOperationException(
-                "Der Wert für BitNumber " + BitNumber.ToString() + " war nicht im zulässigen Bereich! (BitNumber = (min)0 - (max)7)");
+                throw new InvalidOperationException($"The value for {nameof(bitNumber)} '{bitNumber}' was not is the valid range! (BitNumber = (min)0 - (max)7)");
             }
         }
 
-        public static int CheckBitSet(byte b, int BitNumber)
+        public static int CheckBitSet(byte b, int bitNumber)
         {
-            //Kleine Fehlerbehandlung
-            if (BitNumber < 8 && BitNumber > -1)
+            if (bitNumber < 8 && bitNumber > -1)
             {
-                return (b & (1 << BitNumber));
+                return (b & (1 << bitNumber));
             }
             else
             {
-                throw new InvalidOperationException(
-                "Der Wert für BitNumber " + BitNumber.ToString() + " war nicht im zulässigen Bereich! (BitNumber = (min)0 - (max)7)");
+                throw new InvalidOperationException($"The value for {nameof(bitNumber)} '{bitNumber}' was not is the valid range!  (BitNumber = (min)0 - (max)7)");
             }
 
         }
@@ -486,19 +493,19 @@ namespace codessentials.CGM.Export
         public void WriteHeader(Commands.Command command)
         {
             // the element class
-            uint elementClass = (uint)command.ElementClass << 12;
-            uint elementId = (uint)command.ElementId << 5;
-            bool isLongForm = _bucket.Count >= 31; // more than 31
-            uint argumentCount = isLongForm ? 31 : (uint)_bucket.Count;
+            var elementClass = (uint)command.ElementClass << 12;
+            var elementId = (uint)command.ElementId << 5;
+            var isLongForm = _bucket.Count >= 31; // more than 31
+            var argumentCount = isLongForm ? 31 : (uint)_bucket.Count;
 
-            int cmd = (int)(elementClass | elementId | argumentCount);
+            var cmd = (int)(elementClass | elementId | argumentCount);
 
             WriteInt16Direct(cmd);
 
             if (isLongForm)
             {
                 var c = _bucket.Count;
-                int i = 0;
+                var i = 0;
                 if (c > 32032)
                 {
                     WriteInt16Direct(32032 | (1 << 15)); // inclusive partition flag
@@ -527,12 +534,12 @@ namespace codessentials.CGM.Export
 
         public void WriteDirectColor(System.Drawing.Color color)
         {
-            int precision = _cgm.ColourPrecision;
+            var precision = _cgm.ColourPrecision;
             var model = _cgm.ColourModel;
 
             if (model == ColourModel.Model.RGB)
             {
-                int[] scaled = scaleColorValueRGB(color.R, color.G, color.B);
+                var scaled = ScaleColorValueRGB(color.R, color.G, color.B);
                 WriteUInt(scaled[0], precision);
                 WriteUInt(scaled[1], precision);
                 WriteUInt(scaled[2], precision);
@@ -578,35 +585,35 @@ namespace codessentials.CGM.Export
             WriteColorIndex(index, _cgm.ColourIndexPrecision);
         }
 
-        public void WriteColorIndex(int index, int precision)
+        public void WriteColorIndex(int index, int localColorPrecision)
         {
-            WriteUInt(index, precision <= 0 ? _cgm.ColourIndexPrecision : precision);
+            WriteUInt(index, localColorPrecision <= 0 ? _cgm.ColourIndexPrecision : localColorPrecision);
         }
 
-        private int[] scaleColorValueRGB(int r, int g, int b)
+        private int[] ScaleColorValueRGB(int r, int g, int b)
         {
-            int[] min = _cgm.ColourValueExtentMinimumColorValueRGB;
-            int[] max = _cgm.ColourValueExtentMaximumColorValueRGB;
+            var min = _cgm.ColourValueExtentMinimumColorValueRGB;
+            var max = _cgm.ColourValueExtentMaximumColorValueRGB;
 
-            r = clamp(r, min[0], max[0]);
-            g = clamp(g, min[1], max[1]);
-            b = clamp(b, min[2], max[2]);
+            r = Clamp(r, min[0], max[0]);
+            g = Clamp(g, min[1], max[1]);
+            b = Clamp(b, min[2], max[2]);
 
             return new int[] {
-                scale(r, min[0], max[0]),
-                scale(g, min[1], max[1]),
-                scale(b, min[2], max[2])
+                Scale(r, min[0], max[0]),
+                Scale(g, min[1], max[1]),
+                Scale(b, min[2], max[2])
             };
         }
 
-        private int scale(int r, int min, int max)
+        private int Scale(int r, int min, int max)
         {
             // return 255 * (r - min) / (max - min);
 
-           return (max + min) * (r + min) / 255;
+            return (max + min) * (r + min) / 255;
         }
 
-        private int clamp(int r, int min, int max)
+        private int Clamp(int r, int min, int max)
         {
             return Math.Max(Math.Min(r, max), min);
         }
@@ -619,38 +626,37 @@ namespace codessentials.CGM.Export
                 case DeviceViewportSpecificationMode.Mode.PHYDEVCOORD:
                     WriteInt(data.ValueInt);
                     break;
-                case DeviceViewportSpecificationMode.Mode.FRACTION:
                 default:
                     WriteReal(data.ValueReal);
                     break;
             }
         }
 
-        public void WriteVdc(double value)
+        public void WriteVdc(double data)
         {
             if (_cgm.VDCType == VDCType.Type.Real)
             {
                 var realPrecision = _cgm.VDCRealPrecision;
                 if (realPrecision == Precision.Fixed_32)
-                    WriteFixedPoint32(value);
+                    WriteFixedPoint32(data);
                 else if (realPrecision == Precision.Fixed_64)
-                    WriteFixedPoint64(value);
+                    WriteFixedPoint64(data);
                 else if (realPrecision == Precision.Floating_32)
-                    WriteFloatingPoint32(value);
+                    WriteFloatingPoint32(data);
                 else if (realPrecision == Precision.Floating_64)
-                    WriteFloatingPoint64(value);
+                    WriteFloatingPoint64(data);
                 else
                     throw new NotSupportedException($"Unsupported VDCRealPrecision {realPrecision}!");
             }
             else
             {
-                int precision = _cgm.VDCIntegerPrecision;
+                var precision = _cgm.VDCIntegerPrecision;
                 if (precision == 16)
-                    WriteSignedInt16((int)value);
+                    WriteSignedInt16((int)data);
                 else if (precision == 24)
-                    WriteSignedInt24((int)value);
+                    WriteSignedInt24((int)data);
                 else if (precision == 32)
-                    WriteSignedInt32((int)value);
+                    WriteSignedInt32((int)data);
                 else
                     throw new NotSupportedException($"Unsupported VDCIntegerPrecision {precision}!");
             }
@@ -660,12 +666,12 @@ namespace codessentials.CGM.Export
         private void WriteFixedPoint32(double value)
         {
             var val = value.GetWholePart();
-            var fraction = value.GetFractionalPart();            
+            var fraction = value.GetFractionalPart();
             if (value < 0 && fraction != 0)
                 val -= 1;
 
             WriteSignedInt16(val);
-            WriteUInt16((int)(fraction * Two_Ex_16));
+            WriteUInt16((int)(fraction * DefaultBinaryReader.Two_Ex_16));
         }
 
         private void WriteFixedPoint64(double value)
@@ -676,12 +682,12 @@ namespace codessentials.CGM.Export
                 val -= 1;
 
             WriteSignedInt32(val);
-            WriteUInt32((int)(fraction * Two_Ex_32));
+            WriteUInt32((int)(fraction * DefaultBinaryReader.Two_Ex_32));
         }
 
-        public void WriteFloatingPoint32(double value)
+        public void WriteFloatingPoint32(double data)
         {
-            var bytes = BitConverter.GetBytes((Single)value);
+            var bytes = BitConverter.GetBytes((float)data);
             _bucket.AddRange(bytes.Reverse());
         }
 

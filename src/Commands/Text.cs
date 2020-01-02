@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -27,9 +24,9 @@ namespace codessentials.CGM.Commands
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _position = reader.ReadPoint();
+            Position = reader.ReadPoint();
             Final = reader.ReadEnum() != 0;
-            _string = reader.ReadString();
+            Text = reader.ReadString();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -41,14 +38,14 @@ namespace codessentials.CGM.Commands
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.Write($" TEXT {WritePoint(_position)}");
+            writer.Write($" TEXT {WritePoint(Position)}");
 
             if (Final)
                 writer.Write($" final");
             else
                 writer.Write($" notfinal");
 
-            writer.Write($" {WriteString(_string)}");
+            writer.Write($" {WriteString(Text)}");
 
             writer.WriteLine(";");
         }

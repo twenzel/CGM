@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public abstract class DashTypeCommand : Command
     {
         public DashType Type { get; set; } = DashType.SOLID;
 
-        public DashTypeCommand(CommandConstructorArguments args) 
+        protected DashTypeCommand(CommandConstructorArguments args)
             : base(args)
         {
-           
+
         }
- 
+
 
         protected void SetValue(DashType type)
         {

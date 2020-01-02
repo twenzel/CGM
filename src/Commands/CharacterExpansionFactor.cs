@@ -1,46 +1,39 @@
-﻿using codessentials.CGM.Elements;
-using System.Collections.Generic;
-using System.IO;
-using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class CharacterExpansionFactor : Command
     {
-        private double _factor;
+        public double Factor { get; private set; }
 
-        public CharacterExpansionFactor(CGMFile container) 
+        public CharacterExpansionFactor(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 12, container))
         {
-            
+
         }
 
         public CharacterExpansionFactor(CGMFile container, double factor)
-            :this(container)
+            : this(container)
         {
-            _factor = factor;
+            Factor = factor;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _factor = reader.ReadReal();
+            Factor = reader.ReadReal();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteReal(_factor);
+            writer.WriteReal(Factor);
         }
 
         public override string ToString()
         {
-            return $"CharacterExpansionFactor {_factor}";
+            return $"CharacterExpansionFactor {Factor}";
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" CHAREXPAN {WriteReal(_factor)};");
+            writer.WriteLine($" CHAREXPAN {WriteReal(Factor)};");
         }
-
-        public double Factor => _factor;
     }
 }

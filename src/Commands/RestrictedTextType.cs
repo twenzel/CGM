@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class RestrictedTextType : Command
     {
@@ -21,21 +14,21 @@ namespace codessentials.CGM.Commands
 
         public Type Value { get; set; }
 
-        public RestrictedTextType(CGMFile container) 
+        public RestrictedTextType(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 42, container))
         {
-            
+
         }
 
         public RestrictedTextType(CGMFile container, Type type)
-            :this(container)
+            : this(container)
         {
             Value = type;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int indexValue = reader.ReadIndex();
+            var indexValue = reader.ReadIndex();
             switch (indexValue)
             {
                 case 1:
@@ -62,7 +55,7 @@ namespace codessentials.CGM.Commands
                     break;
             }
 
-            _container.RestrictedTextType = Value;            
+            _container.RestrictedTextType = Value;
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -74,6 +67,6 @@ namespace codessentials.CGM.Commands
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.WriteLine($" RESTRTEXTTYPE {WriteInt((int)Value)};");
-        }       
+        }
     }
 }

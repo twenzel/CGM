@@ -6,15 +6,15 @@ namespace codessentials.CGM.Commands
     /// Class=5, ElementId=49
     /// </summary>
     public class SymbolColour : ColourCommand
-    {    
+    {
         public SymbolColour(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 49, container))
         {
-           
+
         }
 
         public SymbolColour(CGMFile container, CGMColor color)
-            :this(container)
+            : this(container)
         {
             SetValue(color);
         }

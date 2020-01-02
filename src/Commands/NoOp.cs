@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=0
@@ -13,19 +6,19 @@ namespace codessentials.CGM.Commands
     public class NoOp : Command
     {
         public NoOp(CGMFile container)
-            :base(new CommandConstructorArguments(ClassCode.DelimiterElement, 0, container))
+            : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 0, container))
         {
-            
+
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            
+
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-           
+
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)

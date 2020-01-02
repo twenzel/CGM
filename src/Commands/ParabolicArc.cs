@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -15,11 +14,11 @@ namespace codessentials.CGM.Commands
         public ParabolicArc(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 23, container))
         {
-            
+
         }
 
         public ParabolicArc(CGMFile container, CGMPoint intersectionPoint, CGMPoint start, CGMPoint end)
-            :this(container)
+            : this(container)
         {
             IntersectionPoint = intersectionPoint;
             Start = start;
@@ -30,7 +29,7 @@ namespace codessentials.CGM.Commands
         {
             IntersectionPoint = reader.ReadPoint();
             Start = reader.ReadPoint();
-            End = reader.ReadPoint();            
+            End = reader.ReadPoint();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

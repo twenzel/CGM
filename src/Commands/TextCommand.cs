@@ -1,45 +1,33 @@
 ﻿using codessentials.CGM.Classes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Commands
 {
     public abstract class TextCommand : Command
     {
-        /** The string to display */
-        protected string _string;
-	
-	    /** The position at which the string should be displayed */
-	    protected CGMPoint _position;
+        /// <summary>
+        /// The string to display
+        /// </summary>
+        public string Text { get; protected set; }
 
-        public TextCommand(CommandConstructorArguments args)
+        /// <summary>
+        /// The position at which the string should be displayed
+        /// </summary>
+        public CGMPoint Position { get; protected set; }
+
+        protected TextCommand(CommandConstructorArguments args)
             : base(args)
         {
-        } 
+        }
 
         protected void SetValues(string data, CGMPoint position)
         {
-            _string = data;
-            _position = position;
+            Text = data;
+            Position = position;
         }
 
         public override string ToString()
         {
-            return $"Text position={_position} string={_string}";
-        }
-
-        public string Text
-        {
-            get { return _string; }
-        }
-
-        public CGMPoint Position
-        {
-            get { return _position; }
+            return $"Text position={Position} string={Text}";
         }
     }
 }

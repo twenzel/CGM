@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class EdgeType : DashTypeCommand
     {
-        public EdgeType(CGMFile container) 
+        public EdgeType(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 27, container))
         {
         }
 
-
         public EdgeType(CGMFile container, DashType type)
-            :this(container)
+            : this(container)
         {
             SetValue(type);
         }

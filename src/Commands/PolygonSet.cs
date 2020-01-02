@@ -1,8 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System;
+﻿using System.Collections.Generic;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -24,11 +21,11 @@ namespace codessentials.CGM.Commands
         public PolygonSet(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 8, container))
         {
-            
+
         }
 
         public PolygonSet(CGMFile container, IEnumerable<KeyValuePair<EdgeFlag, CGMPoint>> values)
-            :this(container)
+            : this(container)
         {
             Set.AddRange(values);
         }
@@ -36,14 +33,14 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             Assert(reader.Arguments.Length % (reader.SizeOfPoint() + reader.SizeOfEnum()) == 0, "Invalid amount of arguments");
-            int n = reader.Arguments.Length / (reader.SizeOfPoint() + reader.SizeOfEnum());
+            var n = reader.Arguments.Length / (reader.SizeOfPoint() + reader.SizeOfEnum());
 
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
             {
-                EdgeFlag edgeOutFlag = (EdgeFlag)reader.ReadEnum();
+                var edgeOutFlag = (EdgeFlag)reader.ReadEnum();
                 var p = reader.ReadPoint();
                 Set.Add(new KeyValuePair<EdgeFlag, CGMPoint>(edgeOutFlag, p));
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -59,7 +56,7 @@ namespace codessentials.CGM.Commands
         {
             writer.Write($" POLYGONSET");
 
-            foreach(var pair in Set)
+            foreach (var pair in Set)
                 writer.Write($" {WritePoint(pair.Value)} {WriteEnum(pair.Key)}");
 
             writer.WriteLine(";");

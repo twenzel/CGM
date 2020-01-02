@@ -23,7 +23,7 @@ namespace codessentials.CGM.Commands
         {
             base.ReadFromBinary(reader);
 
-            _container.RealPrecision = _precision;
+            _container.RealPrecision = Value;
             _container.RealPrecisionProcessed = true;
         }
 
@@ -31,21 +31,21 @@ namespace codessentials.CGM.Commands
         {
             base.WriteAsBinary(writer);
 
-            _container.RealPrecision = _precision;
+            _container.RealPrecision = Value;
             _container.RealPrecisionProcessed = true;
         }
 
         public override string ToString()
         {
-            return "RealPrecision " + _precision;
+            return "RealPrecision " + Value;
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            if (_precision == Precision.Floating_32)
+            if (Value == Precision.Floating_32)
                 writer.WriteLine($" realprec -511.0000, 511.0000, 7 % 10 binary bits %;");
             else
-                throw new NotSupportedException($"Real Precision {_precision} is currently not supported.");
+                throw new NotSupportedException($"Real Precision {Value} is currently not supported.");
         }
     }
 }

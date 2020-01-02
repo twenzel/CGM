@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 
 namespace codessentials.CGM.Commands
 {
@@ -11,80 +7,80 @@ namespace codessentials.CGM.Commands
     /// </remarks>
     public class ColourValueExtent : Command
     {
-        private int[] _minimumColorValueRGB;
-        private int[] _maximumColorValueRGB;
-        private double _firstComponentScale;
-        private double _secondComponentScale;
-        private double _thirdComponentScale;
+        public int[] MinimumColorValueRGB { get; private set; }
+        public int[] MaximumColorValueRGB { get; private set; }
+        public double FirstComponentScale { get; private set; }
+        public double SecondComponentScale { get; private set; }
+        public double ThirdComponentScale { get; private set; }
 
-        public ColourValueExtent(CGMFile container) 
+        public ColourValueExtent(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 10, container))
         {
-            
+
         }
 
         public ColourValueExtent(CGMFile container, int[] minimumColorValueRGB, int[] maximumColorValueRGB, double firstComponentScale, double second, double third)
-            :this(container)
+            : this(container)
         {
-            _minimumColorValueRGB = minimumColorValueRGB;
-            _maximumColorValueRGB = maximumColorValueRGB;
-            _firstComponentScale = firstComponentScale;
-            _secondComponentScale = second;
-            _thirdComponentScale = third;
+            MinimumColorValueRGB = minimumColorValueRGB;
+            MaximumColorValueRGB = maximumColorValueRGB;
+            FirstComponentScale = firstComponentScale;
+            SecondComponentScale = second;
+            ThirdComponentScale = third;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            ColourModel.Model colorModel = _container.ColourModel;
-            _minimumColorValueRGB = new int[] { };
-            _maximumColorValueRGB = new int[] { };
+            var colorModel = _container.ColourModel;
+            MinimumColorValueRGB = new int[] { };
+            MaximumColorValueRGB = new int[] { };
 
             if (colorModel == ColourModel.Model.RGB)
             {
-                int precision = _container.ColourPrecision;
+                var precision = _container.ColourPrecision;
 
-                _minimumColorValueRGB = new int[] { reader.ReadUInt(precision), reader.ReadUInt(precision), reader.ReadUInt(precision) };
-                _maximumColorValueRGB = new int[] { reader.ReadUInt(precision), reader.ReadUInt(precision), reader.ReadUInt(precision) };
+                MinimumColorValueRGB = new int[] { reader.ReadUInt(precision), reader.ReadUInt(precision), reader.ReadUInt(precision) };
+                MaximumColorValueRGB = new int[] { reader.ReadUInt(precision), reader.ReadUInt(precision), reader.ReadUInt(precision) };
 
-                _container.ColourValueExtentMinimumColorValueRGB = _minimumColorValueRGB;
-                _container.ColourValueExtentMaximumColorValueRGB = _maximumColorValueRGB;
+                _container.ColourValueExtentMinimumColorValueRGB = MinimumColorValueRGB;
+                _container.ColourValueExtentMaximumColorValueRGB = MaximumColorValueRGB;
             }
             else if (colorModel == ColourModel.Model.CIELAB ||
                     colorModel == ColourModel.Model.CIELUV ||
                     colorModel == ColourModel.Model.RGB_RELATED)
             {
-                _firstComponentScale = reader.ReadReal();
-                _secondComponentScale = reader.ReadReal();
-                _thirdComponentScale = reader.ReadReal();
+                FirstComponentScale = reader.ReadReal();
+                SecondComponentScale = reader.ReadReal();
+                ThirdComponentScale = reader.ReadReal();
             }
             else
             {
                 reader.Unsupported("unsupported color model " + colorModel);
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
-        {                           
+        {
             if (_container.ColourModel == ColourModel.Model.RGB)
             {
-                int precision = _container.ColourPrecision;
-                writer.WriteUInt(_minimumColorValueRGB[0], precision);
-                writer.WriteUInt(_minimumColorValueRGB[1], precision);
-                writer.WriteUInt(_minimumColorValueRGB[2], precision);
-                writer.WriteUInt(_maximumColorValueRGB[0], precision);
-                writer.WriteUInt(_maximumColorValueRGB[1], precision);
-                writer.WriteUInt(_maximumColorValueRGB[2], precision);
+                var precision = _container.ColourPrecision;
+                writer.WriteUInt(MinimumColorValueRGB[0], precision);
+                writer.WriteUInt(MinimumColorValueRGB[1], precision);
+                writer.WriteUInt(MinimumColorValueRGB[2], precision);
+                writer.WriteUInt(MaximumColorValueRGB[0], precision);
+                writer.WriteUInt(MaximumColorValueRGB[1], precision);
+                writer.WriteUInt(MaximumColorValueRGB[2], precision);
 
-                _container.ColourValueExtentMinimumColorValueRGB = _minimumColorValueRGB;
-                _container.ColourValueExtentMaximumColorValueRGB = _maximumColorValueRGB;
-            }              
+                _container.ColourValueExtentMinimumColorValueRGB = MinimumColorValueRGB;
+                _container.ColourValueExtentMaximumColorValueRGB = MaximumColorValueRGB;
+            }
             else if (_container.ColourModel == ColourModel.Model.CIELAB ||
                     _container.ColourModel == ColourModel.Model.CIELUV ||
                     _container.ColourModel == ColourModel.Model.RGB_RELATED)
             {
-                writer.WriteReal(_firstComponentScale);
-                writer.WriteReal(_secondComponentScale);
-                writer.WriteReal(_thirdComponentScale);
+                writer.WriteReal(FirstComponentScale);
+                writer.WriteReal(SecondComponentScale);
+                writer.WriteReal(ThirdComponentScale);
             }
             else
             {
@@ -98,17 +94,17 @@ namespace codessentials.CGM.Commands
 
             if (_container.ColourModel == ColourModel.Model.RGB)
             {
-                writer.Write($"{_minimumColorValueRGB[0]} {_minimumColorValueRGB[1]} {_minimumColorValueRGB[2]}");
-                writer.Write($", {_maximumColorValueRGB[0]} {_maximumColorValueRGB[1]} {_maximumColorValueRGB[2]}");
+                writer.Write($"{MinimumColorValueRGB[0]} {MinimumColorValueRGB[1]} {MinimumColorValueRGB[2]}");
+                writer.Write($", {MaximumColorValueRGB[0]} {MaximumColorValueRGB[1]} {MaximumColorValueRGB[2]}");
             }
             else if (_container.ColourModel == ColourModel.Model.CMYK)
             {
-                writer.Write($"{_minimumColorValueRGB[0]} {_minimumColorValueRGB[1]} {_minimumColorValueRGB[2]} {_minimumColorValueRGB[3]}");
-                writer.Write($", {_maximumColorValueRGB[0]} {_maximumColorValueRGB[1]} {_maximumColorValueRGB[2]} {_maximumColorValueRGB[3]}");
+                writer.Write($"{MinimumColorValueRGB[0]} {MinimumColorValueRGB[1]} {MinimumColorValueRGB[2]} {MinimumColorValueRGB[3]}");
+                writer.Write($", {MaximumColorValueRGB[0]} {MaximumColorValueRGB[1]} {MaximumColorValueRGB[2]} {MaximumColorValueRGB[3]}");
             }
             else
             {
-                writer.Write($"{AsColorValue(_firstComponentScale)} {AsColorValue(_secondComponentScale)} {AsColorValue(_thirdComponentScale)}");
+                writer.Write($"{AsColorValue(FirstComponentScale)} {AsColorValue(SecondComponentScale)} {AsColorValue(ThirdComponentScale)}");
             }
 
             writer.WriteLine(";");
@@ -121,17 +117,17 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("ColourValueExtent");
             if (_container.ColourModel == ColourModel.Model.RGB)
             {
-                sb.Append(" min RGB=(").Append(_minimumColorValueRGB[0]).Append(",");
-                sb.Append(_minimumColorValueRGB[1]).Append(",");
-                sb.Append(_minimumColorValueRGB[2]).Append(")");
+                sb.Append(" min RGB=(").Append(MinimumColorValueRGB[0]).Append(",");
+                sb.Append(MinimumColorValueRGB[1]).Append(",");
+                sb.Append(MinimumColorValueRGB[2]).Append(")");
 
-                sb.Append(" max RGB=(").Append(_maximumColorValueRGB[0]).Append(",");
-                sb.Append(_maximumColorValueRGB[1]).Append(",");
-                sb.Append(_maximumColorValueRGB[2]).Append(")");
+                sb.Append(" max RGB=(").Append(MaximumColorValueRGB[0]).Append(",");
+                sb.Append(MaximumColorValueRGB[1]).Append(",");
+                sb.Append(MaximumColorValueRGB[2]).Append(")");
             }
             else if (_container.ColourModel == ColourModel.Model.CMYK)
             {
@@ -141,17 +137,11 @@ namespace codessentials.CGM.Commands
                     _container.ColourModel == ColourModel.Model.CIELUV ||
                     _container.ColourModel == ColourModel.Model.RGB_RELATED)
             {
-                sb.Append(" first=").Append(_firstComponentScale);
-                sb.Append(" second=").Append(_secondComponentScale);
-                sb.Append(" third=").Append(_thirdComponentScale);
+                sb.Append(" first=").Append(FirstComponentScale);
+                sb.Append(" second=").Append(SecondComponentScale);
+                sb.Append(" third=").Append(ThirdComponentScale);
             }
             return sb.ToString();
         }
-
-        public int[] MinimumColorValueRGB => _minimumColorValueRGB;
-        public int[] MaximumColorValueRGB =>_maximumColorValueRGB;
-        public double FirstComponentScale => _firstComponentScale;
-        public double SecondComponentScale =>_secondComponentScale;
-        public double ThirdComponentScale => _thirdComponentScale;
     }
 }

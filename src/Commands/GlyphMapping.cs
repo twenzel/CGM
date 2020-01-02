@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -15,14 +14,14 @@ namespace codessentials.CGM.Commands
         public int GlyphSource { get; set; }
         public StructuredDataRecord CodeAssocs { get; set; }
 
-        public GlyphMapping(CGMFile container) 
+        public GlyphMapping(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 22, container))
         {
-           
+
         }
 
         public GlyphMapping(CGMFile container, int characterSetIndex, CharacterSetList.Type type, string sequenceTail, int octetsPerCode, int glyphSource, StructuredDataRecord codeAssocs)
-            :this(container)
+            : this(container)
         {
             CharacterSetIndex = characterSetIndex;
             Type = type;
@@ -39,7 +38,7 @@ namespace codessentials.CGM.Commands
             SequenceTail = reader.ReadFixedString();
             OctetsPerCode = reader.ReadInt();
             GlyphSource = reader.ReadIndex();
-            CodeAssocs = reader.ReadSDR();            
+            CodeAssocs = reader.ReadSDR();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

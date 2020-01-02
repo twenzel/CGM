@@ -1,16 +1,10 @@
-﻿using codessentials.CGM.Export;
-using System.Collections.Generic;
-using System.IO;
-using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=2
     /// </remarks>
     public class EndMetafile : Command
-    { 
-
+    {
         public EndMetafile(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 2, container))
         {
@@ -18,7 +12,7 @@ namespace codessentials.CGM.Commands
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            
+
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

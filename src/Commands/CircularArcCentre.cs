@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -10,59 +7,59 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class CircularArcCentre : Command
     {
-        protected CGMPoint _center;
-        protected double _startDeltaX;
-        protected double _startDeltaY;
-        protected double _endDeltaX;
-        protected double _endDeltaY;
-        protected double _radius;
+        public CGMPoint Center { get; protected set; }
+        public double StartDeltaX { get; protected set; }
+        public double StartDeltaY { get; protected set; }
+        public double EndDeltaX { get; protected set; }
+        public double EndDeltaY { get; protected set; }
+        public double Radius { get; protected set; }
 
-        public CircularArcCentre(CGMFile container) 
+        public CircularArcCentre(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 15, container))
         {
-                     
+
         }
 
         public CircularArcCentre(CGMFile container, CGMPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
            : this(container)
         {
             SetValues(center, startDeltaX, startDeltaY, endDeltaX, endDeltaY, radius);
-        }       
+        }
 
         public CircularArcCentre(CommandConstructorArguments args)
-            :base(args)
+            : base(args)
         {
-            
+
         }
 
         protected void SetValues(CGMPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
         {
-            _center = center;
-            _startDeltaX = startDeltaX;
-            _startDeltaY = startDeltaY;
-            _endDeltaX = endDeltaX;
-            _endDeltaY = endDeltaY;
-            _radius = radius;
+            Center = center;
+            StartDeltaX = startDeltaX;
+            StartDeltaY = startDeltaY;
+            EndDeltaX = endDeltaX;
+            EndDeltaY = endDeltaY;
+            Radius = radius;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _center = reader.ReadPoint();
-            _startDeltaX = reader.ReadVdc();
-            _startDeltaY = reader.ReadVdc();
-            _endDeltaX = reader.ReadVdc();
-            _endDeltaY = reader.ReadVdc();
-            _radius = reader.ReadVdc();
+            Center = reader.ReadPoint();
+            StartDeltaX = reader.ReadVdc();
+            StartDeltaY = reader.ReadVdc();
+            EndDeltaX = reader.ReadVdc();
+            EndDeltaY = reader.ReadVdc();
+            Radius = reader.ReadVdc();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WritePoint(_center);
-            writer.WriteVdc(_startDeltaX);
-            writer.WriteVdc(_startDeltaY);
-            writer.WriteVdc(_endDeltaX);
-            writer.WriteVdc(_endDeltaY);
-            writer.WriteVdc(_radius);
+            writer.WritePoint(Center);
+            writer.WriteVdc(StartDeltaX);
+            writer.WriteVdc(StartDeltaY);
+            writer.WriteVdc(EndDeltaX);
+            writer.WriteVdc(EndDeltaY);
+            writer.WriteVdc(Radius);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
@@ -74,16 +71,9 @@ namespace codessentials.CGM.Commands
 
         protected virtual void WriteValues(IClearTextWriter writer)
         {
-            writer.Write($" {WritePoint(_center)}");
-            writer.Write($" {WritePoint(_startDeltaX, _startDeltaY)} {WritePoint(_endDeltaX, _endDeltaY)}");
-            writer.Write($" {WriteVDC(_radius)}");
+            writer.Write($" {WritePoint(Center)}");
+            writer.Write($" {WritePoint(StartDeltaX, StartDeltaY)} {WritePoint(EndDeltaX, EndDeltaY)}");
+            writer.Write($" {WriteVDC(Radius)}");
         }
-
-        public CGMPoint Center => _center;
-        public double StartDeltaX => _startDeltaX;
-        public double StartDeltaY => _startDeltaY;
-        public double EndDeltaX => _endDeltaX;
-        public double EndDeltaY => _endDeltaY;
-        public double Radius => _radius;
     }
 }

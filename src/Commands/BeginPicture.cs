@@ -1,49 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=3
     /// </remarks>
     public class BeginPicture : Command
     {
-        private string _pictureName;
+        public string PictureName { get; private set; }
 
-        public BeginPicture(CGMFile container) 
+        public BeginPicture(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 3, container))
         {
-            
+
         }
 
         public BeginPicture(CGMFile container, string name)
-            :this(container)
+            : this(container)
         {
-            _pictureName = name;
+            PictureName = name;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _pictureName = reader.ArgumentsCount > 0 ? reader.ReadString() : "";            
+            PictureName = reader.ArgumentsCount > 0 ? reader.ReadString() : "";
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteString(_pictureName);
+            writer.WriteString(PictureName);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($"\n BEGPIC '{_pictureName}';");
+            writer.WriteLine($"\n BEGPIC '{PictureName}';");
         }
 
         public override string ToString()
         {
-            return "BeginPicture " + _pictureName;
+            return "BeginPicture " + PictureName;
         }
-
-        public string PictureName => _pictureName;
     }
 }

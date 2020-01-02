@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=1, Element=7
     /// </remarks>
     public class ColourPrecision : Command
-    { 
+    {
+        public int Precision { get; set; }
 
-        public ColourPrecision(CGMFile container) 
+        public ColourPrecision(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 7, container))
         {
-            
+
         }
 
         public ColourPrecision(CGMFile container, int precision)
-            :this(container)
+            : this(container)
         {
             Precision = precision;
         }
@@ -26,7 +22,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             Precision = reader.ReadInt();
-            _container.ColourPrecision = Precision;            
+            _container.ColourPrecision = Precision;
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -48,8 +44,6 @@ namespace codessentials.CGM.Commands
         public override string ToString()
         {
             return $"ColourPrecision {Precision}";
-        }
-        
-        public int Precision { get; set; }
+        }        
     }
 }

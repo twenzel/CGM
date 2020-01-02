@@ -1,8 +1,6 @@
 ﻿using codessentials.CGM.Classes;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
 
 namespace codessentials.CGM.Commands
@@ -11,37 +9,37 @@ namespace codessentials.CGM.Commands
     /// Class=4, ElementId=2
     /// </summary>
     public class DisjointPolyline : Command
-    {       
+    {
         public List<KeyValuePair<CGMPoint, CGMPoint>> Lines { get; set; } = new List<KeyValuePair<CGMPoint, CGMPoint>>();
-        
-        public DisjointPolyline(CGMFile container) 
+
+        public DisjointPolyline(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 2, container))
         {
-           
+
         }
 
         public DisjointPolyline(CGMFile container, KeyValuePair<CGMPoint, CGMPoint>[] points)
-            :this(container)
+            : this(container)
         {
             Lines.AddRange(points);
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int n = reader.ArgumentsCount / reader.SizeOfPoint();
+            var n = reader.ArgumentsCount / reader.SizeOfPoint();
             Debug.Assert(n % 2 == 0);
 
-            for (int i = 0; i < (n / 2); i++)
+            for (var i = 0; i < (n / 2); i++)
             {
-                CGMPoint p1 = reader.ReadPoint();
-                CGMPoint p2 = reader.ReadPoint();
+                var p1 = reader.ReadPoint();
+                var p2 = reader.ReadPoint();
                 Lines.Add(new KeyValuePair<CGMPoint, CGMPoint>(p1, p2));
             }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            foreach(var pair in Lines)
+            foreach (var pair in Lines)
             {
                 writer.WritePoint(pair.Key);
                 writer.WritePoint(pair.Value);
@@ -50,9 +48,9 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("DisjointPolyline [");
-            for (int i = 0; i < Lines.Count; i++)
+            for (var i = 0; i < Lines.Count; i++)
             {
                 sb.Append("(");
                 sb.Append(Lines[i].Key.X).Append(",");
@@ -70,7 +68,7 @@ namespace codessentials.CGM.Commands
         {
             writer.Write(" DISJTLINE");
 
-            foreach(var pair in Lines)
+            foreach (var pair in Lines)
             {
                 writer.Write($" {WritePoint(pair.Key)} {WritePoint(pair.Value)}");
             }

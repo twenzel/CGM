@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=1, Element=18
@@ -10,14 +8,14 @@ namespace codessentials.CGM.Commands
         public int Min { get; set; }
         public int Max { get; set; }
 
-        public SegmentPriorityExtend(CGMFile container) 
+        public SegmentPriorityExtend(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 18, container))
         {
-           
+
         }
 
         public SegmentPriorityExtend(CGMFile container, int min, int max)
-            :this(container)
+            : this(container)
         {
             Min = min;
             Max = max;
@@ -26,7 +24,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             Min = reader.ReadInt();
-            Max = reader.ReadInt();            
+            Max = reader.ReadInt();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

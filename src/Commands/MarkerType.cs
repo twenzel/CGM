@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using codessentials.CGM.Commands;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=6
@@ -21,21 +16,21 @@ namespace codessentials.CGM.Commands
 
         public Type Value { get; set; } = Type.ASTERISK;
 
-        public MarkerType(CGMFile container) 
+        public MarkerType(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 6, container))
         {
-            
+
         }
 
         public MarkerType(CGMFile container, Type type)
-            :this(container)
+            : this(container)
         {
             Value = type;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int indexValue = reader.ReadIndex();
+            var indexValue = reader.ReadIndex();
             switch (indexValue)
             {
                 case 1:

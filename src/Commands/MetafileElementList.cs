@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=1, Element=11
     /// </remarks>
     public class MetafileElementList : Command
     {
-        private string[] _metaFileElements;
-
         public const string DRAWINGSET = "DRAWINGSET";
         public const string DRAWINGPLUS = "DRAWINGPLUS";
         public const string VERSION2 = "VERSION2";
@@ -21,51 +13,51 @@ namespace codessentials.CGM.Commands
         public const string VERSION3 = "VERSION3";
         public const string VERSION4 = "VERSION4";
 
-        public MetafileElementList(CGMFile container) 
+        public MetafileElementList(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 11, container))
         {
-            
+
         }
 
         public MetafileElementList(CGMFile container, string element)
-            :this(container)
+            : this(container)
         {
-            _metaFileElements = new [] { element};
+            Elements = new[] { element };
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int nElements = reader.ReadInt();
+            var nElements = reader.ReadInt();
 
-            _metaFileElements = new string[nElements];
-            for (int i = 0; i < nElements; i++)
+            Elements = new string[nElements];
+            for (var i = 0; i < nElements; i++)
             {
-                int code1 = reader.ReadIndex();
-                int code2 = reader.ReadIndex();
+                var code1 = reader.ReadIndex();
+                var code2 = reader.ReadIndex();
                 if (code1 == -1)
                 {
                     switch (code2)
                     {
                         case 0:
-                            _metaFileElements[i] = DRAWINGSET;
+                            Elements[i] = DRAWINGSET;
                             break;
                         case 1:
-                            _metaFileElements[i] = DRAWINGPLUS;
+                            Elements[i] = DRAWINGPLUS;
                             break;
                         case 2:
-                            _metaFileElements[i] = VERSION2;
+                            Elements[i] = VERSION2;
                             break;
                         case 3:
-                            _metaFileElements[i] = EXTDPRIM;
+                            Elements[i] = EXTDPRIM;
                             break;
                         case 4:
-                            _metaFileElements[i] = VERSION2GKSM;
+                            Elements[i] = VERSION2GKSM;
                             break;
                         case 5:
-                            _metaFileElements[i] = VERSION3;
+                            Elements[i] = VERSION3;
                             break;
                         case 6:
-                            _metaFileElements[i] = VERSION4;
+                            Elements[i] = VERSION4;
                             break;
                         default:
                             reader.Unsupported("unsupported meta file elements set " + code2);
@@ -75,16 +67,16 @@ namespace codessentials.CGM.Commands
                 else
                 {
                     // note: here, we can easily determine if a class/element is implemented or not                    
-                    _metaFileElements[i] = $" ({code1},{code2})";
+                    Elements[i] = $" ({code1},{code2})";
                 }
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteInt(_metaFileElements.Length);
+            writer.WriteInt(Elements.Length);
 
-            foreach (var elem in _metaFileElements)
+            foreach (var elem in Elements)
             {
                 if (elem == DRAWINGSET)
                 {
@@ -120,26 +112,27 @@ namespace codessentials.CGM.Commands
                 {
                     writer.WriteInt(-1);
                     writer.WriteInt(6);
-                } else
+                }
+                else
                 {
                     var val = elem.Replace("(", "").Replace(")", "").Trim();
                     var separatorIndex = val.IndexOf(",");
                     writer.WriteInt(int.Parse(val.Substring(0, separatorIndex)));
-                    writer.WriteInt(int.Parse(val.Substring(separatorIndex+1)));
+                    writer.WriteInt(int.Parse(val.Substring(separatorIndex + 1)));
                 }
             }
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" mfelemlist '{string.Join("', '", _metaFileElements)}';");
+            writer.WriteLine($" mfelemlist '{string.Join("', '", Elements)}';");
         }
 
         public override string ToString()
         {
-            return "MetafileElementList " + string.Join(" ", _metaFileElements);           
+            return "MetafileElementList " + string.Join(" ", Elements);
         }
 
-        public string[] Elements => _metaFileElements;
+        public string[] Elements { get; private set; }
     }
 }

@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Classes
 {
     /// <summary>
     /// Represents a point parameter type
     /// </summary>
-    public class CGMPoint : IEquatable<CGMPoint>, IComparable<CGMPoint>
+    public sealed class CGMPoint : IEquatable<CGMPoint>, IComparable<CGMPoint>
     {
         public double X { get; private set; }
-        public double Y { get; private set; }        
+        public double Y { get; private set; }
 
         public CGMPoint(double x, double y)
         {
@@ -27,7 +24,7 @@ namespace codessentials.CGM.Classes
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as CGMPoint);           
+            return Equals(obj as CGMPoint);
         }
 
         public bool Equals(CGMPoint other)
@@ -35,7 +32,7 @@ namespace codessentials.CGM.Classes
             if (other == null)
                 return false;
 
-            return IsSame(other.X,X) && IsSame(other.Y, Y);
+            return IsSame(other.X, X) && IsSame(other.Y, Y);
         }
 
         public override int GetHashCode()
@@ -76,7 +73,7 @@ namespace codessentials.CGM.Classes
             else if (Math.Abs(x - y) < 0.0004)
                 return 0;
             else
-                return x.CompareTo(y);                
+                return x.CompareTo(y);
         }
     }
 

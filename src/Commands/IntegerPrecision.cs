@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Commands
 {
@@ -18,7 +12,7 @@ namespace codessentials.CGM.Commands
         public IntegerPrecision(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 4, container))
         {
-            
+
         }
 
         public IntegerPrecision(CGMFile container, int precision)
@@ -33,7 +27,7 @@ namespace codessentials.CGM.Commands
             Precision = reader.ReadInt();
             _container.IntegerPrecision = Precision;
 
-            AssertPrecision();            
+            AssertPrecision();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

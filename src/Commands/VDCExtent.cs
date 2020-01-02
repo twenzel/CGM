@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,14 +10,14 @@ namespace codessentials.CGM.Commands
         public CGMPoint LowerLeftCorner { get; set; }
         public CGMPoint UpperRightCorner { get; set; }
 
-        public VDCExtent(CGMFile container) 
+        public VDCExtent(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 6, container))
         {
-           
+
         }
 
         public VDCExtent(CGMFile container, CGMPoint lowerLeft, CGMPoint upperRight)
-            :this(container)
+            : this(container)
         {
             LowerLeftCorner = lowerLeft;
             UpperRightCorner = upperRight;
@@ -29,7 +26,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             LowerLeftCorner = reader.ReadPoint();
-            UpperRightCorner = reader.ReadPoint();            
+            UpperRightCorner = reader.ReadPoint();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

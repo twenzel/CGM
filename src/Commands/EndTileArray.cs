@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=20
@@ -11,14 +6,14 @@ namespace codessentials.CGM.Commands
     public class EndTileArray : Command
     {
         public EndTileArray(CGMFile container)
-            :base(new CommandConstructorArguments(ClassCode.DelimiterElement, 20, container))
+            : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 20, container))
         {
 
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            
+
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=2, Element=16
@@ -11,21 +7,21 @@ namespace codessentials.CGM.Commands
     {
         public SpecificationMode Mode { get; set; }
 
-        public InteriorStyleSpecificationMode(CGMFile container) 
+        public InteriorStyleSpecificationMode(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 16, container))
         {
-           
+
         }
 
         public InteriorStyleSpecificationMode(CGMFile container, SpecificationMode mode)
-            :this(container)
+            : this(container)
         {
             Mode = mode;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int enumValue = reader.ReadEnum();
+            var enumValue = reader.ReadEnum();
             switch (enumValue)
             {
                 case 0:
@@ -46,7 +42,7 @@ namespace codessentials.CGM.Commands
                     break;
             }
 
-            _container.InteriorStyleSpecificationMode = Mode;            
+            _container.InteriorStyleSpecificationMode = Mode;
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=2, Element=5
     /// </summary>
     public class EdgeWidthSpecificationMode : Command
     {
-        public SpecificationMode Mode { get; set; }    
+        public SpecificationMode Mode { get; set; }
 
-        public EdgeWidthSpecificationMode(CGMFile container) 
+        public EdgeWidthSpecificationMode(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 5, container))
         {
-            
+
         }
 
         public EdgeWidthSpecificationMode(CGMFile container, SpecificationMode mode)
-            :this(container)
+            : this(container)
         {
             Mode = mode;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int mode = reader.ReadEnum();
+            var mode = reader.ReadEnum();
             Mode = SpecificationModeTools.GetMode(mode);
-            _container.EdgeWidthSpecificationMode = Mode;            
+            _container.EdgeWidthSpecificationMode = Mode;
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -44,6 +40,6 @@ namespace codessentials.CGM.Commands
         public override string ToString()
         {
             return $"EdgeWidthSpecificationMode {Mode}";
-        }       
+        }
     }
 }

@@ -7,8 +7,8 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class ApplicationStructureAttribute : Command
     {
-        private string _attributeType;
-        private StructuredDataRecord _data;
+        public string AttributeType { get; private set; }
+        public StructuredDataRecord Data { get; private set; }
 
         public ApplicationStructureAttribute(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ApplicationStructureDescriptorElements, 1, container))
@@ -19,30 +19,27 @@ namespace codessentials.CGM.Commands
         public ApplicationStructureAttribute(CGMFile container, string attributeType, StructuredDataRecord sdr)
             :this(container)
         {
-            _attributeType = attributeType;
-            _data = sdr;
+            AttributeType = attributeType;
+            Data = sdr;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _attributeType = reader.ReadFixedString();
-            _data = reader.ReadSDR();            
+            AttributeType = reader.ReadFixedString();
+            Data = reader.ReadSDR();            
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteFixedString(_attributeType);
-            writer.WriteSDR(_data);
+            writer.WriteFixedString(AttributeType);
+            writer.WriteSDR(Data);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.Write($" APSATTR {WriteString(_attributeType)} ");
-            WriteSDR(writer, _data);
+            writer.Write($" APSATTR {WriteString(AttributeType)} ");
+            WriteSDR(writer, Data);
             writer.WriteLine(";");
         }
-
-        public string AttributeType => _attributeType;
-        public StructuredDataRecord Data => _data;
     }
 }

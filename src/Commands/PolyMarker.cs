@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -12,26 +9,26 @@ namespace codessentials.CGM.Commands
     {
         public CGMPoint[] Points { get; set; }
 
-        public PolyMarker(CGMFile container) 
+        public PolyMarker(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 3, container))
         {
-            
+
         }
 
         public PolyMarker(CGMFile container, CGMPoint[] points)
-            :this(container)
+            : this(container)
         {
             Points = points;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int n = reader.Arguments.Length / reader.SizeOfPoint();
+            var n = reader.Arguments.Length / reader.SizeOfPoint();
 
             Points = new CGMPoint[n];
 
-            for (int i = 0; i < n; i++)
-                Points[i] = reader.ReadPoint();            
+            for (var i = 0; i < n; i++)
+                Points[i] = reader.ReadPoint();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

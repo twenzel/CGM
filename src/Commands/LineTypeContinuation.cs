@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=39
@@ -11,18 +9,18 @@ namespace codessentials.CGM.Commands
 
         public LineTypeContinuation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 39, container))
-        {            
+        {
         }
 
-        public LineTypeContinuation(CGMFile container,  int mode)
-            :this(container)
+        public LineTypeContinuation(CGMFile container, int mode)
+            : this(container)
         {
             Mode = mode;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Mode = reader.ReadIndex();            
+            Mode = reader.ReadIndex();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

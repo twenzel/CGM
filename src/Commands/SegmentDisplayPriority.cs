@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=8, ElementId=6
@@ -13,11 +11,11 @@ namespace codessentials.CGM.Commands
         public SegmentDisplayPriority(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 6, container))
         {
-            
+
         }
 
         public SegmentDisplayPriority(CGMFile container, int name, int prio)
-            :this(container)
+            : this(container)
         {
             Name = name;
             Prio = prio;
@@ -26,7 +24,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             Name = reader.ReadName();
-            Prio = reader.ReadInt();            
+            Prio = reader.ReadInt();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

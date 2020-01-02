@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=2, Element=10
@@ -33,14 +31,14 @@ namespace codessentials.CGM.Commands
 
         public Verticalalignment VerticalAlignment { get; set; }
 
-        public DeviceViewportMapping(CGMFile container) 
+        public DeviceViewportMapping(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 10, container))
         {
-           
+
         }
 
         public DeviceViewportMapping(CGMFile container, Isotropy isotropy, Horizontalalignment horzAlignment, Verticalalignment vertAlignment)
-            :this(container)
+            : this(container)
         {
             IsotropyValue = isotropy;
             HorizontalAlignment = horzAlignment;
@@ -51,7 +49,7 @@ namespace codessentials.CGM.Commands
         {
             IsotropyValue = (Isotropy)reader.ReadEnum();
             HorizontalAlignment = (Horizontalalignment)reader.ReadEnum();
-            VerticalAlignment = (Verticalalignment)reader.ReadEnum();            
+            VerticalAlignment = (Verticalalignment)reader.ReadEnum();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

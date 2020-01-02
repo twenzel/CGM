@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=3, ElementId=11
@@ -9,26 +7,26 @@ namespace codessentials.CGM.Commands
     {
         public int Name { get; set; }
 
-        public SavePrimitiveContext(CGMFile container) 
+        public SavePrimitiveContext(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 11, container))
         {
-           
+
         }
 
         public SavePrimitiveContext(CGMFile container, int name)
-            :this(container)
+            : this(container)
         {
             Name = name;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Name = reader.ReadName();            
+            Name = reader.ReadName();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteName(Name);            
+            writer.WriteName(Name);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)

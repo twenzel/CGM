@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Classes
 {
@@ -16,14 +12,13 @@ namespace codessentials.CGM.Classes
         /// <summary>
         /// Represents an instance of the CGMRectangle class with its members uninitialized.
         /// </summary>
-		public static readonly CGMRectangle Empty = default(CGMRectangle);
-
+		public static readonly CGMRectangle Empty = default;
         public CGMRectangle(double x, double y, double width, double height)
         {
-            this.X = x;
-            this.Y = y;
-            this.Width = width;
-            this.Height = height;
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
         }
 
         /// <summary>Tests whether the <see cref="CGMRectangle.Width" /> or <see cref="CGMRectangle.Height" /> property of this <see cref="CGMRectangle" /> has a value of zero.</summary>
@@ -32,7 +27,7 @@ namespace codessentials.CGM.Classes
         {
             get
             {
-                return this.Width <= 0f || this.Height <= 0f;
+                return Width <= 0f || Height <= 0f;
             }
         }
 
@@ -50,7 +45,7 @@ namespace codessentials.CGM.Classes
         /// <param name="y">The y-coordinate of the point to test. </param>
         public bool Contains(double x, double y)
         {
-            return this.X <= x && x < this.X + this.Width && this.Y <= y && y < this.Y + this.Height;
+            return X <= x && x < X + Width && Y <= y && y < Y + Height;
         }
 
         /// <summary>
@@ -73,8 +68,8 @@ namespace codessentials.CGM.Classes
         /// <param name="maxDistance">The maximum distance to the rectangle border.</param>
         public bool Contains(double x, double y, double maxDinstance)
         {
-            return (this.X <= x && this.X+maxDinstance >= x) && (x < this.X + this.Width && x+maxDinstance >= this.X + this.Width)
-                && (this.Y <= y && this.Y+maxDinstance >= y) && (y < this.Y + this.Height && y+maxDinstance >= this.Y+this.Height);
+            return (X <= x && X + maxDinstance >= x) && (x < X + Width && x + maxDinstance >= X + Width)
+                && (Y <= y && Y + maxDinstance >= y) && (y < Y + Height && y + maxDinstance >= Y + Height);
         }
 
         /// <summary>
@@ -87,10 +82,10 @@ namespace codessentials.CGM.Classes
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public static CGMRectangle FromPoints(CGMPoint leftUpperCorner, CGMPoint rightUpperCorner, CGMPoint leftLowerCorner, CGMPoint rightLowerCorner)
-        {            
+        {
             ValidationCorners(leftUpperCorner, rightUpperCorner, leftLowerCorner, rightLowerCorner);
 
-            return new CGMRectangle(leftUpperCorner.X,  leftUpperCorner.Y, rightUpperCorner.X - leftUpperCorner.X,  leftLowerCorner.Y - leftUpperCorner.Y );
+            return new CGMRectangle(leftUpperCorner.X, leftUpperCorner.Y, rightUpperCorner.X - leftUpperCorner.X, leftLowerCorner.Y - leftUpperCorner.Y);
         }
 
         internal static void ValidationCorners(CGMPoint leftUpperCorner, CGMPoint rightUpperCorner, CGMPoint leftLowerCorner, CGMPoint rightLowerCorner)

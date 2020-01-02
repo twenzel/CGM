@@ -1,6 +1,6 @@
-﻿using codessentials.CGM.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -18,11 +18,11 @@ namespace codessentials.CGM.Commands
         public InterpolatedInterior(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 43, container))
         {
-           
+
         }
 
         public InterpolatedInterior(CGMFile container, int style, IEnumerable<double> geoX, IEnumerable<double> geoY, IEnumerable<double> stageDesignators, IEnumerable<CGMColor> colors)
-            :this(container)
+            : this(container)
         {
             Style = style;
             GeoX.AddRange(geoX);
@@ -38,8 +38,8 @@ namespace codessentials.CGM.Commands
         {
             Style = reader.ReadIndex();
 
-            int length = (Style == 1) ? 1 : 2;
-            for (int i = 0; i < length; i++)
+            var length = (Style == 1) ? 1 : 2;
+            for (var i = 0; i < length; i++)
             {
                 GeoX.Add(reader.ReadSizeSpecification(_container.InteriorStyleSpecificationMode));
                 GeoY.Add(reader.ReadSizeSpecification(_container.InteriorStyleSpecificationMode));
@@ -47,19 +47,19 @@ namespace codessentials.CGM.Commands
 
             var numberOfStages = reader.ReadInt();
 
-            for (int i = 0; i < numberOfStages; i++)
+            for (var i = 0; i < numberOfStages; i++)
                 StageDesignators.Add(reader.ReadReal());
 
-            int colorLength = (Style == 3) ? 3 : numberOfStages + 1;
+            var colorLength = (Style == 3) ? 3 : numberOfStages + 1;
 
-            for (int i = 0; i < colorLength; i++)
-                Colors.Add(reader.ReadColor());            
+            for (var i = 0; i < colorLength; i++)
+                Colors.Add(reader.ReadColor());
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
             writer.WriteIndex(Style);
-            for (int i = 0; i < GeoX.Count; i++)
+            for (var i = 0; i < GeoX.Count; i++)
             {
                 writer.WriteSizeSpecification(GeoX[i], _container.InteriorStyleSpecificationMode);
                 writer.WriteSizeSpecification(GeoY[i], _container.InteriorStyleSpecificationMode);
@@ -77,7 +77,7 @@ namespace codessentials.CGM.Commands
         {
             writer.Write($" INTERPINT {WriteIndex(Style)}");
 
-            for (int i = 0; i < GeoX.Count; i++)
+            for (var i = 0; i < GeoX.Count; i++)
             {
                 writer.Write($" {WriteVDC(GeoX[i])} {WriteVDC(GeoY[i])}");
             }

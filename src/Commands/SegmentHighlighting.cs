@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=8, ElementId=5
@@ -19,11 +17,11 @@ namespace codessentials.CGM.Commands
         public SegmentHighlighting(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 5, container))
         {
-           
+
         }
 
         public SegmentHighlighting(CGMFile container, int id, Highlighting value)
-            :this(container)
+            : this(container)
         {
             Identifier = id;
             Value = value;
@@ -32,7 +30,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             Identifier = reader.ReadName();
-            Value = (Highlighting)reader.ReadEnum();            
+            Value = (Highlighting)reader.ReadEnum();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

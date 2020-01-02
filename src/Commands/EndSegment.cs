@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=7
@@ -10,14 +6,14 @@ namespace codessentials.CGM.Commands
     public class EndSegment : Command
     {
         public EndSegment(CGMFile container)
-            :base(new CommandConstructorArguments(ClassCode.DelimiterElement, 7, container))
+            : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 7, container))
         {
 
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            
+
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

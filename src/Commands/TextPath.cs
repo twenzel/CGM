@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class TextPath : Command
     {
@@ -16,21 +12,21 @@ namespace codessentials.CGM.Commands
 
         public Type Path { get; set; }
 
-        public TextPath(CGMFile container) 
+        public TextPath(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 17, container))
         {
-            
+
         }
 
         public TextPath(CGMFile container, Type path)
-            :this(container)
+            : this(container)
         {
-            Path= path;
+            Path = path;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int enumValue = reader.ReadEnum();
+            var enumValue = reader.ReadEnum();
             switch (enumValue)
             {
                 case 0:
@@ -53,7 +49,7 @@ namespace codessentials.CGM.Commands
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteEnum((int)Path);            
+            writer.WriteEnum((int)Path);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)

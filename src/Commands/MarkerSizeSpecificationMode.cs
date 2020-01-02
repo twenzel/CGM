@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=2, Element=4
@@ -11,23 +7,23 @@ namespace codessentials.CGM.Commands
     {
         public SpecificationMode Mode { get; set; }
 
-        public MarkerSizeSpecificationMode(CGMFile container) 
+        public MarkerSizeSpecificationMode(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 4, container))
         {
-            
+
         }
 
         public MarkerSizeSpecificationMode(CGMFile container, SpecificationMode mode)
-            :this(container)
+            : this(container)
         {
             Mode = mode;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int mode = reader.ReadEnum();
+            var mode = reader.ReadEnum();
             Mode = SpecificationModeTools.GetMode(mode);
-            _container.MarkerSizeSpecificationMode = Mode;            
+            _container.MarkerSizeSpecificationMode = Mode;
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -44,6 +40,6 @@ namespace codessentials.CGM.Commands
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.WriteLine($" MARKERSIZEMODE  {WriteEnum(Mode)};");
-        }       
+        }
     }
 }

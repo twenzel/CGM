@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=1, Element=19
@@ -22,23 +14,23 @@ namespace codessentials.CGM.Commands
             RGB_RELATED = 5
         }
 
-        private Model _model;
+        public Model Value { get; private set; }
 
         public ColourModel(CGMFile container)
                 : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 19, container))
         {
-            
+
         }
 
         public ColourModel(CGMFile container, Model model)
-            :this(container)
+            : this(container)
         {
-            _model = model;
+            Value = model;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int index = reader.ReadIndex();
+            var index = reader.ReadIndex();
             switch (index)
             {
                 case 1:
@@ -62,25 +54,23 @@ namespace codessentials.CGM.Commands
                     break;
             }
 
-            _model = _container.ColourModel;            
+            Value = _container.ColourModel;
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteIndex((int)_model);
-            _container.ColourModel = _model;
+            writer.WriteIndex((int)Value);
+            _container.ColourModel = Value;
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" COLRMODEL {WriteInt((int)_model)};");
+            writer.WriteLine($" COLRMODEL {WriteInt((int)Value)};");
         }
 
         public override string ToString()
         {
-            return $"ColourModel {_model}";
+            return $"ColourModel {Value}";
         }
-
-        public Model Value => _model;
     }
 }

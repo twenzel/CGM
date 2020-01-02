@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,14 +12,14 @@ namespace codessentials.CGM.Commands
         public double Size { get; set; }
         public CGMColor Color { get; set; }
 
-        public MarkerRepresentation(CGMFile container) 
+        public MarkerRepresentation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 12, container))
         {
-           
+
         }
 
         public MarkerRepresentation(CGMFile container, int index, int type, double size, CGMColor color)
-            :this(container)
+            : this(container)
         {
             Index = index;
             Type = type;
@@ -33,7 +32,7 @@ namespace codessentials.CGM.Commands
             Index = reader.ReadIndex();
             Type = reader.ReadIndex();
             Size = reader.ReadSizeSpecification(_container.MarkerSizeSpecificationMode);
-            Color = reader.ReadColor();            
+            Color = reader.ReadColor();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

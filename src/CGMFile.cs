@@ -1,10 +1,8 @@
-﻿using codessentials.CGM.Classes;
-using codessentials.CGM.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using codessentials.CGM.Classes;
+using codessentials.CGM.Commands;
 
 namespace codessentials.CGM
 {
@@ -16,13 +14,13 @@ namespace codessentials.CGM
         protected List<Command> _commands = new List<Command>();
         protected List<Message> _messages = new List<Message>();
         private ColourTable _colorTable;
-        private Dictionary<string, bool> _foundFigureItems = new Dictionary<string, bool>();
-        private Dictionary<string, bool> _foundConsumableNumbers = new Dictionary<string, bool>();
+        private readonly Dictionary<string, bool> _foundFigureItems = new Dictionary<string, bool>();
+        private readonly Dictionary<string, bool> _foundConsumableNumbers = new Dictionary<string, bool>();
         private List<TextCommand> _figureItems = null;
         private List<CGMRectangle> _rectangles = null;
         private List<TextCommand> _torqueTextCandidates = null;
 
-        public CGMFile()
+        protected CGMFile()
         {
             ResetMetaDefinitions();
         }
@@ -32,7 +30,7 @@ namespace codessentials.CGM
         /// </summary>
         /// <param name="filename">Path to the CGM file.</param>
         /// <returns></returns>
-        public static BinaryCGMFile ReadBinary(string filename) 
+        public static BinaryCGMFile ReadBinary(string filename)
         {
             return new BinaryCGMFile(filename);
         }
@@ -255,8 +253,7 @@ namespace codessentials.CGM
         /// <returns></returns>
         public bool ContainsFigureItemText(string textToCheck)
         {
-            var result = false;
-            if (_foundFigureItems.TryGetValue(textToCheck, out result))
+            if (_foundFigureItems.TryGetValue(textToCheck, out var result))
                 return result;
 
             result = GetAllFigureItems(true).Any(c => c.Text == textToCheck);
@@ -272,8 +269,7 @@ namespace codessentials.CGM
         /// <returns></returns>
         public bool ContainsConsumableNumber(string textToCheck)
         {
-            var result = false;
-            if (_foundConsumableNumbers.TryGetValue(textToCheck, out result))
+            if (_foundConsumableNumbers.TryGetValue(textToCheck, out var result))
                 return result;
 
             result = GetConsumableNumberCandidates().Any(c => c.Text == textToCheck);
@@ -312,12 +308,8 @@ namespace codessentials.CGM
                         GeometryRecognitionEngine.IsNearBy(textCommand.Position, c.Position, 15)
                         );
 
-                    if (secondLineCommand != null)
-                    {
-                        // check nearby figure item               
-                        if (figureItems.Any(f => GeometryRecognitionEngine.IsNearBy(textCommand.Position, f.Position, 40)))
-                            return true;
-                    }
+                    if (secondLineCommand != null && figureItems.Any(f => GeometryRecognitionEngine.IsNearBy(textCommand.Position, f.Position, 40)))
+                        return true;
                 }
             }
 
@@ -394,15 +386,13 @@ namespace codessentials.CGM
             {
                 var currentCommand = Commands[i];
 
-                var colorCommand = currentCommand as TextColour;
-                if (colorCommand != null && result.ColorCommand == null)
+                if (currentCommand is TextColour colorCommand && result.ColorCommand == null)
                 {
                     result.ColorCommand = colorCommand;
                     continue;
                 }
 
-                var heightCommand = currentCommand as CharacterHeight;
-                if (heightCommand != null && result.HeightCommand == null)
+                if (currentCommand is CharacterHeight heightCommand && result.HeightCommand == null)
                 {
                     result.HeightCommand = heightCommand;
                 }
@@ -423,7 +413,9 @@ namespace codessentials.CGM
                 return table.GetColor(command.Color.ColorIndex);
             }
             else
+            {
                 return command.Color.Color;
+            }
         }
 
         private ColourTable GetColorTable()
@@ -448,8 +440,7 @@ namespace codessentials.CGM
             {
                 var currentCommand = Commands[i];
 
-                var orientationCommand = currentCommand as CharacterOrientation;
-                if (orientationCommand != null)
+                if (currentCommand is CharacterOrientation orientationCommand)
                 {
                     return orientationCommand.IsDownToUp();
                 }

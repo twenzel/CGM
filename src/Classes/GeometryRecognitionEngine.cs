@@ -1,6 +1,6 @@
-﻿using codessentials.CGM.Commands;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using codessentials.CGM.Commands;
 
 namespace codessentials.CGM.Classes
 {
@@ -53,7 +53,7 @@ namespace codessentials.CGM.Classes
             var result = new List<CGMRectangle>();
             foreach (var line in rectangleCanditates)
             {
-                CGMRectangle rectangle = GetRectangle(line);
+                var rectangle = GetRectangle(line);
 
                 if (!rectangle.IsEmpty)
                     result.Add(rectangle);
@@ -97,11 +97,10 @@ namespace codessentials.CGM.Classes
                 if (l != null && l.IsLowerRight(verticalLine.B))
                 {
                     l.SetLowerRight(verticalLine.B);
-                    continue;
                 }
             }
 
-            return rects.Where(r => r.IsValid).Select(r => r.GetRectangle());
+            return rects.Where(r => r.IsValid).Select(r => r.ToRectangle());
         }
 
         private static bool IsHorizontalLine(CGMPoint a, CGMPoint b)
@@ -163,7 +162,7 @@ namespace codessentials.CGM.Classes
         /// <param name="rangeDistance">The range distance.</param>
         public static bool IsNearBy(CGMPoint pointA, CGMPoint pointWithinRange, float rangeDistance)
         {
-            CGMRectangle rect = new CGMRectangle((float)pointA.X - rangeDistance, (float)pointA.Y - rangeDistance, rangeDistance * 2, rangeDistance * 2);
+            var rect = new CGMRectangle((float)pointA.X - rangeDistance, (float)pointA.Y - rangeDistance, rangeDistance * 2, rangeDistance * 2);
 
             return rect.Contains(pointWithinRange);
         }
@@ -233,7 +232,7 @@ namespace codessentials.CGM.Classes
                 return true;
             }
 
-            public CGMRectangle GetRectangle()
+            public CGMRectangle ToRectangle()
             {
                 return CGMRectangle.FromPoints(_topLine.A, _topLine.B, _leftLowerCorner, _rightLowerCorner);
             }
