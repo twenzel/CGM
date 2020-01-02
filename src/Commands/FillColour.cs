@@ -4,13 +4,13 @@ namespace codessentials.CGM.Commands
 {
     public class FillColour : ColourCommand
     {
-        public FillColour(CGMFile container)
+        public FillColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 23, container))
         {
         }
 
 
-        public FillColour(CGMFile container, CGMColor color)
+        public FillColour(CgmFile container, CgmColor color)
             : this(container)
         {
             SetValue(color);

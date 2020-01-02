@@ -10,15 +10,15 @@ namespace codessentials.CGM.Commands
         public int BundleIndex { get; set; }
         public int EdgeType { get; set; }
         public double EdgeWidth { get; set; }
-        public CGMColor EdgeColor { get; set; }
+        public CgmColor EdgeColor { get; set; }
 
-        public EdgeRepresentation(CGMFile container)
+        public EdgeRepresentation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 15, container))
         {
 
         }
 
-        public EdgeRepresentation(CGMFile container, int index, int type, double width, CGMColor color)
+        public EdgeRepresentation(CgmFile container, int index, int type, double width, CgmColor color)
             : this(container)
         {
             BundleIndex = index;

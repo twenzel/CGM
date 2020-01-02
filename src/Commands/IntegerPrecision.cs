@@ -9,13 +9,13 @@ namespace codessentials.CGM.Commands
     {
         public int Precision { get; set; }
 
-        public IntegerPrecision(CGMFile container)
+        public IntegerPrecision(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 4, container))
         {
 
         }
 
-        public IntegerPrecision(CGMFile container, int precision)
+        public IntegerPrecision(CgmFile container, int precision)
             : this(container)
         {
             Precision = precision;

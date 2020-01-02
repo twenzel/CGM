@@ -5,7 +5,7 @@
     /// </remarks>
     public class EndApplicationStructure : Command
     {
-        public EndApplicationStructure(CGMFile container)
+        public EndApplicationStructure(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 23, container))
         {
 

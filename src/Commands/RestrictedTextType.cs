@@ -14,13 +14,13 @@
 
         public Type Value { get; set; }
 
-        public RestrictedTextType(CGMFile container)
+        public RestrictedTextType(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 42, container))
         {
 
         }
 
-        public RestrictedTextType(CGMFile container, Type type)
+        public RestrictedTextType(CgmFile container, Type type)
             : this(container)
         {
             Value = type;

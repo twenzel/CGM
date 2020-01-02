@@ -3,19 +3,19 @@
     /// <summary>
     /// Describes a line
     /// </summary>
-    public struct CGMLine
+    internal struct CgmLine
     {
-        public CGMPoint A { get; private set; }
-        public CGMPoint B { get; private set; }
+        public CgmPoint A { get; private set; }
+        public CgmPoint B { get; private set; }
 
-        public CGMLine(CGMPoint a, CGMPoint b)
+        public CgmLine(CgmPoint a, CgmPoint b)
         {
             if (a.X < b.X)
             {
                 A = a;
                 B = b;
             }
-            else if (CGMPoint.IsSame(a.X, b.X))
+            else if (CgmPoint.IsSame(a.X, b.X))
             {
                 if (a.Y < b.Y)
                 {

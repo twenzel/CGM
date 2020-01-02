@@ -13,13 +13,13 @@
 
         public Value Data { get; private set; }
 
-        public ClipInheritance(CGMFile container)
+        public ClipInheritance(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 3, container))
         {
 
         }
 
-        public ClipInheritance(CGMFile container, Value value)
+        public ClipInheritance(CgmFile container, Value value)
             : this(container)
         {
             Data = value;

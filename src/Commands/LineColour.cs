@@ -7,12 +7,12 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class LineColour : ColourCommand
     {
-        public LineColour(CGMFile container)
+        public LineColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 4, container))
         {
         }
 
-        public LineColour(CGMFile container, CGMColor color)
+        public LineColour(CgmFile container, CgmColor color)
             : this(container)
         {
             SetValue(color);

@@ -4,13 +4,13 @@
     {
         public double Width { get; set; }
 
-        public EdgeWidth(CGMFile container)
+        public EdgeWidth(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 28, container))
         {
 
         }
 
-        public EdgeWidth(CGMFile container, double width)
+        public EdgeWidth(CgmFile container, double width)
             : this(container)
         {
             Width = width;

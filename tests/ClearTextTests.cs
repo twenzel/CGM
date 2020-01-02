@@ -1,18 +1,15 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace codessentials.CGM.Tests
 {
     [TestFixture]
-    class ClearTextTests : CGMTest
+    class ClearTextTests : CgmTest
     {
-        [Test]        
+        [Test]
         public void CompareFiles()
         {
             var assembly = this.GetType().Assembly;
@@ -26,12 +23,12 @@ namespace codessentials.CGM.Tests
 
                     if (resourceNames.Contains(comparisionFile))
                     {
-                        BinaryCGMFile binaryFile = ReadBinaryFile(name, assembly);
+                        var binaryFile = ReadBinaryFile(name, assembly);
                         var actual = ConvertToClearText(binaryFile);
                         var expected = ReadExpectedTextContent(comparisionFile, assembly);
 
                         Assert.AreEqual(0, binaryFile.Messages.Count());
-                      
+
 
                         //StringAssert.AreEqualIgnoringCase(RemoveCompareExceptions(expected), RemoveCompareExceptions(actual), $"File {name} differs!");
                     }
@@ -40,7 +37,7 @@ namespace codessentials.CGM.Tests
         }
 
         [Ignore("Not yet ready")]
-        [Test]        
+        [Test]
         public void ConvertFiles_ToClearText()
         {
             var assembly = this.GetType().Assembly;
@@ -50,7 +47,7 @@ namespace codessentials.CGM.Tests
             {
                 if (name.EndsWith(".cgm", StringComparison.OrdinalIgnoreCase))
                 {
-                    BinaryCGMFile binaryFile = ReadBinaryFile(name, assembly);
+                    var binaryFile = ReadBinaryFile(name, assembly);
                     var content = ConvertToClearText(binaryFile);
 
                     Assert.IsNotEmpty(content, $"File {name} is could not be converted!");
@@ -65,12 +62,10 @@ namespace codessentials.CGM.Tests
 
         private string ReadExpectedTextContent(string resourceName, Assembly assembly)
         {
-            using (var stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                using (var reader = new StreamReader(stream))
-                    return reader.ReadToEnd();
-            }
-        }                
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
+        }
 
         private string GetComparisionFileName(string resourceName)
         {

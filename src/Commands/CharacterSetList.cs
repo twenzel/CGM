@@ -20,13 +20,13 @@ namespace codessentials.CGM.Commands
 
         public List<KeyValuePair<Type, string>> CharacterSets { get; } = new List<KeyValuePair<Type, string>>();
 
-        public CharacterSetList(CGMFile container)
+        public CharacterSetList(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 14, container))
         {
 
         }
 
-        public CharacterSetList(CGMFile container, KeyValuePair<Type, string>[] items)
+        public CharacterSetList(CgmFile container, KeyValuePair<Type, string>[] items)
             : this(container)
         {
             CharacterSets.AddRange(items);

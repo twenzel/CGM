@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace codessentials.CGM.Tests
 {
     [TestFixture]
-    class BinaryReaderTests : CGMTest
+    class BinaryReaderTests : CgmTest
     {
         [Test]
         public void ReadBinaryFiles()
@@ -20,7 +20,7 @@ namespace codessentials.CGM.Tests
             {
                 if (name.EndsWith(".cgm", StringComparison.OrdinalIgnoreCase))
                 {
-                    BinaryCGMFile binaryFile = ReadBinaryFile(name, assembly);
+                    BinaryCgmFile binaryFile = ReadBinaryFile(name, assembly);
 
                     Assert.AreEqual(0, binaryFile.Messages.Count(), "Messages: " + string.Join("\r\n", binaryFile.Messages.Select(m => m.ToString())));
                 }

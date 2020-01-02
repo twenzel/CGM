@@ -7,13 +7,13 @@
     {
         public string PictureName { get; private set; }
 
-        public BeginPicture(CGMFile container)
+        public BeginPicture(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 3, container))
         {
 
         }
 
-        public BeginPicture(CGMFile container, string name)
+        public BeginPicture(CgmFile container, string name)
             : this(container)
         {
             PictureName = name;

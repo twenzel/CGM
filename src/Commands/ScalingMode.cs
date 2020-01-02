@@ -16,13 +16,13 @@ namespace codessentials.CGM.Commands
         public Mode Value { get; set; }
         public double MetricScalingFactor { get; set; }
 
-        public ScalingMode(CGMFile container)
+        public ScalingMode(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 1, container))
         {
 
         }
 
-        public ScalingMode(CGMFile container, Mode mode, double factor)
+        public ScalingMode(CgmFile container, Mode mode, double factor)
             : this(container)
         {
             Value = mode;

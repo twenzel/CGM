@@ -7,13 +7,13 @@
     {
         public SpecificationMode Mode { get; set; }
 
-        public MarkerSizeSpecificationMode(CGMFile container)
+        public MarkerSizeSpecificationMode(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 4, container))
         {
 
         }
 
-        public MarkerSizeSpecificationMode(CGMFile container, SpecificationMode mode)
+        public MarkerSizeSpecificationMode(CgmFile container, SpecificationMode mode)
             : this(container)
         {
             Mode = mode;

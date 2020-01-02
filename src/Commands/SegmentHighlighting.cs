@@ -14,13 +14,13 @@
         public int Identifier { get; set; }
         public Highlighting Value { get; set; }
 
-        public SegmentHighlighting(CGMFile container)
+        public SegmentHighlighting(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 5, container))
         {
 
         }
 
-        public SegmentHighlighting(CGMFile container, int id, Highlighting value)
+        public SegmentHighlighting(CgmFile container, int id, Highlighting value)
             : this(container)
         {
             Identifier = id;

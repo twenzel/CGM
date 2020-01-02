@@ -7,21 +7,21 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class HyperbolicArc : Command
     {
-        public CGMPoint Center { get; set; }
-        public CGMPoint TransverseRadius { get; set; }
-        public CGMPoint ConjugateRadius { get; set; }
+        public CgmPoint Center { get; set; }
+        public CgmPoint TransverseRadius { get; set; }
+        public CgmPoint ConjugateRadius { get; set; }
         public double StartX { get; set; }
         public double StartY { get; set; }
         public double EndX { get; set; }
         public double EndY { get; set; }
 
-        public HyperbolicArc(CGMFile container)
+        public HyperbolicArc(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 22, container))
         {
 
         }
 
-        public HyperbolicArc(CGMFile container, CGMPoint center, CGMPoint transverseRadius, CGMPoint conjugateRadius, double startX, double startY, double endX, double endY)
+        public HyperbolicArc(CgmFile container, CgmPoint center, CgmPoint transverseRadius, CgmPoint conjugateRadius, double startX, double startY, double endX, double endY)
             : this(container)
         {
             Center = center;

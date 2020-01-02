@@ -23,13 +23,13 @@ namespace codessentials.CGM.Commands
         public DataTypeSelector TypeSelector { get; private set; }
         public List<ApplicationStructureInfo> Infos { get; } = new List<ApplicationStructureInfo>();
 
-        public ApplicationStructureDirectory(CGMFile container)
+        public ApplicationStructureDirectory(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 20, container))
         {
 
         }
 
-        public ApplicationStructureDirectory(CGMFile container, DataTypeSelector typeSelector, ApplicationStructureInfo[] infos)
+        public ApplicationStructureDirectory(CgmFile container, DataTypeSelector typeSelector, ApplicationStructureInfo[] infos)
             : this(container)
         {
             TypeSelector = typeSelector;

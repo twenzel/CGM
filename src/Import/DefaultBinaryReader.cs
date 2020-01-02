@@ -11,7 +11,7 @@ namespace codessentials.CGM.Import
     public class DefaultBinaryReader : IBinaryReader, IDisposable
     {
         private readonly BinaryReader _reader;
-        private readonly CGMFile _cgm;
+        private readonly CgmFile _cgm;
         private int _positionInCurrentArgument;
         private byte[] _arguments;
         private Command _currentCommand;
@@ -28,7 +28,7 @@ namespace codessentials.CGM.Import
         public int ArgumentsCount => _arguments.Length;
         public IEnumerable<Message> Messages => _messages;
 
-        public DefaultBinaryReader(Stream stream, CGMFile cgm, ICommandFactory commandFactory)
+        public DefaultBinaryReader(Stream stream, CgmFile cgm, ICommandFactory commandFactory)
         {
             if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
@@ -375,66 +375,71 @@ namespace codessentials.CGM.Import
         private void ReadArguments(int argumentsCount, BinaryReader reader)
         {
             if (argumentsCount != 31)
-            {
-                _arguments = new byte[argumentsCount];
-                for (var i = 0; i < argumentsCount; i++)
-                    _arguments[i] = reader.ReadByte();
-
-                if (argumentsCount % 2 == 1)
-                {
-                    try
-                    {
-                        reader.ReadByte();
-                    }
-                    catch (EndOfStreamException)
-                    {
-                        // we've reached the end of the data input. Since we're only
-                        // skipping data here, the exception can be ignored.
-                    }
-                }
-            }
+                ReadShortFormCommandArguments(argumentsCount, reader);
             else
+                ReadLongFormCommandArguments(reader);
+        }
+
+        private void ReadLongFormCommandArguments(BinaryReader reader)
+        {
+            int argumentsCount;
+            var a = 0;
+            bool done;
+
+            do
             {
-                var a = 0;
-                // this is a long form command
-                bool done;
-                do
+                argumentsCount = ReadInt16Direct(reader);
+                if (argumentsCount == -1)
+                    break;
+
+                if ((argumentsCount & (1 << 15)) != 0)
                 {
-                    argumentsCount = ReadInt16Direct(reader);
-                    if (argumentsCount == -1)
-                        break;
-
-                    if ((argumentsCount & (1 << 15)) != 0)
-                    {
-                        // data is partitioned and it's not the last partition
-                        done = false;
-                        // clear bit 15
-                        argumentsCount &= ~(1 << 15);
-                    }
-                    else
-                    {
-                        done = true;
-                    }
-
-                    if (_arguments == null)
-                        _arguments = new byte[argumentsCount];
-
-                    else
-                    {
-                        // resize the args array
-                        Array.Resize(ref _arguments, _arguments.Length + argumentsCount);
-                    }
-
-                    for (var i = 0; i < argumentsCount; i++)
-                        _arguments[a++] = reader.ReadByte();
-
-                    // align on a word if necessary
-                    if (argumentsCount % 2 == 1)
-                    {
-                        reader.ReadByte();
-                    }
+                    // data is partitioned and it's not the last partition
+                    done = false;
+                    // clear bit 15
+                    argumentsCount &= ~(1 << 15);
                 }
-                while (!done);
+                else
+                {
+                    done = true;
+                }
+
+                if (_arguments == null)
+                    _arguments = new byte[argumentsCount];
+
+                else
+                {
+                    // resize the args array
+                    Array.Resize(ref _arguments, _arguments.Length + argumentsCount);
+                }
+
+                for (var i = 0; i < argumentsCount; i++)
+                    _arguments[a++] = reader.ReadByte();
+
+                // align on a word if necessary
+                if (argumentsCount % 2 == 1)
+                    reader.ReadByte();
+            }
+            while (!done);
+        }
+
+        private void ReadShortFormCommandArguments(int argumentsCount, BinaryReader reader)
+        {
+            _arguments = new byte[argumentsCount];
+            for (var i = 0; i < argumentsCount; i++)
+                _arguments[i] = reader.ReadByte();
+
+            if (argumentsCount % 2 == 1)
+            {
+                try
+                {
+                    reader.ReadByte();
+                }
+                catch (EndOfStreamException)
+                {
+                    // we've reached the end of the data input. Since we're only
+                    // skipping data here, the exception can be ignored.
+                }
             }
         }
 
@@ -633,7 +638,7 @@ namespace codessentials.CGM.Import
 
         public double ReadVdc()
         {
-            if (_cgm.VDCType == VDCType.Type.Real)
+            if (_cgm.VDCType == VdcType.Type.Real)
             {
                 var realPrecision = _cgm.VDCRealPrecision;
                 if (realPrecision == Precision.Fixed_32)
@@ -669,13 +674,13 @@ namespace codessentials.CGM.Import
 
         protected int SizeOfVdc()
         {
-            if (_cgm.VDCType == VDCType.Type.Integer)
+            if (_cgm.VDCType == VdcType.Type.Integer)
             {
                 var precision = _cgm.VDCIntegerPrecision;
                 return (precision / 8);
             }
 
-            if (_cgm.VDCType == VDCType.Type.Real)
+            if (_cgm.VDCType == VdcType.Type.Real)
             {
                 var precision = _cgm.VDCRealPrecision;
                 if (precision == Precision.Fixed_32)
@@ -842,9 +847,9 @@ namespace codessentials.CGM.Import
             return 2;
         }
 
-        public CGMPoint ReadPoint()
+        public CgmPoint ReadPoint()
         {
-            return new CGMPoint(ReadVdc(), ReadVdc());
+            return new CgmPoint(ReadVdc(), ReadVdc());
         }
 
         public int SizeOfPoint()
@@ -863,14 +868,14 @@ namespace codessentials.CGM.Import
             return ReadUInt(localColorPrecision == -1 ? _cgm.ColourIndexPrecision : localColorPrecision);
         }
 
-        public CGMColor ReadColor()
+        public CgmColor ReadColor()
         {
             return ReadColor(-1);
         }
 
-        public CGMColor ReadColor(int localColorPrecision)
+        public CgmColor ReadColor(int localColorPrecision)
         {
-            var result = new CGMColor();
+            var result = new CgmColor();
 
             if (_cgm.ColourSelectionMode == ColourSelectionMode.Type.DIRECT)
                 result.Color = ReadDirectColor();

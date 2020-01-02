@@ -14,13 +14,13 @@
         public ActionType Action { get; set; }
         public string Message { get; set; }
 
-        public MessageCommand(CGMFile container)
+        public MessageCommand(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ExternalElements, 1, container))
         {
 
         }
 
-        public MessageCommand(CGMFile container, ActionType action, string message)
+        public MessageCommand(CgmFile container, ActionType action, string message)
             : this(container)
         {
             Action = action;

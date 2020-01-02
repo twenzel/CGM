@@ -7,13 +7,13 @@
     {
         public string Description { get; private set; }
 
-        public MetafileDescription(CGMFile container)
+        public MetafileDescription(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 2, container))
         {
 
         }
 
-        public MetafileDescription(CGMFile container, string description)
+        public MetafileDescription(CgmFile container, string description)
             : this(container)
         {
             Description = description;

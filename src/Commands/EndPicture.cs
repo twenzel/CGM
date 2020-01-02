@@ -5,7 +5,7 @@
     /// </remarks>
     public class EndPicture : Command
     {
-        public EndPicture(CGMFile container)
+        public EndPicture(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 5, container))
         {
 

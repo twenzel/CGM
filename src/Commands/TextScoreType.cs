@@ -15,13 +15,13 @@ namespace codessentials.CGM.Commands
 
         public List<TSInfo> Infos { get; set; } = new List<TSInfo>();
 
-        public TextScoreType(CGMFile container)
+        public TextScoreType(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 41, container))
         {
 
         }
 
-        public TextScoreType(CGMFile container, IEnumerable<TSInfo> infos)
+        public TextScoreType(CgmFile container, IEnumerable<TSInfo> infos)
             : this(container)
         {
             Infos.AddRange(infos);

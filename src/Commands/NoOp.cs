@@ -5,7 +5,7 @@
     /// </remarks>
     public class NoOp : Command
     {
-        public NoOp(CGMFile container)
+        public NoOp(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 0, container))
         {
 

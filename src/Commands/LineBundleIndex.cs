@@ -5,13 +5,13 @@
     /// </summary>
     public class LineBundleIndex : GenericIndexCommand
     {
-        public LineBundleIndex(CGMFile container)
+        public LineBundleIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 1, container), "LINEINDEX")
         {
 
         }
 
-        public LineBundleIndex(CGMFile container, int index)
+        public LineBundleIndex(CgmFile container, int index)
             : this(container)
         {
             SetValue(index);

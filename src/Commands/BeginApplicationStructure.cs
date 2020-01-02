@@ -15,13 +15,13 @@
         public string Type { get; private set; }
         public InheritanceFlag Flag { get; private set; }
 
-        public BeginApplicationStructure(CGMFile container)
+        public BeginApplicationStructure(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 21, container))
         {
 
         }
 
-        public BeginApplicationStructure(CGMFile container, string id, string type, InheritanceFlag flag)
+        public BeginApplicationStructure(CgmFile container, string id, string type, InheritanceFlag flag)
             : this(container)
         {
             Id = id;

@@ -7,13 +7,13 @@
     {
         public bool Flag { get; private set; }
 
-        public ClipIndicator(CGMFile container)
+        public ClipIndicator(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 6, container))
         {
 
         }
 
-        public ClipIndicator(CGMFile container, bool flag)
+        public ClipIndicator(CgmFile container, bool flag)
             : this(container)
         {
             Flag = flag;

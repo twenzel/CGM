@@ -14,13 +14,13 @@
         public double Height { get; set; }
         public double Width { get; set; }
 
-        public SymbolSize(CGMFile container)
+        public SymbolSize(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 50, container))
         {
 
         }
 
-        public SymbolSize(CGMFile container, ScaleIndicator indicator, double width, double height)
+        public SymbolSize(CgmFile container, ScaleIndicator indicator, double width, double height)
             : this(container)
         {
             Indicator = indicator;

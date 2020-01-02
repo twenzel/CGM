@@ -5,13 +5,13 @@
         public int Identifier { get; set; }
         public string DataRecord { get; set; }
 
-        public Escape(CGMFile container)
+        public Escape(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.EscapeElement, 0, container))
         {
 
         }
 
-        public Escape(CGMFile container, int id, string record)
+        public Escape(CgmFile container, int id, string record)
             : this(container)
         {
             Identifier = id;

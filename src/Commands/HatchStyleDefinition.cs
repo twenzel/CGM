@@ -24,13 +24,13 @@ namespace codessentials.CGM.Commands
         public List<int> GapWidths { get; set; } = new List<int>();
         public List<int> LineTypes { get; set; } = new List<int>();
 
-        public HatchStyleDefinition(CGMFile container)
+        public HatchStyleDefinition(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 18, container))
         {
 
         }
 
-        public HatchStyleDefinition(CGMFile container, int index, HatchStyle style, double firstX, double firstY, double secondX, double secondY, double cycleLength, int[] gapWidths, int[] lineTypes)
+        public HatchStyleDefinition(CgmFile container, int index, HatchStyle style, double firstX, double firstY, double secondX, double secondY, double cycleLength, int[] gapWidths, int[] lineTypes)
             : this(container)
         {
             Index = index;

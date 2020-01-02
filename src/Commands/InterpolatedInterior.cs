@@ -13,15 +13,15 @@ namespace codessentials.CGM.Commands
         public List<double> GeoX { get; set; } = new List<double>();
         public List<double> GeoY { get; set; } = new List<double>();
         public List<double> StageDesignators { get; set; } = new List<double>();
-        public List<CGMColor> Colors { get; set; } = new List<CGMColor>();
+        public List<CgmColor> Colors { get; set; } = new List<CgmColor>();
 
-        public InterpolatedInterior(CGMFile container)
+        public InterpolatedInterior(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 43, container))
         {
 
         }
 
-        public InterpolatedInterior(CGMFile container, int style, IEnumerable<double> geoX, IEnumerable<double> geoY, IEnumerable<double> stageDesignators, IEnumerable<CGMColor> colors)
+        public InterpolatedInterior(CgmFile container, int style, IEnumerable<double> geoX, IEnumerable<double> geoY, IEnumerable<double> stageDesignators, IEnumerable<CgmColor> colors)
             : this(container)
         {
             Style = style;

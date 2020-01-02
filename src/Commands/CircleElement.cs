@@ -7,16 +7,16 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class CircleElement : Command
     {
-        public CGMPoint Center { get; private set; }
+        public CgmPoint Center { get; private set; }
         public double Radius { get; private set; }
 
-        public CircleElement(CGMFile container)
+        public CircleElement(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 12, container))
         {
 
         }
 
-        public CircleElement(CGMFile container, CGMPoint center, double radius)
+        public CircleElement(CgmFile container, CgmPoint center, double radius)
             : this(container)
         {
             Center = center;

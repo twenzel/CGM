@@ -7,15 +7,15 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class PolygonElement : Command
     {
-        public CGMPoint[] Points { get; set; }
+        public CgmPoint[] Points { get; set; }
 
-        public PolygonElement(CGMFile container)
+        public PolygonElement(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 7, container))
         {
 
         }
 
-        public PolygonElement(CGMFile container, CGMPoint[] points)
+        public PolygonElement(CgmFile container, CgmPoint[] points)
             : this(container)
         {
             Points = points;
@@ -26,7 +26,7 @@ namespace codessentials.CGM.Commands
             Assert((reader.Arguments.Length - reader.CurrentArg) % reader.SizeOfPoint() == 0, "Invalid amount of arguments");
             var n = (reader.Arguments.Length - reader.CurrentArg) / reader.SizeOfPoint();
 
-            Points = new CGMPoint[n];
+            Points = new CgmPoint[n];
 
             for (var i = 0; i < n; i++)
                 Points[i] = reader.ReadPoint();
@@ -50,7 +50,7 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            return "PolygonElement " + string.Join<CGMPoint>(", ", Points);
+            return "PolygonElement " + string.Join<CgmPoint>(", ", Points);
         }
     }
 }

@@ -31,13 +31,13 @@
 
         public Verticalalignment VerticalAlignment { get; set; }
 
-        public DeviceViewportMapping(CGMFile container)
+        public DeviceViewportMapping(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 10, container))
         {
 
         }
 
-        public DeviceViewportMapping(CGMFile container, Isotropy isotropy, Horizontalalignment horzAlignment, Verticalalignment vertAlignment)
+        public DeviceViewportMapping(CgmFile container, Isotropy isotropy, Horizontalalignment horzAlignment, Verticalalignment vertAlignment)
             : this(container)
         {
             IsotropyValue = isotropy;

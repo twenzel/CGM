@@ -5,13 +5,13 @@
     /// </summary>
     public class TextBundleIndex : GenericIndexCommand
     {
-        public TextBundleIndex(CGMFile container)
+        public TextBundleIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 9, container), "TEXTINDEX")
         {
 
         }
 
-        public TextBundleIndex(CGMFile container, int index)
+        public TextBundleIndex(CgmFile container, int index)
             : this(container)
         {
             SetValue(index);

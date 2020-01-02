@@ -7,13 +7,13 @@
     {
         public int Precision { get; set; }
 
-        public ColourPrecision(CGMFile container)
+        public ColourPrecision(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 7, container))
         {
 
         }
 
-        public ColourPrecision(CGMFile container, int precision)
+        public ColourPrecision(CgmFile container, int precision)
             : this(container)
         {
             Precision = precision;

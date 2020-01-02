@@ -7,13 +7,13 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class SymbolColour : ColourCommand
     {
-        public SymbolColour(CGMFile container)
+        public SymbolColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 49, container))
         {
 
         }
 
-        public SymbolColour(CGMFile container, CGMColor color)
+        public SymbolColour(CgmFile container, CgmColor color)
             : this(container)
         {
             SetValue(color);

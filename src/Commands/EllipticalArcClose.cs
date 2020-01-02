@@ -9,13 +9,13 @@ namespace codessentials.CGM.Commands
     {
         public ClosureType ClosureType { get; set; }
 
-        public EllipticalArcClose(CGMFile container)
+        public EllipticalArcClose(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 19, container))
         {
 
         }
 
-        public EllipticalArcClose(CGMFile container, ClosureType type, double startX, double startY, double endX, double endY, CGMPoint center, CGMPoint first, CGMPoint second)
+        public EllipticalArcClose(CgmFile container, ClosureType type, double startX, double startY, double endX, double endY, CgmPoint center, CgmPoint first, CgmPoint second)
             : this(container)
         {
             ClosureType = type;

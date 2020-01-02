@@ -5,18 +5,18 @@ namespace codessentials.CGM.Commands
     /// <remarks>
     /// Class=1, Element=17
     /// </remarks>
-    public class MaximumVDCExtent : Command
+    public class MaximumVdcExtent : Command
     {
-        public CGMPoint FirstCorner { get; set; }
-        public CGMPoint SecondCorner { get; set; }
+        public CgmPoint FirstCorner { get; set; }
+        public CgmPoint SecondCorner { get; set; }
 
-        public MaximumVDCExtent(CGMFile container)
+        public MaximumVdcExtent(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 17, container))
         {
 
         }
 
-        public MaximumVDCExtent(CGMFile container, CGMPoint first, CGMPoint second)
+        public MaximumVdcExtent(CgmFile container, CgmPoint first, CgmPoint second)
             : this(container)
         {
             FirstCorner = first;

@@ -9,16 +9,16 @@ namespace codessentials.CGM.Commands
     public class RectangleElement : Command
     {
         public RectangleF Shape { get; private set; }
-        public CGMPoint FirstCorner { get; set; }
-        public CGMPoint SecondCorner { get; set; }
+        public CgmPoint FirstCorner { get; set; }
+        public CgmPoint SecondCorner { get; set; }
 
-        public RectangleElement(CGMFile container)
+        public RectangleElement(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 11, container))
         {
 
         }
 
-        public RectangleElement(CGMFile container, CGMPoint firstCorner, CGMPoint secondCorner)
+        public RectangleElement(CgmFile container, CgmPoint firstCorner, CgmPoint secondCorner)
             : this(container)
         {
             FirstCorner = firstCorner;

@@ -10,13 +10,13 @@ namespace codessentials.CGM.Commands
     {
         public int CellColorPrecision { get; set; }
 
-        public Tile(CGMFile container)
+        public Tile(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 29, container))
         {
 
         }
 
-        public Tile(CGMFile container, CompressionType compressionType, int rowPaddingIndicator, int cellColorPrecision, StructuredDataRecord sdr, MemoryStream image)
+        public Tile(CgmFile container, CompressionType compressionType, int rowPaddingIndicator, int cellColorPrecision, StructuredDataRecord sdr, MemoryStream image)
             : this(container)
         {
             CompressionType = compressionType;

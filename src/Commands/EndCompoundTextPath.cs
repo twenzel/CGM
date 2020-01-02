@@ -6,7 +6,7 @@
     public class EndCompoundTextPath : Command
     {
 
-        public EndCompoundTextPath(CGMFile container)
+        public EndCompoundTextPath(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 18, container))
         {
 

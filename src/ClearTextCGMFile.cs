@@ -7,14 +7,19 @@ namespace codessentials.CGM
     /// <summary>
     /// Represents a CGM file in CleanText mode
     /// </summary>
-    public class ClearTextCGMFile : CGMFile
+    public class ClearTextCgmFile : CgmFile
     {
-        public ClearTextCGMFile()
+        /// <summary>
+        /// The original file name.
+        /// </summary>
+        public string FileName { get; }
+
+        public ClearTextCgmFile()
         {
             ResetMetaDefinitions();
         }
 
-        public ClearTextCGMFile(BinaryCGMFile binaryfile)
+        public ClearTextCgmFile(BinaryCgmFile binaryfile)
         {
             FileName = binaryfile.FileName;
             ApplyValues(binaryfile);
@@ -34,10 +39,8 @@ namespace codessentials.CGM
         /// <param name="fileName">The file name to write the content to.</param>
         public void WriteFile(string fileName)
         {
-            using (var stream = File.Create(fileName))
-            {
-                WriteFile(stream);
-            }
+            using var stream = File.Create(fileName);
+            WriteFile(stream);
         }
 
         /// <summary>
@@ -47,13 +50,11 @@ namespace codessentials.CGM
         public void WriteFile(Stream stream)
         {
             ResetMetaDefinitions();
-            using (var writer = new DefaultClearTextWriter(stream))
-            {
-                foreach (var command in _commands)
-                    writer.WriteCommand(command);
+            using var writer = new DefaultClearTextWriter(stream);
+            foreach (var command in _commands)
+                writer.WriteCommand(command);
 
-                _messages.AddRange(writer.Messages);
-            }
+            _messages.AddRange(writer.Messages);
         }
 
         /// <summary>
@@ -62,17 +63,10 @@ namespace codessentials.CGM
         /// <returns></returns>
         public string GetContent()
         {
-            using (var stream = new MemoryStream())
-            {
-                WriteFile(stream);
+            using var stream = new MemoryStream();
+            WriteFile(stream);
 
-                return Encoding.Default.GetString(stream.ToArray());
-            }
+            return Encoding.Default.GetString(stream.ToArray());
         }
-
-        /// <summary>
-        /// The original file name.
-        /// </summary>
-        public string FileName { get; }
     }
 }

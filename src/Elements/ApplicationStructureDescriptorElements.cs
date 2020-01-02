@@ -4,15 +4,13 @@ namespace codessentials.CGM.Elements
 {
     public static class ApplicationStructureDescriptorElements
     {
-        public static Command CreateCommand(int elementId, int elementClass, CGMFile container)
+        public static Command CreateCommand(int elementId, int elementClass, CgmFile container)
         {
-            switch ((ApplicationStructureDescriptorElement)elementId)
+            return ((ApplicationStructureDescriptorElement)elementId) switch
             {
-                case ApplicationStructureDescriptorElement.APPLICATION_STRUCTURE_ATTRIBUTE:
-                    return new ApplicationStructureAttribute(container);
-                default:
-                    return new UnknownCommand(elementId, elementClass, container);
-            }
+                ApplicationStructureDescriptorElement.APPLICATION_STRUCTURE_ATTRIBUTE => new ApplicationStructureAttribute(container),
+                _ => new UnknownCommand(elementId, elementClass, container),
+            };
         }
     }
 }

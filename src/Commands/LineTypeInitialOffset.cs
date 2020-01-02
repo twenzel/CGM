@@ -7,13 +7,13 @@
     {
         public double Offset { get; set; }
 
-        public LineTypeInitialOffset(CGMFile container)
+        public LineTypeInitialOffset(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 40, container))
         {
 
         }
 
-        public LineTypeInitialOffset(CGMFile container, double offset)
+        public LineTypeInitialOffset(CgmFile container, double offset)
             : this(container)
         {
             Offset = offset;

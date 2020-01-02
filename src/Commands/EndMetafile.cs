@@ -5,7 +5,7 @@
     /// </remarks>
     public class EndMetafile : Command
     {
-        public EndMetafile(CGMFile container)
+        public EndMetafile(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 2, container))
         {
         }

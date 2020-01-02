@@ -4,12 +4,12 @@ namespace codessentials.CGM.Commands
 {
     public class TextColour : ColourCommand
     {
-        public TextColour(CGMFile container)
+        public TextColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 14, container))
         {
         }
 
-        public TextColour(CGMFile container, CGMColor color)
+        public TextColour(CgmFile container, CgmColor color)
             : this(container)
         {
             SetValue(color);

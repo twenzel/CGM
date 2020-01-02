@@ -5,12 +5,12 @@
     /// </summary>
     public class LineType : DashTypeCommand
     {
-        public LineType(CGMFile container)
+        public LineType(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 2, container))
         {
         }
 
-        public LineType(CGMFile container, DashType type)
+        public LineType(CgmFile container, DashType type)
             : this(container)
         {
             SetValue(type);

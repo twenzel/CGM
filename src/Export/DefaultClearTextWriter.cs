@@ -62,17 +62,10 @@ namespace codessentials.CGM.Export
         {
             if (text.Contains(LINE_FEED) && text.Length > 1)
             {
-                var lines = text.Split(new[] { LINE_FEED }, StringSplitOptions.None);
-                for (var i = 0; i < lines.Length - 1; i++)
-                {
-                    WriteLine(lines[i]);
-                }
-
-                Write(lines[lines.Length - 1]);
+                WriteLineFeeds(text);
             }
             else
             {
-
                 if (current_chars_per_line + text.Length > MAX_CHARS_PER_LINE)
                 {
                     if (text == LINE_FEED || text == ";" || text.Length == 1)
@@ -81,39 +74,7 @@ namespace codessentials.CGM.Export
                     }
                     else
                     {
-                        while (current_chars_per_line + text.Length > MAX_CHARS_PER_LINE && text.Length > 0)
-                        {
-                            var nextSeparatorChar = text.LastIndexOf(" ", MAX_CHARS_PER_LINE - current_chars_per_line);
-
-                            // if this is the separator between command and content (like "mfdesc 'abc'")
-                            // then ignore this and put out the whole line at once
-                            if (nextSeparatorChar > 0 && text.Length > nextSeparatorChar && text[nextSeparatorChar + 1] == '\'')
-                                nextSeparatorChar = -1;
-
-                            if (nextSeparatorChar == -1)
-                                nextSeparatorChar = text.LastIndexOf(LINE_FEED, MAX_CHARS_PER_LINE - current_chars_per_line);
-
-                            if (nextSeparatorChar == -1)
-                                nextSeparatorChar = text.IndexOf(" ");
-
-                            if (nextSeparatorChar == -1)
-                                nextSeparatorChar = text.IndexOf(LINE_FEED);
-
-                            if (nextSeparatorChar > 0)
-                            {
-                                var currentLine = text.Substring(0, nextSeparatorChar);
-                                text = text.Substring(nextSeparatorChar);
-                                WriteLine(currentLine);
-                            }
-                            else
-                            {
-                                _writer.Write(text);
-                                current_chars_per_line = 0;
-                                text = "";
-                            }
-                        }
-
-                        Write(text);
+                        WriteSplittedText(text);
                     }
                 }
                 else if (!string.IsNullOrEmpty(text))
@@ -122,6 +83,55 @@ namespace codessentials.CGM.Export
                     current_chars_per_line += text.Length;
                 }
             }
+        }
+
+        private void WriteSplittedText(string text)
+        {
+            while (current_chars_per_line + text.Length > MAX_CHARS_PER_LINE && text.Length > 0)
+            {
+                var nextSeparatorChar = text.LastIndexOf(" ", MAX_CHARS_PER_LINE - current_chars_per_line);
+
+                // if this is the separator between command and content (like "mfdesc 'abc'")
+                // then ignore this and put out the whole line at once
+                if (nextSeparatorChar > 0 && text.Length > nextSeparatorChar && text[nextSeparatorChar + 1] == '\'')
+                    nextSeparatorChar = -1;
+
+                if (nextSeparatorChar == -1)
+                    nextSeparatorChar = text.LastIndexOf(LINE_FEED, MAX_CHARS_PER_LINE - current_chars_per_line);
+
+                if (nextSeparatorChar == -1)
+                    nextSeparatorChar = text.IndexOf(" ");
+
+                if (nextSeparatorChar == -1)
+                    nextSeparatorChar = text.IndexOf(LINE_FEED);
+
+                if (nextSeparatorChar > 0)
+                {
+                    var currentLine = text.Substring(0, nextSeparatorChar);
+                    text = text.Substring(nextSeparatorChar);
+                    WriteLine(currentLine);
+                }
+                else
+                {
+                    _writer.Write(text);
+                    current_chars_per_line = 0;
+                    text = "";
+                }
+            }
+
+            // write remaining text
+            Write(text);
+        }
+
+        private void WriteLineFeeds(string text)
+        {
+            var lines = text.Split(new[] { LINE_FEED }, StringSplitOptions.None);
+            for (var i = 0; i < lines.Length - 1; i++)
+            {
+                WriteLine(lines[i]);
+            }
+
+            Write(lines[lines.Length - 1]);
         }
 
         public void Info(string message)

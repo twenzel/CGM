@@ -16,15 +16,15 @@ namespace codessentials.CGM.Commands
             CLOSEVIS = 3,
         }
 
-        public List<KeyValuePair<EdgeFlag, CGMPoint>> Set { get; set; } = new List<KeyValuePair<EdgeFlag, CGMPoint>>();
+        public List<KeyValuePair<EdgeFlag, CgmPoint>> Set { get; set; } = new List<KeyValuePair<EdgeFlag, CgmPoint>>();
 
-        public PolygonSet(CGMFile container)
+        public PolygonSet(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 8, container))
         {
 
         }
 
-        public PolygonSet(CGMFile container, IEnumerable<KeyValuePair<EdgeFlag, CGMPoint>> values)
+        public PolygonSet(CgmFile container, IEnumerable<KeyValuePair<EdgeFlag, CgmPoint>> values)
             : this(container)
         {
             Set.AddRange(values);
@@ -39,7 +39,7 @@ namespace codessentials.CGM.Commands
             {
                 var edgeOutFlag = (EdgeFlag)reader.ReadEnum();
                 var p = reader.ReadPoint();
-                Set.Add(new KeyValuePair<EdgeFlag, CGMPoint>(edgeOutFlag, p));
+                Set.Add(new KeyValuePair<EdgeFlag, CgmPoint>(edgeOutFlag, p));
             }
         }
 

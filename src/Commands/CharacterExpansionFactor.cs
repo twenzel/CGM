@@ -4,13 +4,13 @@
     {
         public double Factor { get; private set; }
 
-        public CharacterExpansionFactor(CGMFile container)
+        public CharacterExpansionFactor(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 12, container))
         {
 
         }
 
-        public CharacterExpansionFactor(CGMFile container, double factor)
+        public CharacterExpansionFactor(CgmFile container, double factor)
             : this(container)
         {
             Factor = factor;

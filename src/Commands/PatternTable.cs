@@ -12,15 +12,15 @@ namespace codessentials.CGM.Commands
         public int Nx { get; set; }
         public int Ny { get; set; }
         public int LocalColorPrecision { get; set; }
-        public List<CGMColor> Colors { get; set; } = new List<CGMColor>();
+        public List<CgmColor> Colors { get; set; } = new List<CgmColor>();
 
-        public PatternTable(CGMFile container)
+        public PatternTable(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 32, container))
         {
 
         }
 
-        public PatternTable(CGMFile container, int index, int nx, int ny, int localColorPrecision, IEnumerable<CGMColor> colors)
+        public PatternTable(CgmFile container, int index, int nx, int ny, int localColorPrecision, IEnumerable<CgmColor> colors)
             : this(container)
         {
             Index = index;

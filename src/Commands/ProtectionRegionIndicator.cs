@@ -8,13 +8,13 @@
         public int Index { get; set; }
         public int Indicator { get; set; }
 
-        public ProtectionRegionIndicator(CGMFile container)
+        public ProtectionRegionIndicator(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 17, container))
         {
 
         }
 
-        public ProtectionRegionIndicator(CGMFile container, int index, int indicator)
+        public ProtectionRegionIndicator(CgmFile container, int index, int indicator)
             : this(container)
         {
             Index = index;

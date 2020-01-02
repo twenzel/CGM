@@ -8,9 +8,9 @@ namespace codessentials.CGM
     /// <summary>
     /// Write to simplify the creation of CGM files.
     /// </summary>
-    public class CGMWriter
+    public class CgmWriter
     {
-        private readonly CGMFile _cgm;
+        private readonly CgmFile _cgm;
 
         /// <summary>
         /// Initializes the writer and creates a new binary or clear text file
@@ -18,12 +18,12 @@ namespace codessentials.CGM
         /// <param name="format">Binary or clear text</param>
         /// <param name="graphicName">Optional. The name of the graphic. Will be written to meta data.</param>
         /// <param name="version">Version of the graphic. Will be written to meta data.</param>
-        public CGMWriter(FileFormat format, string graphicName = default, int version = 1)
+        public CgmWriter(FileFormat format, string graphicName = default, int version = 1)
         {
             if (format == FileFormat.Binary)
-                _cgm = new BinaryCGMFile();
+                _cgm = new BinaryCgmFile();
             else
-                _cgm = new ClearTextCGMFile();
+                _cgm = new ClearTextCgmFile();
 
             if (graphicName != null)
                 AddCommand(new BeginMetafile(_cgm, graphicName));
@@ -51,9 +51,9 @@ namespace codessentials.CGM
             AddCommand(new CharacterSetList(_cgm, items));
         }
 
-        public void SetVDCType(VDCType.Type type)
+        public void SetVDCType(VdcType.Type type)
         {
-            AddCommand(new VDCType(_cgm, type));
+            AddCommand(new VdcType(_cgm, type));
         }
 
         public void Finish()
@@ -68,19 +68,19 @@ namespace codessentials.CGM
 
         public byte[] GetContent()
         {
-            if (_cgm is BinaryCGMFile binary)
+            if (_cgm is BinaryCgmFile binary)
                 return binary.GetContent();
-            else if (_cgm is ClearTextCGMFile clearText)
+            else if (_cgm is ClearTextCgmFile clearText)
             {
-                using (var stream = new MemoryStream())
-                {
-                    clearText.WriteFile(stream);
+                using var stream = new MemoryStream();
+                clearText.WriteFile(stream);
 
-                    return stream.ToArray();
-                }
+                return stream.ToArray();
             }
             else
+            {
                 throw new InvalidOperationException("Unknown CGM format!");
+            }
         }
     }
 }

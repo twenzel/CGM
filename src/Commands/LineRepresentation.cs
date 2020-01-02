@@ -10,15 +10,15 @@ namespace codessentials.CGM.Commands
         public int Index { get; set; }
         public int LineType { get; set; }
         public double LineWidth { get; set; }
-        public CGMColor Color { get; set; }
+        public CgmColor Color { get; set; }
 
-        public LineRepresentation(CGMFile container)
+        public LineRepresentation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 11, container))
         {
 
         }
 
-        public LineRepresentation(CGMFile container, int index, int lineType, double width, CGMColor color)
+        public LineRepresentation(CgmFile container, int index, int lineType, double width, CgmColor color)
             : this(container)
         {
             Index = index;

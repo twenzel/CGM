@@ -2,12 +2,12 @@
 {
     public class EdgeType : DashTypeCommand
     {
-        public EdgeType(CGMFile container)
+        public EdgeType(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 27, container))
         {
         }
 
-        public EdgeType(CGMFile container, DashType type)
+        public EdgeType(CgmFile container, DashType type)
             : this(container)
         {
             SetValue(type);

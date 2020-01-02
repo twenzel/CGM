@@ -2,7 +2,7 @@
 
 namespace codessentials.CGM.Classes
 {
-    public struct CGMRectangle
+    public struct CgmRectangle
     {
         public double X { get; private set; }
         public double Y { get; private set; }
@@ -12,8 +12,8 @@ namespace codessentials.CGM.Classes
         /// <summary>
         /// Represents an instance of the CGMRectangle class with its members uninitialized.
         /// </summary>
-		public static readonly CGMRectangle Empty = default;
-        public CGMRectangle(double x, double y, double width, double height)
+		public static readonly CgmRectangle Empty = default;
+        public CgmRectangle(double x, double y, double width, double height)
         {
             X = x;
             Y = y;
@@ -21,8 +21,8 @@ namespace codessentials.CGM.Classes
             Height = height;
         }
 
-        /// <summary>Tests whether the <see cref="CGMRectangle.Width" /> or <see cref="CGMRectangle.Height" /> property of this <see cref="CGMRectangle" /> has a value of zero.</summary>
-		/// <returns>This property returns true if the <see cref="CGMRectangle.Width" /> or <see cref="CGMRectangle.Height" /> property of this <see cref="CGMRectangle" /> has a value of zero; otherwise, false.</returns>
+        /// <summary>Tests whether the <see cref="CgmRectangle.Width" /> or <see cref="CgmRectangle.Height" /> property of this <see cref="CgmRectangle" /> has a value of zero.</summary>
+		/// <returns>This property returns true if the <see cref="CgmRectangle.Width" /> or <see cref="CgmRectangle.Height" /> property of this <see cref="CgmRectangle" /> has a value of zero; otherwise, false.</returns>
         public bool IsEmpty
         {
             get
@@ -34,7 +34,7 @@ namespace codessentials.CGM.Classes
         /// <summary>Determines if the specified point is contained within this rectangle.</summary>
         /// <returns>This method returns true if the point defined by <paramref name="x" /> and <paramref name="y" /> is contained within this rectangle; otherwise false.</returns>
         /// <param name="point">The point to test. </param>
-        public bool Contains(CGMPoint point)
+        public bool Contains(CgmPoint point)
         {
             return Contains(point.X, point.Y);
         }
@@ -56,7 +56,7 @@ namespace codessentials.CGM.Classes
         /// <returns>
         /// This method returns true if the point defined by <paramref name="x" /> and <paramref name="y" /> is contained within this rectangle; otherwise false.
         /// </returns>
-        public bool Contains(CGMPoint point, double maxDistance)
+        public bool Contains(CgmPoint point, double maxDistance)
         {
             return Contains(point.X, point.Y, maxDistance);
         }
@@ -81,25 +81,25 @@ namespace codessentials.CGM.Classes
         /// <param name="rightLowerCorner">The right lower corner.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public static CGMRectangle FromPoints(CGMPoint leftUpperCorner, CGMPoint rightUpperCorner, CGMPoint leftLowerCorner, CGMPoint rightLowerCorner)
+        public static CgmRectangle FromPoints(CgmPoint leftUpperCorner, CgmPoint rightUpperCorner, CgmPoint leftLowerCorner, CgmPoint rightLowerCorner)
         {
             ValidationCorners(leftUpperCorner, rightUpperCorner, leftLowerCorner, rightLowerCorner);
 
-            return new CGMRectangle(leftUpperCorner.X, leftUpperCorner.Y, rightUpperCorner.X - leftUpperCorner.X, leftLowerCorner.Y - leftUpperCorner.Y);
+            return new CgmRectangle(leftUpperCorner.X, leftUpperCorner.Y, rightUpperCorner.X - leftUpperCorner.X, leftLowerCorner.Y - leftUpperCorner.Y);
         }
 
-        internal static void ValidationCorners(CGMPoint leftUpperCorner, CGMPoint rightUpperCorner, CGMPoint leftLowerCorner, CGMPoint rightLowerCorner)
+        internal static void ValidationCorners(CgmPoint leftUpperCorner, CgmPoint rightUpperCorner, CgmPoint leftLowerCorner, CgmPoint rightLowerCorner)
         {
-            if (!CGMPoint.IsSame(leftUpperCorner.Y, rightUpperCorner.Y))
+            if (!CgmPoint.IsSame(leftUpperCorner.Y, rightUpperCorner.Y))
                 throw new ArgumentException("The left upper corner is not at the same height as the right upper corner");
 
-            if (!CGMPoint.IsSame(leftLowerCorner.Y, rightLowerCorner.Y))
+            if (!CgmPoint.IsSame(leftLowerCorner.Y, rightLowerCorner.Y))
                 throw new ArgumentException("The left lower corner is not at the same height as the right lower corner");
 
-            if (!CGMPoint.IsSame(leftUpperCorner.X, leftLowerCorner.X))
+            if (!CgmPoint.IsSame(leftUpperCorner.X, leftLowerCorner.X))
                 throw new ArgumentException("The left upper corner is not at the same X as the left lower corner");
 
-            if (!CGMPoint.IsSame(rightUpperCorner.X, rightLowerCorner.X))
+            if (!CgmPoint.IsSame(rightUpperCorner.X, rightLowerCorner.X))
                 throw new ArgumentException("The right upper corner is not at the same X as the right lower corner");
         }
     }

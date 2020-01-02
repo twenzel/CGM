@@ -10,15 +10,15 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class DisjointPolyline : Command
     {
-        public List<KeyValuePair<CGMPoint, CGMPoint>> Lines { get; set; } = new List<KeyValuePair<CGMPoint, CGMPoint>>();
+        public List<KeyValuePair<CgmPoint, CgmPoint>> Lines { get; set; } = new List<KeyValuePair<CgmPoint, CgmPoint>>();
 
-        public DisjointPolyline(CGMFile container)
+        public DisjointPolyline(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 2, container))
         {
 
         }
 
-        public DisjointPolyline(CGMFile container, KeyValuePair<CGMPoint, CGMPoint>[] points)
+        public DisjointPolyline(CgmFile container, KeyValuePair<CgmPoint, CgmPoint>[] points)
             : this(container)
         {
             Lines.AddRange(points);
@@ -33,7 +33,7 @@ namespace codessentials.CGM.Commands
             {
                 var p1 = reader.ReadPoint();
                 var p2 = reader.ReadPoint();
-                Lines.Add(new KeyValuePair<CGMPoint, CGMPoint>(p1, p2));
+                Lines.Add(new KeyValuePair<CgmPoint, CgmPoint>(p1, p2));
             }
         }
 

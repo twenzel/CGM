@@ -9,17 +9,17 @@ namespace codessentials.CGM.Commands
     {
         public int BundleIndex { get; set; }
         public InteriorStyle.Style Style { get; set; }
-        public CGMColor Color { get; set; }
+        public CgmColor Color { get; set; }
         public int HatchIndex { get; set; }
         public int PatternIndex { get; set; }
 
-        public FillRepresentation(CGMFile container)
+        public FillRepresentation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 14, container))
         {
 
         }
 
-        public FillRepresentation(CGMFile container, int index, InteriorStyle.Style style, CGMColor color, int hatchIndex, int patternIndex)
+        public FillRepresentation(CgmFile container, int index, InteriorStyle.Style style, CgmColor color, int hatchIndex, int patternIndex)
             : this(container)
         {
             BundleIndex = index;

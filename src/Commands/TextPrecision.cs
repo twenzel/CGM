@@ -7,13 +7,13 @@
     {
         public TextPrecisionType Value { get; set; }
 
-        public TextPrecision(CGMFile container)
+        public TextPrecision(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 11, container))
         {
 
         }
 
-        public TextPrecision(CGMFile container, TextPrecisionType value)
+        public TextPrecision(CgmFile container, TextPrecisionType value)
             : this(container)
         {
             Value = value;

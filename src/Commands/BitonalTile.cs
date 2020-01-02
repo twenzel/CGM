@@ -8,16 +8,16 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class BitonalTile : TileElement
     {
-        public CGMColor Backgroundcolor { get; private set; }
-        public CGMColor Foregroundcolor { get; private set; }
+        public CgmColor Backgroundcolor { get; private set; }
+        public CgmColor Foregroundcolor { get; private set; }
 
-        public BitonalTile(CGMFile container)
+        public BitonalTile(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 28, container))
         {
 
         }
 
-        public BitonalTile(CGMFile container, CompressionType compressionType, int rowPaddingIndicator, CGMColor backgroundcolor, CGMColor foregroundcolor, StructuredDataRecord sdr, MemoryStream image)
+        public BitonalTile(CgmFile container, CompressionType compressionType, int rowPaddingIndicator, CgmColor backgroundcolor, CgmColor foregroundcolor, StructuredDataRecord sdr, MemoryStream image)
             : this(container)
         {
             DataRecord = sdr;

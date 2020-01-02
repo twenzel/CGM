@@ -16,13 +16,13 @@
 
         public Type Value { get; set; } = Type.ASTERISK;
 
-        public MarkerType(CGMFile container)
+        public MarkerType(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 6, container))
         {
 
         }
 
-        public MarkerType(CGMFile container, Type type)
+        public MarkerType(CgmFile container, Type type)
             : this(container)
         {
             Value = type;
@@ -31,27 +31,15 @@
         public override void ReadFromBinary(IBinaryReader reader)
         {
             var indexValue = reader.ReadIndex();
-            switch (indexValue)
+            Value = indexValue switch
             {
-                case 1:
-                    Value = Type.DOT;
-                    break;
-                case 2:
-                    Value = Type.PLUS;
-                    break;
-                case 3:
-                    Value = Type.ASTERISK;
-                    break;
-                case 4:
-                    Value = Type.CIRCLE;
-                    break;
-                case 5:
-                    Value = Type.CROSS;
-                    break;
-                default:
-                    Value = Type.ASTERISK;
-                    break;
-            }
+                1 => Type.DOT,
+                2 => Type.PLUS,
+                3 => Type.ASTERISK,
+                4 => Type.CIRCLE,
+                5 => Type.CROSS,
+                _ => Type.ASTERISK,
+            };
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

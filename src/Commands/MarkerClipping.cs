@@ -7,13 +7,13 @@
     {
         public ClippingMode Mode { get; set; }
 
-        public MarkerClipping(CGMFile container)
+        public MarkerClipping(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 8, container))
         {
 
         }
 
-        public MarkerClipping(CGMFile container, ClippingMode mode)
+        public MarkerClipping(CgmFile container, ClippingMode mode)
             : this(container)
         {
             Mode = mode;

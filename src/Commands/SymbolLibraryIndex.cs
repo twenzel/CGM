@@ -5,12 +5,12 @@
     /// </summary>
     public class SymbolLibraryIndex : GenericIndexCommand
     {
-        public SymbolLibraryIndex(CGMFile container)
+        public SymbolLibraryIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 48, container), "SYMBOLINDEX")
         {
         }
 
-        public SymbolLibraryIndex(CGMFile container, int index)
+        public SymbolLibraryIndex(CgmFile container, int index)
             : this(container)
         {
             SetValue(index);

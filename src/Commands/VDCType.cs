@@ -3,7 +3,7 @@
     /// <remarks>
     /// Class=1, Element=3
     /// </remarks>
-    public class VDCType : Command
+    public class VdcType : Command
     {
         public enum Type
         {
@@ -13,13 +13,13 @@
 
         public Type Value { get; private set; } = Type.Integer;
 
-        public VDCType(CGMFile container)
+        public VdcType(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 3, container))
         {
 
         }
 
-        public VDCType(CGMFile container, Type type)
+        public VdcType(CgmFile container, Type type)
             : this(container)
         {
             Value = type;

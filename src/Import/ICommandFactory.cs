@@ -14,6 +14,6 @@ namespace codessentials.CGM.Import
         /// <param name="elementClass">The command class</param>
         /// <param name="container">The parent container</param>
         /// <returns></returns>
-        Command CreateCommand(int elementId, int elementClass, CGMFile container);
+        Command CreateCommand(int elementId, int elementClass, CgmFile container);
     }
 }

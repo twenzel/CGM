@@ -25,7 +25,7 @@ Add the NuGet package [codessentials.CGM](https://nuget.org/packages/codessentia
 
 ### Write new CGM files
 ```CSharp
-var writer = new CGMWriter(FileFormat.Binary);
+var writer = new CgmWriter(FileFormat.Binary);
 writer.SetDescription("Created By UnitTest");
 writer.SetElementList("DRAWINGPLUS");
 writer.SetFontList(new[] { "Arial", "Arial Bold" });
@@ -42,7 +42,7 @@ var data = writer.GetContent();
 
 ### Read & write binary CGM
 ```CSharp
-var cgm = new BinaryCGMFile("corvette.cgm");
+var cgm = new BinaryCgmFile("corvette.cgm");
 
 // modify graphic
 
@@ -51,9 +51,9 @@ cgm.WriteFile();
 
 ### Convert binary to clear text format
 ```CSharp
-var binaryFile = new BinaryCGMFile("corvette.cgm");
+var binaryFile = new BinaryCgmFile("corvette.cgm");
 
-var cleanTextFile = new ClearTextCGMFile(binaryFile);
+var cleanTextFile = new ClearTextCgmFile(binaryFile);
 var content = cleanTextFile.GetContent();
 ```
 

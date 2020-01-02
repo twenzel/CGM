@@ -17,13 +17,13 @@ namespace codessentials.CGM.Commands
 
         public List<FontInfo> Infos { get; set; } = new List<FontInfo>();
 
-        public FontProperties(CGMFile container)
+        public FontProperties(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 21, container))
         {
 
         }
 
-        public FontProperties(CGMFile container, FontInfo[] infos)
+        public FontProperties(CgmFile container, FontInfo[] infos)
             : this(container)
         {
             Infos.AddRange(infos);

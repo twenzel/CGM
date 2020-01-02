@@ -10,13 +10,13 @@
         public double BaseX { get; set; }
         public double BaseY { get; set; }
 
-        public SymbolOrientation(CGMFile container)
+        public SymbolOrientation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 51, container))
         {
 
         }
 
-        public SymbolOrientation(CGMFile container, double upX, double upY, double baseX, double baseY)
+        public SymbolOrientation(CgmFile container, double upX, double upY, double baseX, double baseY)
             : this(container)
         {
             UpX = upX;

@@ -8,7 +8,7 @@ namespace codessentials.CGM.Commands
     /// </remarks>
     public class BeginTileArray : Command
     {
-        public CGMPoint Position { get; private set; }
+        public CgmPoint Position { get; private set; }
         public int CellPathDirection { get; private set; }
         public int LineProgressionDirection { get; private set; }
         public int NumberTilesInPathDirection { get; private set; }
@@ -22,13 +22,13 @@ namespace codessentials.CGM.Commands
         public int NumberCellsInPathDirection { get; private set; }
         public int NumberCellsInLineDirection { get; private set; }
 
-        public BeginTileArray(CGMFile container)
+        public BeginTileArray(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 19, container))
         {
 
         }
 
-        public BeginTileArray(CGMFile container, CGMPoint position, int cellPathDirection, int lineProgressionDirection, int numberTilesInPathDirection,
+        public BeginTileArray(CgmFile container, CgmPoint position, int cellPathDirection, int lineProgressionDirection, int numberTilesInPathDirection,
             int numberTilesInLineDirection, int numberCellsPerTileInPathDirection, int numberCellsPerTileInLineDirection, double cellSizeInPathDirection,
             double cellSizeInLineDirection, int imageOffsetinPathDirection, int imageOffsetInLineDirection, int numberCellsInPathDirection, int numberCellsInLineDirection)
             : this(container)

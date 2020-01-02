@@ -15,13 +15,13 @@
 
         public bool Flag { get; set; }
 
-        public CopySegment(CGMFile container)
+        public CopySegment(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 1, container))
         {
 
         }
 
-        public CopySegment(CGMFile container, int id, double xScale, double xRotation, double yRotation, double yScale, double xTranslation, double yTranslation, bool flag)
+        public CopySegment(CgmFile container, int id, double xScale, double xRotation, double yRotation, double yScale, double xTranslation, double yTranslation, bool flag)
             : this(container)
         {
             Id = id;

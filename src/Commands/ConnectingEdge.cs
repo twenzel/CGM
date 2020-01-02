@@ -5,7 +5,7 @@
     /// </summary>
     public class ConnectingEdge : Command
     {
-        public ConnectingEdge(CGMFile container)
+        public ConnectingEdge(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 21, container))
         {
 

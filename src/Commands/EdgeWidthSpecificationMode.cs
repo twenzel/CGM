@@ -7,13 +7,13 @@
     {
         public SpecificationMode Mode { get; set; }
 
-        public EdgeWidthSpecificationMode(CGMFile container)
+        public EdgeWidthSpecificationMode(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 5, container))
         {
 
         }
 
-        public EdgeWidthSpecificationMode(CGMFile container, SpecificationMode mode)
+        public EdgeWidthSpecificationMode(CgmFile container, SpecificationMode mode)
             : this(container)
         {
             Mode = mode;

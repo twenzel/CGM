@@ -7,13 +7,13 @@
     {
         public int Value { get; set; }
 
-        public MaximumColourIndex(CGMFile container)
+        public MaximumColourIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 9, container))
         {
 
         }
 
-        public MaximumColourIndex(CGMFile container, int index)
+        public MaximumColourIndex(CgmFile container, int index)
             : this(container)
         {
             Value = index;

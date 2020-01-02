@@ -7,15 +7,15 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class PolyMarker : Command
     {
-        public CGMPoint[] Points { get; set; }
+        public CgmPoint[] Points { get; set; }
 
-        public PolyMarker(CGMFile container)
+        public PolyMarker(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 3, container))
         {
 
         }
 
-        public PolyMarker(CGMFile container, CGMPoint[] points)
+        public PolyMarker(CgmFile container, CgmPoint[] points)
             : this(container)
         {
             Points = points;
@@ -25,7 +25,7 @@ namespace codessentials.CGM.Commands
         {
             var n = reader.Arguments.Length / reader.SizeOfPoint();
 
-            Points = new CGMPoint[n];
+            Points = new CgmPoint[n];
 
             for (var i = 0; i < n; i++)
                 Points[i] = reader.ReadPoint();
@@ -49,7 +49,7 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            return "PolyMarker " + string.Join<CGMPoint>(", ", Points);
+            return "PolyMarker " + string.Join<CgmPoint>(", ", Points);
         }
     }
 }

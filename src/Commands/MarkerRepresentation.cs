@@ -10,15 +10,15 @@ namespace codessentials.CGM.Commands
         public int Index { get; set; }
         public int Type { get; set; }
         public double Size { get; set; }
-        public CGMColor Color { get; set; }
+        public CgmColor Color { get; set; }
 
-        public MarkerRepresentation(CGMFile container)
+        public MarkerRepresentation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 12, container))
         {
 
         }
 
-        public MarkerRepresentation(CGMFile container, int index, int type, double size, CGMColor color)
+        public MarkerRepresentation(CgmFile container, int index, int type, double size, CgmColor color)
             : this(container)
         {
             Index = index;

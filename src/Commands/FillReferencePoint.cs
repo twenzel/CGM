@@ -7,15 +7,15 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class FillReferencePoint : Command
     {
-        public CGMPoint Point { get; set; }
+        public CgmPoint Point { get; set; }
 
-        public FillReferencePoint(CGMFile container)
+        public FillReferencePoint(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 31, container))
         {
 
         }
 
-        public FillReferencePoint(CGMFile container, CGMPoint point)
+        public FillReferencePoint(CgmFile container, CgmPoint point)
             : this(container)
         {
             Point = point;

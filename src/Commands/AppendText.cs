@@ -14,13 +14,13 @@
         public FinalType Final { get; private set; }
         public string Text { get; private set; }
 
-        public AppendText(CGMFile container)
+        public AppendText(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 6, container))
         {
 
         }
 
-        public AppendText(CGMFile container, FinalType final, string text)
+        public AppendText(CgmFile container, FinalType final, string text)
             : this(container)
         {
             Final = final;

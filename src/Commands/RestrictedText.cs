@@ -11,13 +11,13 @@ namespace codessentials.CGM.Commands
         public double DeltaHeight { get; set; }
         public bool Final { get; set; }
 
-        public RestrictedText(CGMFile container)
+        public RestrictedText(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 5, container))
         {
 
         }
 
-        public RestrictedText(CGMFile container, string data, CGMPoint position, double deltaWidth, double deltaHeight, bool final)
+        public RestrictedText(CgmFile container, string data, CgmPoint position, double deltaWidth, double deltaHeight, bool final)
             : this(container)
         {
             DeltaWidth = deltaWidth;

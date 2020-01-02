@@ -5,7 +5,7 @@
     /// </remarks>
     public class BeginCompoundTextPath : Command
     {
-        public BeginCompoundTextPath(CGMFile container)
+        public BeginCompoundTextPath(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 17, container))
         {
 

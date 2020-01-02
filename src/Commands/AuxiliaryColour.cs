@@ -7,13 +7,13 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class AuxiliaryColour : ColourCommand
     {
-        public AuxiliaryColour(CGMFile container)
+        public AuxiliaryColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 3, container))
         {
 
         }
 
-        public AuxiliaryColour(CGMFile container, CGMColor color)
+        public AuxiliaryColour(CgmFile container, CgmColor color)
             : this(container)
         {
             SetValue(color);

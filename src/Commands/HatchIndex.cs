@@ -14,13 +14,13 @@
 
         public HatchType Type { get; set; } = HatchType.HORIZONTAL_LINES;
 
-        public HatchIndex(CGMFile container)
+        public HatchIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 24, container))
         {
 
         }
 
-        public HatchIndex(CGMFile container, HatchType type)
+        public HatchIndex(CgmFile container, HatchType type)
             : this(container)
         {
             Type = type;

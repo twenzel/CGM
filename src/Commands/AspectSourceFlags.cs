@@ -35,21 +35,21 @@ namespace codessentials.CGM.Commands
             BUNDLED
         }
 
-        public class ASFInfo
+        public class AspectSourceFlagsInfo
         {
             public ASFType Type { get; set; }
             public ASFValue Value { get; set; }
         }
 
-        public List<ASFInfo> Infos { get; } = new List<ASFInfo>();
+        public List<AspectSourceFlagsInfo> Infos { get; } = new List<AspectSourceFlagsInfo>();
 
-        public AspectSourceFlags(CGMFile container)
+        public AspectSourceFlags(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 35, container))
         {
 
         }
 
-        public AspectSourceFlags(CGMFile container, ASFInfo[] infos)
+        public AspectSourceFlags(CgmFile container, AspectSourceFlagsInfo[] infos)
             : this(container)
         {
             Infos.AddRange(infos);
@@ -59,7 +59,7 @@ namespace codessentials.CGM.Commands
         {
             while (reader.CurrentArg < reader.Arguments.Length)
             {
-                var info = new ASFInfo()
+                var info = new AspectSourceFlagsInfo()
                 {
                     Type = (ASFType)reader.ReadEnum(),
                     Value = (ASFValue)reader.ReadEnum()

@@ -7,13 +7,13 @@
         public double Xbase { get; private set; }
         public double Ybase { get; private set; }
 
-        public CharacterOrientation(CGMFile container)
+        public CharacterOrientation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 16, container))
         {
 
         }
 
-        public CharacterOrientation(CGMFile container, double xUp, double yUp, double xBase, double yBase)
+        public CharacterOrientation(CgmFile container, double xUp, double yUp, double xBase, double yBase)
             : this(container)
         {
             Xup = xUp;

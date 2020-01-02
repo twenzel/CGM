@@ -12,13 +12,13 @@ namespace codessentials.CGM.Commands
         /// </summary>
         public Color Color { get; private set; }
 
-        public BackgroundColour(CGMFile container)
+        public BackgroundColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 7, container))
         {
 
         }
 
-        public BackgroundColour(CGMFile container, Color color)
+        public BackgroundColour(CgmFile container, Color color)
             : this(container)
         {
             Color = color;

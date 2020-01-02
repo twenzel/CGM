@@ -5,7 +5,7 @@
     /// </remarks>
     public class BeginCompoundLine : Command
     {
-        public BeginCompoundLine(CGMFile container)
+        public BeginCompoundLine(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 15, container))
         {
 

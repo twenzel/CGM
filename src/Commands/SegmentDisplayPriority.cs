@@ -8,13 +8,13 @@
         public int Name { get; set; }
         public int Prio { get; set; }
 
-        public SegmentDisplayPriority(CGMFile container)
+        public SegmentDisplayPriority(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 6, container))
         {
 
         }
 
-        public SegmentDisplayPriority(CGMFile container, int name, int prio)
+        public SegmentDisplayPriority(CgmFile container, int name, int prio)
             : this(container)
         {
             Name = name;

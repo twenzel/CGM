@@ -23,7 +23,7 @@ namespace codessentials.CGM
 
         void WriteName(int data);
 
-        void WriteColor(CGMColor color, int localColorPrecision = -1);
+        void WriteColor(CgmColor color, int localColorPrecision = -1);
 
         void WriteDirectColor(System.Drawing.Color color);
 
@@ -32,7 +32,7 @@ namespace codessentials.CGM
         void WriteColorIndex(int index, int localColorPrecision);
         void WriteVdc(double data);
 
-        void WritePoint(CGMPoint point);
+        void WritePoint(CgmPoint point);
 
         void WriteReal(double data);
 

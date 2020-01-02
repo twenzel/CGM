@@ -14,12 +14,12 @@
 
         public TextPathMode Mode { get; set; }
 
-        public GeneralizedTextPathMode(CGMFile container)
+        public GeneralizedTextPathMode(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 18, container))
         {
         }
 
-        public GeneralizedTextPathMode(CGMFile container, TextPathMode mode)
+        public GeneralizedTextPathMode(CgmFile container, TextPathMode mode)
             : this(container)
         {
             Mode = mode;

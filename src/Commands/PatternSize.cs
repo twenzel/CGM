@@ -10,13 +10,13 @@
         public double WidthX { get; set; }
         public double WidthY { get; set; }
 
-        public PatternSize(CGMFile container)
+        public PatternSize(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 33, container))
         {
 
         }
 
-        public PatternSize(CGMFile container, double heightX, double heightY, double widthX, double widthY)
+        public PatternSize(CgmFile container, double heightX, double heightY, double widthX, double widthY)
             : this(container)
         {
             HeightX = heightX;

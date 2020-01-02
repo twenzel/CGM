@@ -5,17 +5,17 @@ namespace codessentials.CGM.Commands
     /// <remarks>
     /// Class=3, ElementId=1
     /// </remarks>
-    public class VDCIntegerPrecision : Command
+    public class VdcIntegerPrecision : Command
     {
         public int Precision { get; private set; }
 
-        public VDCIntegerPrecision(CGMFile container)
+        public VdcIntegerPrecision(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 1, container))
         {
 
         }
 
-        public VDCIntegerPrecision(CGMFile container, int precision)
+        public VdcIntegerPrecision(CgmFile container, int precision)
             : this(container)
         {
             Precision = precision;

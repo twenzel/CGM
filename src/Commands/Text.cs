@@ -9,13 +9,13 @@ namespace codessentials.CGM.Commands
     {
         public bool Final { get; set; }
 
-        public Text(CGMFile container)
+        public Text(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 4, container))
         {
 
         }
 
-        public Text(CGMFile container, string data, CGMPoint position, bool final)
+        public Text(CgmFile container, string data, CgmPoint position, bool final)
             : this(container)
         {
             Final = final;
