@@ -10,13 +10,13 @@
         public double ContinuousHorizontalAlignment { get; set; }
         public double ContinuousVerticalAlignment { get; set; }
 
-        public TextAlignment(CGMFile container)
+        public TextAlignment(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 18, container))
         {
 
         }
 
-        public TextAlignment(CGMFile container, HorizontalAlignmentType horz, VerticalAlignmentType vert, double continousHorz, double continousVert)
+        public TextAlignment(CgmFile container, HorizontalAlignmentType horz, VerticalAlignmentType vert, double continousHorz, double continousVert)
             : this(container)
         {
             HorizontalAlignment = horz;

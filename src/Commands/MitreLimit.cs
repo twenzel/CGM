@@ -7,12 +7,12 @@
     {
         public double Limit { get; set; }
 
-        public MitreLimit(CGMFile container)
+        public MitreLimit(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 19, container))
         {
         }
 
-        public MitreLimit(CGMFile container, double limit)
+        public MitreLimit(CgmFile container, double limit)
             : this(container)
         {
             Limit = limit;

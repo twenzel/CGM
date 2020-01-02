@@ -6,12 +6,12 @@ namespace codessentials.CGM.Classes
     /// <summary>
     /// Represents a point parameter type
     /// </summary>
-    public sealed class CGMPoint : IEquatable<CGMPoint>, IComparable<CGMPoint>
+    public sealed class CgmPoint : IEquatable<CgmPoint>, IComparable<CgmPoint>
     {
         public double X { get; private set; }
         public double Y { get; private set; }
 
-        public CGMPoint(double x, double y)
+        public CgmPoint(double x, double y)
         {
             X = x;
             Y = y;
@@ -24,10 +24,10 @@ namespace codessentials.CGM.Classes
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as CGMPoint);
+            return Equals(obj as CgmPoint);
         }
 
-        public bool Equals(CGMPoint other)
+        public bool Equals(CgmPoint other)
         {
             if (other == null)
                 return false;
@@ -48,7 +48,7 @@ namespace codessentials.CGM.Classes
         /// A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance precedes <paramref name="other" /> in the sort order.  Zero This instance occurs in the same position in the sort order as <paramref name="other" />. Greater than zero This instance follows <paramref name="other" /> in the sort order.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public int CompareTo(CGMPoint other)
+        public int CompareTo(CgmPoint other)
         {
             var calc = CompareValues(X, other.X);
 
@@ -80,10 +80,10 @@ namespace codessentials.CGM.Classes
     /// <summary>
     /// Comparer to sort CGMPoints to the leftest upper corner
     /// </summary>
-    /// <seealso cref="System.Collections.Generic.IComparer{codessentials.CGM.Classes.CGMPoint}" />
-    public class CGMPointComparer : IComparer<CGMPoint>
+    /// <seealso cref="System.Collections.Generic.IComparer{codessentials.CGM.Classes.CgmPoint}" />
+    public class CGMPointComparer : IComparer<CgmPoint>
     {
-        public int Compare(CGMPoint x, CGMPoint y)
+        public int Compare(CgmPoint x, CgmPoint y)
         {
             return x.CompareTo(y);
         }

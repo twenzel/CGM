@@ -4,13 +4,13 @@
     {
         public bool IsVisible { get; set; }
 
-        public EdgeVisibility(CGMFile container)
+        public EdgeVisibility(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 30, container))
         {
 
         }
 
-        public EdgeVisibility(CGMFile container, bool isVisible)
+        public EdgeVisibility(CgmFile container, bool isVisible)
             : this(container)
         {
             IsVisible = isVisible;

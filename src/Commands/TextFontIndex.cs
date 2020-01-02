@@ -5,13 +5,13 @@
     /// </summary>
     public class TextFontIndex : GenericIndexCommand
     {
-        public TextFontIndex(CGMFile container)
+        public TextFontIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 10, container), "TEXTFONTINDEX")
         {
 
         }
 
-        public TextFontIndex(CGMFile container, int index)
+        public TextFontIndex(CgmFile container, int index)
             : this(container)
         {
             SetValue(index);

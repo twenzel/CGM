@@ -7,20 +7,20 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class CircularArcCentre : Command
     {
-        public CGMPoint Center { get; protected set; }
+        public CgmPoint Center { get; protected set; }
         public double StartDeltaX { get; protected set; }
         public double StartDeltaY { get; protected set; }
         public double EndDeltaX { get; protected set; }
         public double EndDeltaY { get; protected set; }
         public double Radius { get; protected set; }
 
-        public CircularArcCentre(CGMFile container)
+        public CircularArcCentre(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 15, container))
         {
 
         }
 
-        public CircularArcCentre(CGMFile container, CGMPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
+        public CircularArcCentre(CgmFile container, CgmPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
            : this(container)
         {
             SetValues(center, startDeltaX, startDeltaY, endDeltaX, endDeltaY, radius);
@@ -32,7 +32,7 @@ namespace codessentials.CGM.Commands
 
         }
 
-        protected void SetValues(CGMPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
+        protected void SetValues(CgmPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
         {
             Center = center;
             StartDeltaX = startDeltaX;

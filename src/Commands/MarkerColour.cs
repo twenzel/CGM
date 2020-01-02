@@ -7,12 +7,12 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class MarkerColour : ColourCommand
     {
-        public MarkerColour(CGMFile container)
+        public MarkerColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 8, container))
         {
         }
 
-        public MarkerColour(CGMFile container, CGMColor color)
+        public MarkerColour(CgmFile container, CgmColor color)
             : this(container)
         {
             SetValue(color);

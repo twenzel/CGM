@@ -5,7 +5,7 @@
     /// </remarks>
     public class EndCompoundLine : Command
     {
-        public EndCompoundLine(CGMFile container)
+        public EndCompoundLine(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 16, container))
         {
 

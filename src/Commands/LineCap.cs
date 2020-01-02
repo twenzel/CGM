@@ -2,12 +2,12 @@
 {
     public class LineCap : CapCommand
     {
-        public LineCap(CGMFile container)
+        public LineCap(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 37, container))
         {
         }
 
-        public LineCap(CGMFile container, LineCapIndicator lineIndicator, DashCapIndicator dashIndicator)
+        public LineCap(CgmFile container, LineCapIndicator lineIndicator, DashCapIndicator dashIndicator)
             : this(container)
         {
             SetValues(lineIndicator, dashIndicator);

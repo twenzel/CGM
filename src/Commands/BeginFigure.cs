@@ -5,7 +5,7 @@
     /// </remarks>
     public class BeginFigure : Command
     {
-        public BeginFigure(CGMFile container)
+        public BeginFigure(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 8, container))
         {
 

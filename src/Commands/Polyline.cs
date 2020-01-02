@@ -8,13 +8,13 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class Polyline : Command, IComparable<Polyline>
     {
-        public Polyline(CGMFile container)
+        public Polyline(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 1, container))
         {
 
         }
 
-        public Polyline(CGMFile container, CGMPoint[] points)
+        public Polyline(CgmFile container, CgmPoint[] points)
             : this(container)
         {
             Points = points;
@@ -24,7 +24,7 @@ namespace codessentials.CGM.Commands
         {
             var n = reader.Arguments.Length / reader.SizeOfPoint();
 
-            Points = new CGMPoint[n];
+            Points = new CgmPoint[n];
 
             for (var i = 0; i < n; i++)
             {
@@ -50,7 +50,7 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            return "Polyline " + string.Join<CGMPoint>(", ", Points);
+            return "Polyline " + string.Join<CgmPoint>(", ", Points);
         }
 
         public bool IsSimpleLine
@@ -58,7 +58,7 @@ namespace codessentials.CGM.Commands
             get { return Points.Length == 2; }
         }
 
-        public CGMPoint[] Points { get; private set; }
+        public CgmPoint[] Points { get; private set; }
 
         public int CompareTo(Polyline other)
         {

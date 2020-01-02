@@ -11,7 +11,7 @@ namespace codessentials.CGM.Import
     public class DefaultBinaryReader : IBinaryReader, IDisposable
     {
         private readonly BinaryReader _reader;
-        private readonly CGMFile _cgm;
+        private readonly CgmFile _cgm;
         private int _positionInCurrentArgument;
         private byte[] _arguments;
         private Command _currentCommand;
@@ -28,7 +28,7 @@ namespace codessentials.CGM.Import
         public int ArgumentsCount => _arguments.Length;
         public IEnumerable<Message> Messages => _messages;
 
-        public DefaultBinaryReader(Stream stream, CGMFile cgm, ICommandFactory commandFactory)
+        public DefaultBinaryReader(Stream stream, CgmFile cgm, ICommandFactory commandFactory)
         {
             if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
@@ -847,9 +847,9 @@ namespace codessentials.CGM.Import
             return 2;
         }
 
-        public CGMPoint ReadPoint()
+        public CgmPoint ReadPoint()
         {
-            return new CGMPoint(ReadVdc(), ReadVdc());
+            return new CgmPoint(ReadVdc(), ReadVdc());
         }
 
         public int SizeOfPoint()
@@ -868,14 +868,14 @@ namespace codessentials.CGM.Import
             return ReadUInt(localColorPrecision == -1 ? _cgm.ColourIndexPrecision : localColorPrecision);
         }
 
-        public CGMColor ReadColor()
+        public CgmColor ReadColor()
         {
             return ReadColor(-1);
         }
 
-        public CGMColor ReadColor(int localColorPrecision)
+        public CgmColor ReadColor(int localColorPrecision)
         {
-            var result = new CGMColor();
+            var result = new CgmColor();
 
             if (_cgm.ColourSelectionMode == ColourSelectionMode.Type.DIRECT)
                 result.Color = ReadDirectColor();

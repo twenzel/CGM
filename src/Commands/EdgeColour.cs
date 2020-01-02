@@ -4,13 +4,13 @@ namespace codessentials.CGM.Commands
 {
     public class EdgeColour : ColourCommand
     {
-        public EdgeColour(CGMFile container)
+        public EdgeColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 29, container))
         {
 
         }
 
-        public EdgeColour(CGMFile container, CGMColor color)
+        public EdgeColour(CgmFile container, CgmColor color)
             : this(container)
         {
             SetValue(color);

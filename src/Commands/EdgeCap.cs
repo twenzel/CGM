@@ -2,12 +2,12 @@
 {
     public class EdgeCap : CapCommand
     {
-        public EdgeCap(CGMFile container)
+        public EdgeCap(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 44, container))
         {
         }
 
-        public EdgeCap(CGMFile container, LineCapIndicator lineIndicator, DashCapIndicator dashIndicator)
+        public EdgeCap(CgmFile container, LineCapIndicator lineIndicator, DashCapIndicator dashIndicator)
             : this(container)
         {
             SetValues(lineIndicator, dashIndicator);

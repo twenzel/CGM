@@ -42,13 +42,13 @@ namespace codessentials.CGM.Commands
         //    _fontMapping.Add("symbol", new FontWrapper(new Font(FontFamily.GenericSerif, DEFAULT_FONT_SIZE, FontStyle.Regular), true));
         //}
 
-        public FontList(CGMFile container)
+        public FontList(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 13, container))
         {
 
         }
 
-        public FontList(CGMFile container, string[] fonts)
+        public FontList(CgmFile container, string[] fonts)
             : this(container)
         {
             FontNames.AddRange(fonts);

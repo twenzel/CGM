@@ -7,13 +7,13 @@
     {
         public SpecificationMode Mode { get; set; }
 
-        public LineWidthSpecificationMode(CGMFile container)
+        public LineWidthSpecificationMode(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 3, container))
         {
 
         }
 
-        public LineWidthSpecificationMode(CGMFile container, SpecificationMode mode)
+        public LineWidthSpecificationMode(CgmFile container, SpecificationMode mode)
             : this(container)
         {
             Mode = mode;

@@ -9,16 +9,16 @@ namespace codessentials.CGM.Commands
     {
         public int PatternIndex { get; set; }
         public int Identifier { get; set; }
-        public CGMPoint FirstCorner { get; set; }
-        public CGMPoint SecondCorner { get; set; }
+        public CgmPoint FirstCorner { get; set; }
+        public CgmPoint SecondCorner { get; set; }
 
-        public GeometricPatternDefinition(CGMFile container)
+        public GeometricPatternDefinition(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 19, container))
         {
 
         }
 
-        public GeometricPatternDefinition(CGMFile container, int patternIndex, int id, CGMPoint first, CGMPoint second)
+        public GeometricPatternDefinition(CgmFile container, int patternIndex, int id, CgmPoint first, CgmPoint second)
             : this(container)
         {
             PatternIndex = patternIndex;

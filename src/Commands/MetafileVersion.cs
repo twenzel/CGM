@@ -7,12 +7,12 @@
     {
         public int Version { get; private set; }
 
-        public MetafileVersion(CGMFile container)
+        public MetafileVersion(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 1, container))
         {
         }
 
-        public MetafileVersion(CGMFile container, int version)
+        public MetafileVersion(CgmFile container, int version)
             : this(container)
         {
             Version = version;

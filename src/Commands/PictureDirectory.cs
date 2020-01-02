@@ -24,13 +24,13 @@ namespace codessentials.CGM.Commands
         public Type Value { get; set; }
         public List<PDInfo> Infos { get; set; } = new List<PDInfo>();
 
-        public PictureDirectory(CGMFile container)
+        public PictureDirectory(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 24, container))
         {
 
         }
 
-        public PictureDirectory(CGMFile container, Type type, IEnumerable<PDInfo> infos)
+        public PictureDirectory(CgmFile container, Type type, IEnumerable<PDInfo> infos)
             : this(container)
         {
             Value = type;

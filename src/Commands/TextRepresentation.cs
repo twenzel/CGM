@@ -12,15 +12,15 @@ namespace codessentials.CGM.Commands
         public TextPrecisionType Precision { get; set; }
         public double Spacing { get; set; }
         public double Expansion { get; set; }
-        public CGMColor Color { get; set; }
+        public CgmColor Color { get; set; }
 
-        public TextRepresentation(CGMFile container)
+        public TextRepresentation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 13, container))
         {
 
         }
 
-        public TextRepresentation(CGMFile container, int bundleIndex, int fontIndex, TextPrecisionType precision, double spacing, double expansion, CGMColor color)
+        public TextRepresentation(CgmFile container, int bundleIndex, int fontIndex, TextPrecisionType precision, double spacing, double expansion, CgmColor color)
             : this(container)
         {
             BundleIndex = bundleIndex;

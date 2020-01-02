@@ -7,12 +7,12 @@
     {
         public int Mode { get; set; }
 
-        public LineTypeContinuation(CGMFile container)
+        public LineTypeContinuation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 39, container))
         {
         }
 
-        public LineTypeContinuation(CGMFile container, int mode)
+        public LineTypeContinuation(CgmFile container, int mode)
             : this(container)
         {
             Mode = mode;

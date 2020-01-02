@@ -5,37 +5,37 @@
     /// </remarks>
     public class ApplicationData : Command
     {
-        private int _identifier;
-        private string _data;
+        public int Identifier { get; set; }
+        public string Data { get; set; }
 
-        public ApplicationData(CGMFile container)
+        public ApplicationData(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ExternalElements, 2, container))
         {
 
         }
 
-        public ApplicationData(CGMFile container, int id, string data)
+        public ApplicationData(CgmFile container, int id, string data)
             : this(container)
         {
-            _identifier = id;
-            _data = data;
+            Identifier = id;
+            Data = data;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _identifier = reader.ReadInt();
-            _data = reader.ReadString();
+            Identifier = reader.ReadInt();
+            Data = reader.ReadString();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteInt(_identifier);
-            writer.WriteString(_data);
+            writer.WriteInt(Identifier);
+            writer.WriteString(Data);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" APPLDATA {WriteInt(_identifier)}, {WriteString(_data)};");
+            writer.WriteLine($" APPLDATA {WriteInt(Identifier)}, {WriteString(Data)};");
         }
     }
 }

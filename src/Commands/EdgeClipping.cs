@@ -7,12 +7,12 @@
     {
         public ClippingMode Mode { get; set; }
 
-        public EdgeClipping(CGMFile container)
+        public EdgeClipping(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 9, container))
         {
         }
 
-        public EdgeClipping(CGMFile container, ClippingMode mode)
+        public EdgeClipping(CgmFile container, ClippingMode mode)
             : this(container)
         {
             Mode = mode;

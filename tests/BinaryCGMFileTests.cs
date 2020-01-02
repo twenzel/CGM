@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace codessentials.CGM.Tests
 {
     [TestFixture]
-    class BinaryCGMFileTests : CGMTest
+    class BinaryCgmFileTests : CgmTest
     {
         [Ignore("Not yet ready")]
         [Test]
@@ -26,7 +26,7 @@ namespace codessentials.CGM.Tests
                     var expected = ConvertToClearText(binaryFile);
 
                     using var stream = new MemoryStream(binaryFile.GetContent());
-                    var newBinary = new BinaryCGMFile(stream);
+                    var newBinary = new BinaryCgmFile(stream);
                     var actual = ConvertToClearText(newBinary);
 
                     actual.Should().Be(expected, "In file " + name);
@@ -43,7 +43,7 @@ namespace codessentials.CGM.Tests
             var expected = ConvertToClearText(binaryFile);
 
             using var stream = new MemoryStream(binaryFile.GetContent());
-            var newBinary = new BinaryCGMFile(stream);
+            var newBinary = new BinaryCgmFile(stream);
             var actual = ConvertToClearText(newBinary);
 
             actual.Should().Be(expected);
@@ -58,11 +58,11 @@ namespace codessentials.CGM.Tests
         [TestCase("ATextWithAVeryLongContentByDoublingAllSentencesLikeATextWithAVeryLongContentBy")]
         public void Floating_String_Test(string data)
         {
-            var writer = new CGMWriter(FileFormat.Binary, "");
+            var writer = new CgmWriter(FileFormat.Binary, "");
             writer.SetDescription(data);
             writer.Finish();
 
-            var binaryFile = new BinaryCGMFile(new MemoryStream(writer.GetContent()));
+            var binaryFile = new BinaryCgmFile(new MemoryStream(writer.GetContent()));
             var actual = ConvertToClearText(binaryFile);
             var expected = new StringBuilder();
             expected.AppendLine("BEGMF '';");
@@ -76,7 +76,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void ComposeTest()
         {
-            var writer = new CGMWriter(FileFormat.Binary, "");
+            var writer = new CgmWriter(FileFormat.Binary, "");
             writer.SetDescription("Created By UnitTest");
             writer.SetElementList("DRAWINGPLUS");
             writer.SetFontList(new[] { "Arial", "Arial Bold" });
@@ -84,7 +84,7 @@ namespace codessentials.CGM.Tests
             writer.SetVDCType(VDCType.Type.Real);
             writer.Finish();
 
-            var binaryFile = new BinaryCGMFile(new MemoryStream(writer.GetContent()));
+            var binaryFile = new BinaryCgmFile(new MemoryStream(writer.GetContent()));
             var actual = ConvertToClearText(binaryFile);
             var expected = new StringBuilder();
             expected.AppendLine("BEGMF '';");

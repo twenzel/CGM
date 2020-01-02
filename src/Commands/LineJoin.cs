@@ -2,12 +2,12 @@
 {
     public class LineJoin : JoinCommand
     {
-        public LineJoin(CGMFile container)
+        public LineJoin(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 38, container))
         {
         }
 
-        public LineJoin(CGMFile container, JoinIndicator type)
+        public LineJoin(CgmFile container, JoinIndicator type)
             : this(container)
         {
             SetValue(type);

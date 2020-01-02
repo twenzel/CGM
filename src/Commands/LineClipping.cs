@@ -7,13 +7,13 @@
     {
         public ClippingMode Mode { get; set; }
 
-        public LineClipping(CGMFile container)
+        public LineClipping(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 7, container))
         {
 
         }
 
-        public LineClipping(CGMFile container, ClippingMode mode)
+        public LineClipping(CgmFile container, ClippingMode mode)
             : this(container)
         {
             Mode = mode;

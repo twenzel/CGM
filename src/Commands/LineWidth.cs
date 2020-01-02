@@ -7,13 +7,13 @@
     {
         public double Width { get; set; }
 
-        public LineWidth(CGMFile container)
+        public LineWidth(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 3, container))
         {
 
         }
 
-        public LineWidth(CGMFile container, double width)
+        public LineWidth(CgmFile container, double width)
             : this(container)
         {
             Width = width;

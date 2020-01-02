@@ -39,7 +39,7 @@ namespace codessentials.CGM.Commands
         public List<Color> CmykGridLocations { get; set; } = new List<Color>();
         public List<Tuple<double, double, double>> XyzGridLocations { get; set; } = new List<Tuple<double, double, double>>();
 
-        public ColourCalibration(CGMFile container)
+        public ColourCalibration(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 20, container))
         {
 

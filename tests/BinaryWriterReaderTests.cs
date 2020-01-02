@@ -22,7 +22,7 @@ namespace codessentials.CGM.Tests
         public void Setup()
         {
             _stream = new MemoryStream();
-            var cgm = new BinaryCGMFile();
+            var cgm = new BinaryCgmFile();
             _commandFactory = new Mock<ICommandFactory>();
 
             _writer = new DefaultBinaryWriter(_stream, cgm);
@@ -169,7 +169,7 @@ namespace codessentials.CGM.Tests
             _writer.WriteCommand(command);
             _stream.Position = 0;
 
-            _commandFactory.Setup(c => c.CreateCommand(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CGMFile>())).Returns(command);
+            _commandFactory.Setup(c => c.CreateCommand(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CgmFile>())).Returns(command);
 
             _reader.ReadCommands();
             if (_reader.Messages.Any())

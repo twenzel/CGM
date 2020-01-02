@@ -7,13 +7,13 @@ namespace codessentials.CGM.Commands
     /// </remarks>
     public class VDCRealPrecision : RealPrecisionBase
     {
-        public VDCRealPrecision(CGMFile container)
+        public VDCRealPrecision(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 2, container))
         {
 
         }
 
-        public VDCRealPrecision(CGMFile container, Precision precision)
+        public VDCRealPrecision(CgmFile container, Precision precision)
             : this(container)
         {
             SetValue(precision);

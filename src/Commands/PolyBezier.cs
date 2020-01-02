@@ -16,13 +16,13 @@ namespace codessentials.CGM.Commands
 
         public List<BezierCurve> Curves { get; set; } = new List<BezierCurve>();
 
-        public PolyBezier(CGMFile container)
+        public PolyBezier(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 26, container))
         {
 
         }
 
-        public PolyBezier(CGMFile container, int continuityIndicator, IEnumerable<BezierCurve> curves)
+        public PolyBezier(CgmFile container, int continuityIndicator, IEnumerable<BezierCurve> curves)
             : this(container)
         {
             ContinuityIndicator = continuityIndicator;

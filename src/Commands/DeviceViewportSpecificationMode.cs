@@ -15,13 +15,13 @@
         public Mode Value { get; private set; }
         public double MetricScaleFactor { get; private set; }
 
-        public DeviceViewportSpecificationMode(CGMFile container)
+        public DeviceViewportSpecificationMode(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 9, container))
         {
 
         }
 
-        public DeviceViewportSpecificationMode(CGMFile container, Mode mode, double factor)
+        public DeviceViewportSpecificationMode(CgmFile container, Mode mode, double factor)
             : this(container)
         {
             Value = mode;

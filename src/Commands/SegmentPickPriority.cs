@@ -8,13 +8,13 @@
         public int Identifier { get; set; }
         public int Prio { get; set; }
 
-        public SegmentPickPriority(CGMFile container)
+        public SegmentPickPriority(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 7, container))
         {
 
         }
 
-        public SegmentPickPriority(CGMFile container, int id, int prio)
+        public SegmentPickPriority(CgmFile container, int id, int prio)
             : this(container)
         {
             Identifier = id;

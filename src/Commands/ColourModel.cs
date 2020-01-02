@@ -16,13 +16,13 @@
 
         public Model Value { get; private set; }
 
-        public ColourModel(CGMFile container)
+        public ColourModel(CgmFile container)
                 : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 19, container))
         {
 
         }
 
-        public ColourModel(CGMFile container, Model model)
+        public ColourModel(CgmFile container, Model model)
             : this(container)
         {
             Value = model;

@@ -12,13 +12,13 @@
 
         public Type Path { get; set; }
 
-        public TextPath(CGMFile container)
+        public TextPath(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 17, container))
         {
 
         }
 
-        public TextPath(CGMFile container, Type path)
+        public TextPath(CgmFile container, Type path)
             : this(container)
         {
             Path = path;

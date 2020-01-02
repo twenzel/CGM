@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace codessentials.CGM.Tests
 {
     [TestFixture]
-    class ClearTextTests : CGMTest
+    class ClearTextTests : CgmTest
     {
         [Test]
         public void CompareFiles()

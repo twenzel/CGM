@@ -7,16 +7,16 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class ClipRectangle : Command
     {
-        public CGMPoint Point1 { get; set; }
-        public CGMPoint Point2 { get; set; }
+        public CgmPoint Point1 { get; set; }
+        public CgmPoint Point2 { get; set; }
 
-        public ClipRectangle(CGMFile container)
+        public ClipRectangle(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 5, container))
         {
 
         }
 
-        public ClipRectangle(CGMFile container, CGMPoint point1, CGMPoint point2)
+        public ClipRectangle(CgmFile container, CgmPoint point1, CgmPoint point2)
             : this(container)
         {
             Point1 = point1;

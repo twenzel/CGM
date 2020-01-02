@@ -1,27 +1,25 @@
-﻿using codessentials.CGM.Classes;
-using codessentials.CGM.Commands;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using codessentials.CGM.Classes;
+using codessentials.CGM.Commands;
 using FluentAssertions;
-using System.Drawing;
+using NUnit.Framework;
 
 namespace codessentials.CGM.Tests
 {
     [TestFixture]
     public class CommandTests
     {
-        private static CGMColor Color_Index = new CGMColor() { ColorIndex = 2 };
-        private static CGMColor Color_Index2 = new CGMColor() { ColorIndex = 3 };
-        private static CGMColor Color_Color = new CGMColor() { Color = System.Drawing.Color.Red };
-        private static CGMColor Color_Color2 = new CGMColor() { Color = System.Drawing.Color.Peru };
-        private static CGMPoint Point = new CGMPoint(2, 2);
-        private static CGMPoint Point2 = new CGMPoint(5, 8);
-        private static CGMPoint Point3 = new CGMPoint(4, 99);
+        private static CgmColor Color_Index = new CgmColor() { ColorIndex = 2 };
+        private static CgmColor Color_Index2 = new CgmColor() { ColorIndex = 3 };
+        private static CgmColor Color_Color = new CgmColor() { Color = System.Drawing.Color.Red };
+        private static CgmColor Color_Color2 = new CgmColor() { Color = System.Drawing.Color.Peru };
+        private static CgmPoint Point = new CgmPoint(2, 2);
+        private static CgmPoint Point2 = new CgmPoint(5, 8);
+        private static CgmPoint Point3 = new CgmPoint(4, 99);
 
         [Test]
         public void AlternateCharacterSetIndex_Write_Binary()
@@ -34,6 +32,12 @@ namespace codessentials.CGM.Tests
         {
             TestCommand(cgm => new AppendText(cgm, AppendText.FinalType.FINAL, "test"), cmd => cmd.Final == AppendText.FinalType.FINAL && cmd.Text == "test");
             TestCommand(cgm => new AppendText(cgm, AppendText.FinalType.NOTFINAL, "test2"), cmd => cmd.Final == AppendText.FinalType.NOTFINAL && cmd.Text == "test2");
+        }
+
+        [Test]
+        public void ApplicationData_Write_Binary()
+        {
+            TestCommand(cgm => new ApplicationData(cgm, 2, "test"), cmd => cmd.Identifier == 2 && cmd.Data == "test");
         }
 
         [Test]
@@ -182,7 +186,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void BeginTileArray_Write_Binary_ColorMode_Direct()
         {
-            var position = new CGMPoint(55.879, 1.654889);
+            var position = new CgmPoint(55.879, 1.654889);
             var cellPathDirection = 2;
             var lineProgressionDirection = 5;
             var nTilesInPathDirection = 650;
@@ -196,14 +200,14 @@ namespace codessentials.CGM.Tests
             var nCellsInPathDirection = 5;
             var nCellsInLineDirection = 5;
 
-            Func<CGMFile, BeginTileArray> tileArrayFunc = cgm =>
+            BeginTileArray TileArrayFunc(CgmFile cgm)
             {
                 return new BeginTileArray(cgm, position, cellPathDirection, lineProgressionDirection, nTilesInPathDirection, nTilesInLineDirection,
                     nCellsPerTileInPathDirection, nCellsPerTileInLineDirection, cellSizeInPathDirection, cellSizeInLineDirection, imageOffsetInPathDirection,
                     imageOffsetInLineDirection, nCellsInPathDirection, nCellsInLineDirection);
-            };
+            }
 
-            Func<BeginTileArray, bool> checkFunc = cmd =>
+            bool CheckFunc(BeginTileArray cmd)
             {
                 return cmd.Position.X == position.X && cmd.Position.Y == position.Y
                 && cmd.CellPathDirection == cellPathDirection
@@ -218,7 +222,7 @@ namespace codessentials.CGM.Tests
                 && cmd.CellSizeInLineDirection == cellSizeInLineDirection
                 && cmd.ImageOffsetInPathDirection == imageOffsetInPathDirection
                 && cmd.ImageOffsetInLineDirection == imageOffsetInLineDirection;
-            };
+            }
 
             TestCommand(cgm =>
             {
@@ -229,21 +233,22 @@ namespace codessentials.CGM.Tests
                 cgm.VDCRealPrecision = Precision.Floating_32;
                 cgm.RealPrecision = Precision.Floating_32;
 
-                return tileArrayFunc(cgm);
-            }, checkFunc);
+                return TileArrayFunc(cgm);
+            }, CheckFunc);
         }
 
         [Test]
         public void BitonalTile_Write_Binary()
         {
-            var color1 = new CGMColor() { ColorIndex = 5 };
-            var color2 = new CGMColor() { ColorIndex = 4 };
+            var color1 = new CgmColor() { ColorIndex = 5 };
+            var color2 = new CgmColor() { ColorIndex = 4 };
 
             var sdr = new StructuredDataRecord();
             sdr.Add(StructuredDataRecord.StructuredDataType.E, new object[] { 2 });
             var image = new MemoryStream(new byte[] { 1, 20, 30, 5, 45 });
 
-            TestCommand(cgm => new BitonalTile(cgm, CompressionType.BITMAP, 1, color1, color2, sdr, image), cmd => {
+            TestCommand(cgm => new BitonalTile(cgm, CompressionType.BITMAP, 1, color1, color2, sdr, image), cmd =>
+            {
                 cmd.CompressionType.Should().Be(CompressionType.BITMAP);
                 cmd.RowPaddingIndicator.Should().Be(1);
                 cmd.Backgroundcolor.Should().Be(color1);
@@ -258,15 +263,15 @@ namespace codessentials.CGM.Tests
                 cmd.Foregroundcolor.Should().Be(color2);
                 cmd.DataRecord.Members.Should().HaveCount(1);
                 cmd.DataRecord.Members[0].Type.Should().Be(StructuredDataRecord.StructuredDataType.E);
-                cmd.Image.ToArray().Should().ContainInOrder( image.ToArray());
+                cmd.Image.ToArray().Should().ContainInOrder(image.ToArray());
             });
         }
 
         [Test]
         public void CellArray_Write_Binary()
         {
-            var point1 = new CGMPoint(1, 1);
-            var point2 = new CGMPoint(2, 2);
+            var point1 = new CgmPoint(1, 1);
+            var point2 = new CgmPoint(2, 2);
 
             TestCommand(cgm => new CellArray(cgm, 0, 1, 2, point1, point2, point2, 0, new[] { Color_Index, Color_Index2 }), cmd =>
             {
@@ -381,7 +386,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void CircleElement_Write_Binary()
         {
-            var point = new CGMPoint(2, 2);
+            var point = new CgmPoint(2, 2);
 
             TestCommand(cgm => new CircleElement(cgm, point, 2), cmd =>
             {
@@ -393,9 +398,9 @@ namespace codessentials.CGM.Tests
         [Test]
         public void CircularArc3Point_Write_Binary()
         {
-            var point = new CGMPoint(2, 2);
-            var point2 = new CGMPoint(5, 2);
-            var point3 = new CGMPoint(4, 4);
+            var point = new CgmPoint(2, 2);
+            var point2 = new CgmPoint(5, 2);
+            var point3 = new CgmPoint(4, 4);
 
             TestCommand(cgm => new CircularArc3Point(cgm, point, point2, point3), cmd =>
             {
@@ -408,9 +413,9 @@ namespace codessentials.CGM.Tests
         [Test]
         public void CircularArc3PointClose_Write_Binary()
         {
-            var point = new CGMPoint(2, 2);
-            var point2 = new CGMPoint(5, 2);
-            var point3 = new CGMPoint(4, 4);
+            var point = new CgmPoint(2, 2);
+            var point2 = new CgmPoint(5, 2);
+            var point3 = new CgmPoint(4, 4);
 
             TestCommand(cgm => new CircularArc3PointClose(cgm, point, point2, point3, ClosureType.CHORD), cmd =>
             {
@@ -424,7 +429,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void CircularArcCentre_Write_Binary()
         {
-            var point = new CGMPoint(2, 2);
+            var point = new CgmPoint(2, 2);
 
             TestCommand(cgm => new CircularArcCentre(cgm, point, 1, 2, 3, 4, 5), cmd =>
             {
@@ -440,7 +445,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void CircularArcCentreClose_Write_Binary()
         {
-            var point = new CGMPoint(2, 2);
+            var point = new CgmPoint(2, 2);
 
             TestCommand(cgm => new CircularArcCentreClose(cgm, point, 1, 2, 3, 4, 5, ClosureType.PIE), cmd =>
             {
@@ -457,7 +462,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void CircularArcCentreReversed_Write_Binary()
         {
-            var point = new CGMPoint(2, 2);
+            var point = new CgmPoint(2, 2);
 
             TestCommand(cgm => new CircularArcCentreReversed(cgm, point, 1, 2, 3, 4, 5), cmd =>
             {
@@ -487,8 +492,8 @@ namespace codessentials.CGM.Tests
         [Test]
         public void ClipRectangle_Write_Binary()
         {
-            var point = new CGMPoint(2, 2);
-            var point2 = new CGMPoint(5, 3);
+            var point = new CgmPoint(2, 2);
+            var point2 = new CgmPoint(5, 3);
 
             TestCommand(cgm => new ClipRectangle(cgm, point, point2), cmd =>
             {
@@ -744,7 +749,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void DisjointPolyline_Write_Binary()
         {
-            TestCommand(cgm => new DisjointPolyline(cgm, new[] { new KeyValuePair<CGMPoint, CGMPoint>(new CGMPoint(1, 2), new CGMPoint(5, 6)) }), cmd =>
+            TestCommand(cgm => new DisjointPolyline(cgm, new[] { new KeyValuePair<CgmPoint, CgmPoint>(new CgmPoint(1, 2), new CgmPoint(5, 6)) }), cmd =>
             {
                 cmd.Lines.Should().HaveCount(1);
                 cmd.Lines[0].Key.X.Should().Be(1);
@@ -985,12 +990,14 @@ namespace codessentials.CGM.Tests
         [Test]
         public void FontList_Write_Binary()
         {
-            TestCommand(cgm => new FontList(cgm, new[] { "Arial" }), cmd => {
+            TestCommand(cgm => new FontList(cgm, new[] { "Arial" }), cmd =>
+            {
                 cmd.FontNames.Should().HaveCount(1);
                 cmd.FontNames[0].Should().Be("Arial");
             });
 
-            TestCommand(cgm => new FontList(cgm, new[] { "Arial", "Arial Bold" }), cmd => {
+            TestCommand(cgm => new FontList(cgm, new[] { "Arial", "Arial Bold" }), cmd =>
+            {
                 cmd.FontNames.Should().HaveCount(2);
                 cmd.FontNames[0].Should().Be("Arial");
                 cmd.FontNames[1].Should().Be("Arial Bold");
@@ -1587,7 +1594,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void PolygonSet_Write_Binary()
         {
-            TestCommand(cgm => new PolygonSet(cgm, new[] { new KeyValuePair<PolygonSet.EdgeFlag, CGMPoint>(PolygonSet.EdgeFlag.CLOSEVIS, Point), new KeyValuePair<PolygonSet.EdgeFlag, CGMPoint>(PolygonSet.EdgeFlag.CLOSEINVIS, Point2) }), cmd =>
+            TestCommand(cgm => new PolygonSet(cgm, new[] { new KeyValuePair<PolygonSet.EdgeFlag, CgmPoint>(PolygonSet.EdgeFlag.CLOSEVIS, Point), new KeyValuePair<PolygonSet.EdgeFlag, CgmPoint>(PolygonSet.EdgeFlag.CLOSEINVIS, Point2) }), cmd =>
            {
                cmd.Set.Should().HaveCount(2);
                cmd.Set[0].Key.Should().Be(PolygonSet.EdgeFlag.CLOSEVIS);
@@ -1904,7 +1911,7 @@ namespace codessentials.CGM.Tests
         {
             var sdr = new StructuredDataRecord();
             sdr.Add(StructuredDataRecord.StructuredDataType.E, new object[] { 2 });
-            sdr.Add(StructuredDataRecord.StructuredDataType.IX, new object[] { 5,6 });
+            sdr.Add(StructuredDataRecord.StructuredDataType.IX, new object[] { 5, 6 });
             var image = new MemoryStream(new byte[] { 1, 20, 30, 5, 45 });
 
             TestCommand(cgm => new Tile(cgm, CompressionType.BITMAP, 1, 8, sdr, image), cmd =>
@@ -1966,24 +1973,26 @@ namespace codessentials.CGM.Tests
         [Test]
         public void VDCExtent_Write_Binary_Negative()
         {
-            var negativePoint = new CGMPoint(0, -0.4363);
+            var negativePoint = new CgmPoint(0, -0.4363);
 
-            TestCommand(cgm => {
+            TestCommand(cgm =>
+            {
                 cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
                 return new VDCExtent(cgm, negativePoint, Point2);
             }, cmd =>
             {
                 cmd.LowerLeftCorner.Should().Be(negativePoint);
                 cmd.UpperRightCorner.Should().Be(Point2);
-            });           
+            });
         }
 
         [Test]
         public void VDCExtent_Write_Binary_Negative2()
-        {           
-            var negativePoint = new CGMPoint(-1.0000, -5.0825);
+        {
+            var negativePoint = new CgmPoint(-1.0000, -5.0825);
 
-            TestCommand(cgm => {
+            TestCommand(cgm =>
+            {
                 cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
                 return new VDCExtent(cgm, negativePoint, Point2);
             }, cmd =>
@@ -1996,9 +2005,10 @@ namespace codessentials.CGM.Tests
         [Test]
         public void VDCExtent_Write_Binary_Negative3()
         {
-            var negativePoint = new CGMPoint(0.0000, -5.0);
+            var negativePoint = new CgmPoint(0.0000, -5.0);
 
-            TestCommand(cgm => {
+            TestCommand(cgm =>
+            {
                 cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
                 return new VDCExtent(cgm, negativePoint, Point2);
             }, cmd =>
@@ -2049,13 +2059,13 @@ namespace codessentials.CGM.Tests
             }, cmd => cmd.Factor == expected);
         }
 
-        private void TestCommand<TCommand>(Func<CGMFile, TCommand> commandCreator, Func<TCommand, bool> check) where TCommand : Command
+        private void TestCommand<TCommand>(Func<CgmFile, TCommand> commandCreator, Func<TCommand, bool> check) where TCommand : Command
         {
-            var cgm = new BinaryCGMFile();
+            var cgm = new BinaryCgmFile();
             cgm.Commands.Add(commandCreator(cgm));
 
             var content = cgm.GetContent();
-            var binaryFile = new BinaryCGMFile(new MemoryStream(content));
+            var binaryFile = new BinaryCgmFile(new MemoryStream(content));
 
             var newcommand = binaryFile.Commands.FirstOrDefault(cmd => cmd is TCommand) as TCommand;
 
@@ -2067,17 +2077,17 @@ namespace codessentials.CGM.Tests
             Assert.IsTrue(check(newcommand), allMessages);
         }
 
-        private void TestCommand<TCommand>(Func<CGMFile, TCommand> commandCreator, Action<TCommand> assertLogic) where TCommand : Command
+        private void TestCommand<TCommand>(Func<CgmFile, TCommand> commandCreator, Action<TCommand> assertLogic) where TCommand : Command
         {
             TestCommand<TCommand>(commandCreator, cmd => { assertLogic(cmd); return true; });
         }
 
-        private bool IsColorIndex(CGMColor color)
+        private bool IsColorIndex(CgmColor color)
         {
             return color.ColorIndex == Color_Index.ColorIndex;
         }
 
-        private bool IsColorIndex2(CGMColor color)
+        private bool IsColorIndex2(CgmColor color)
         {
             return color.ColorIndex == Color_Index2.ColorIndex;
         }

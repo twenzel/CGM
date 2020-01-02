@@ -4,7 +4,7 @@ namespace codessentials.CGM.Commands
 {
     public abstract class ColourCommand : Command
     {
-        public CGMColor Color { get; set; }
+        public CgmColor Color { get; set; }
 
         protected ColourCommand(CommandConstructorArguments args)
             : base(args)
@@ -22,7 +22,7 @@ namespace codessentials.CGM.Commands
             writer.WriteColor(Color);
         }
 
-        protected void SetValue(CGMColor color)
+        protected void SetValue(CgmColor color)
         {
             Color = color;
         }

@@ -4,7 +4,7 @@ namespace codessentials.CGM.Elements
 {
     public static class SegmentControlElements
     {
-        public static Command CreateCommand(int elementId, int elementClass, CGMFile container)
+        public static Command CreateCommand(int elementId, int elementClass, CgmFile container)
         {
             return ((SegmentControlElement)elementId) switch
             {

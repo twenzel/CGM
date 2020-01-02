@@ -8,14 +8,14 @@ namespace codessentials.CGM
     /// <summary>
     /// Represents a CGM file in binary mode
     /// </summary>
-    public class BinaryCGMFile : CGMFile
+    public class BinaryCgmFile : CgmFile
     {
         /// <summary>
         /// The binary file name
         /// </summary>
         public string FileName { get; }
 
-        public BinaryCGMFile()
+        public BinaryCgmFile()
         {
             Name = "new";
         }
@@ -24,7 +24,7 @@ namespace codessentials.CGM
         /// Creates a new CGM object reading a binary CGM file.
         /// </summary>
         /// <param name="fileName">Path to the binary CGM file.</param>
-        public BinaryCGMFile(string fileName)
+        public BinaryCgmFile(string fileName)
         {
             FileName = fileName;
             Name = Path.GetFileName(fileName);
@@ -37,7 +37,7 @@ namespace codessentials.CGM
         /// </summary>
         /// <param name="data">The stream containing binary CGM data.</param>
         /// <param name="name">The name of the CGM.</param>
-        public BinaryCGMFile(Stream data, string name = "stream")
+        public BinaryCgmFile(Stream data, string name = "stream")
         {
             if (data is null)
                 throw new ArgumentNullException(nameof(data));

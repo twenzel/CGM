@@ -4,7 +4,7 @@ namespace codessentials.CGM.Commands
 {
     public class UnknownCommand : Command
     {
-        public UnknownCommand(int elementId, int elementClass, CGMFile container)
+        public UnknownCommand(int elementId, int elementClass, CgmFile container)
             : this(container)
         {
             if (elementClass == 0 && elementId == 0)
@@ -14,7 +14,7 @@ namespace codessentials.CGM.Commands
             throw new NotSupportedException($"UnknownCommand ({this}).");
         }
 
-        public UnknownCommand(CGMFile container)
+        public UnknownCommand(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ReservedForFutureUse1, 1, container))
         {
 

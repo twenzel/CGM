@@ -7,13 +7,13 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class CircularArcCentreReversed : CircularArcCentre
     {
-        public CircularArcCentreReversed(CGMFile container)
+        public CircularArcCentreReversed(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 20, container))
         {
 
         }
 
-        public CircularArcCentreReversed(CGMFile container, CGMPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
+        public CircularArcCentreReversed(CgmFile container, CgmPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
            : this(container)
         {
             SetValues(center, startDeltaX, startDeltaY, endDeltaX, endDeltaY, radius);

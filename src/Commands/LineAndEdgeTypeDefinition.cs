@@ -11,13 +11,13 @@ namespace codessentials.CGM.Commands
         public double DashCycleRepeatLength { get; set; }
         public int[] DashElements { get; set; }
 
-        public LineAndEdgeTypeDefinition(CGMFile container)
+        public LineAndEdgeTypeDefinition(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 17, container))
         {
 
         }
 
-        public LineAndEdgeTypeDefinition(CGMFile container, int lineType, double dashCycleRepeat, int[] elements)
+        public LineAndEdgeTypeDefinition(CgmFile container, int lineType, double dashCycleRepeat, int[] elements)
             : this(container)
         {
             LineType = lineType;

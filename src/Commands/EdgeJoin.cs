@@ -2,12 +2,12 @@
 {
     public class EdgeJoin : JoinCommand
     {
-        public EdgeJoin(CGMFile container)
+        public EdgeJoin(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 45, container))
         {
         }
 
-        public EdgeJoin(CGMFile container, JoinIndicator type)
+        public EdgeJoin(CgmFile container, JoinIndicator type)
             : this(container)
         {
             SetValue(type);

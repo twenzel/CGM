@@ -7,14 +7,14 @@ namespace codessentials.CGM.Commands
         public int StartIndex { get; private set; }
         public Color[] Colors { get; private set; }
 
-        public ColourTable(CGMFile container)
+        public ColourTable(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 34, container))
         {
 
         }
 
 
-        public ColourTable(CGMFile container, int startIndex, Color[] colors)
+        public ColourTable(CgmFile container, int startIndex, Color[] colors)
             : this(container)
         {
             StartIndex = startIndex;

@@ -10,13 +10,13 @@ namespace codessentials.CGM.Commands
     {
         public List<double> Weights { get; set; } = new List<double>();
 
-        public NonUniformRationalBSpline(CGMFile container)
+        public NonUniformRationalBSpline(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 25, container))
         {
 
         }
 
-        public NonUniformRationalBSpline(CGMFile container, int splineOrder, IEnumerable<CGMPoint> points, IEnumerable<double> knots, double start, double end, IEnumerable<double> weights)
+        public NonUniformRationalBSpline(CgmFile container, int splineOrder, IEnumerable<CgmPoint> points, IEnumerable<double> knots, double start, double end, IEnumerable<double> weights)
             : this(container)
         {
             Weights.AddRange(weights);

@@ -16,13 +16,13 @@
 
         public Type Value { get; set; } = Type.ASTERISK;
 
-        public MarkerType(CGMFile container)
+        public MarkerType(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 6, container))
         {
 
         }
 
-        public MarkerType(CGMFile container, Type type)
+        public MarkerType(CgmFile container, Type type)
             : this(container)
         {
             Value = type;

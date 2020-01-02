@@ -14,7 +14,7 @@ namespace codessentials.CGM.Commands
     {
         protected ClassCode _elementClass;
         protected int _elementId;
-        protected CGMFile _container;
+        protected CgmFile _container;
 
         private static readonly string ZERO_DOUBLE = WriteDouble(0d);
 
@@ -99,7 +99,7 @@ namespace codessentials.CGM.Commands
             return WriteVC(value.FirstPoint) + " " + WriteVC(value.SecondPoint);
         }
 
-        protected string WritePoint(CGMPoint value)
+        protected string WritePoint(CgmPoint value)
         {
             return WritePoint(value.X, value.Y);
         }
@@ -170,7 +170,7 @@ namespace codessentials.CGM.Commands
             };
         }
 
-        protected string WriteColor(CGMColor value)
+        protected string WriteColor(CgmColor value)
         {
             if (_container.ColourSelectionMode == ColourSelectionMode.Type.INDEXED)
                 return WriteIndex(value.ColorIndex);

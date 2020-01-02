@@ -13,13 +13,13 @@
         public const string VERSION3 = "VERSION3";
         public const string VERSION4 = "VERSION4";
 
-        public MetafileElementList(CGMFile container)
+        public MetafileElementList(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 11, container))
         {
 
         }
 
-        public MetafileElementList(CGMFile container, string element)
+        public MetafileElementList(CgmFile container, string element)
             : this(container)
         {
             Elements = new[] { element };

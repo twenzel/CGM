@@ -7,13 +7,13 @@
     {
         public Command EmbeddedCommand { get; set; }
 
-        public MetafileDefaultsReplacement(CGMFile container)
+        public MetafileDefaultsReplacement(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 12, container))
         {
 
         }
 
-        public MetafileDefaultsReplacement(CGMFile container, Command command)
+        public MetafileDefaultsReplacement(CgmFile container, Command command)
             : this(container)
         {
             EmbeddedCommand = command;

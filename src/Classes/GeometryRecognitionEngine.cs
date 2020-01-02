@@ -14,9 +14,9 @@ namespace codessentials.CGM.Classes
         /// </summary>
         /// <param name="file">The file.</param>
         /// <returns></returns>
-        public static List<CGMRectangle> GetRectangles(CGMFile file)
+        public static List<CgmRectangle> GetRectangles(CgmFile file)
         {
-            var result = new List<CGMRectangle>();
+            var result = new List<CgmRectangle>();
 
             // sort all polylines by their points
             var polylines = file.Commands.Where(c => c.ElementClass == ClassCode.GraphicalPrimitiveElements && (c.ElementId == 1)).Cast<Polyline>().ToList(); //Polyline
@@ -48,9 +48,9 @@ namespace codessentials.CGM.Classes
             return result;
         }
 
-        private static IEnumerable<CGMRectangle> FindRectangleInPolygons(IEnumerable<Polyline> rectangleCanditates)
+        private static IEnumerable<CgmRectangle> FindRectangleInPolygons(IEnumerable<Polyline> rectangleCanditates)
         {
-            var result = new List<CGMRectangle>();
+            var result = new List<CgmRectangle>();
             foreach (var line in rectangleCanditates)
             {
                 var rectangle = GetRectangle(line);
@@ -62,17 +62,17 @@ namespace codessentials.CGM.Classes
             return result;
         }
 
-        private static IEnumerable<CGMRectangle> FindRectangleInSimpleLines(IEnumerable<Polyline> simpleLines)
+        private static IEnumerable<CgmRectangle> FindRectangleInSimpleLines(IEnumerable<Polyline> simpleLines)
         {
             // get all horizontal lines
-            var horizontalLines = simpleLines.Where(l => IsHorizontalLine(l.Points[0], l.Points[1])).Select(l => new CGMLine(l.Points[0], l.Points[1]));
-            var verticalLines = simpleLines.Where(l => IsVerticalLine(l.Points[0], l.Points[1])).Select(l => new CGMLine(l.Points[0], l.Points[1]));
+            var horizontalLines = simpleLines.Where(l => IsHorizontalLine(l.Points[0], l.Points[1])).Select(l => new CgmLine(l.Points[0], l.Points[1]));
+            var verticalLines = simpleLines.Where(l => IsVerticalLine(l.Points[0], l.Points[1])).Select(l => new CgmLine(l.Points[0], l.Points[1]));
             var rects = new List<RectanglePoints>();
 
             // loop through horizontal lines and find the two parelles each
             foreach (var horzLine in horizontalLines)
             {
-                var others = horizontalLines.Where(l => CGMPoint.IsSame(l.A.X, horzLine.A.X) && l.A.Y > horzLine.A.Y);
+                var others = horizontalLines.Where(l => CgmPoint.IsSame(l.A.X, horzLine.A.X) && l.A.Y > horzLine.A.Y);
 
                 if (others.Any())
                 {
@@ -103,42 +103,42 @@ namespace codessentials.CGM.Classes
             return rects.Where(r => r.IsValid).Select(r => r.ToRectangle());
         }
 
-        private static bool IsHorizontalLine(CGMPoint a, CGMPoint b)
+        private static bool IsHorizontalLine(CgmPoint a, CgmPoint b)
         {
-            return CGMPoint.IsSame(a.Y, b.Y) && !CGMPoint.IsSame(a.X, b.X);
+            return CgmPoint.IsSame(a.Y, b.Y) && !CgmPoint.IsSame(a.X, b.X);
         }
 
-        private static bool IsVerticalLine(CGMPoint a, CGMPoint b)
+        private static bool IsVerticalLine(CgmPoint a, CgmPoint b)
         {
-            return CGMPoint.IsSame(a.X, b.X) && !CGMPoint.IsSame(a.Y, b.Y);
+            return CgmPoint.IsSame(a.X, b.X) && !CgmPoint.IsSame(a.Y, b.Y);
         }
 
 
-        public static CGMRectangle GetRectangle(Polyline polyline)
+        public static CgmRectangle GetRectangle(Polyline polyline)
         {
             if (IsRectangle(polyline))
             {
                 var points = polyline.Points;
 
                 // rectangle is descriped counter clock-wise starting right
-                if (CGMPoint.IsSame(points[0].Y, points[1].Y) && CGMPoint.IsSame(points[1].X, points[2].X) && CGMPoint.IsSame(points[2].Y, points[3].Y))
+                if (CgmPoint.IsSame(points[0].Y, points[1].Y) && CgmPoint.IsSame(points[1].X, points[2].X) && CgmPoint.IsSame(points[2].Y, points[3].Y))
                 {
                     if (points[1].Y < points[2].Y)
-                        return CGMRectangle.FromPoints(points[1], points[0], points[2], points[3]);
+                        return CgmRectangle.FromPoints(points[1], points[0], points[2], points[3]);
                     else if (points[0].X < points[1].X) // starting left
-                        return CGMRectangle.FromPoints(points[3], points[2], points[0], points[1]);
+                        return CgmRectangle.FromPoints(points[3], points[2], points[0], points[1]);
                     else
-                        return CGMRectangle.FromPoints(points[2], points[3], points[1], points[0]);
+                        return CgmRectangle.FromPoints(points[2], points[3], points[1], points[0]);
                 }
 
                 // rectangle is described clock wise 
-                if (CGMPoint.IsSame(points[0].X, points[1].X) && CGMPoint.IsSame(points[1].Y, points[2].Y) && CGMPoint.IsSame(points[2].X, points[3].X))
+                if (CgmPoint.IsSame(points[0].X, points[1].X) && CgmPoint.IsSame(points[1].Y, points[2].Y) && CgmPoint.IsSame(points[2].X, points[3].X))
                 {
-                    return CGMRectangle.FromPoints(points[4], points[0], points[3], points[1]);
+                    return CgmRectangle.FromPoints(points[4], points[0], points[3], points[1]);
                 }
             }
 
-            return CGMRectangle.Empty;
+            return CgmRectangle.Empty;
         }
 
         private static bool IsRectangle(Polyline polyline)
@@ -168,62 +168,62 @@ namespace codessentials.CGM.Classes
         /// <param name="pointA">The start point.</param>
         /// <param name="pointWithinRange">The point with have to be within the range of the start point.</param>
         /// <param name="rangeDistance">The range distance.</param>
-        public static bool IsNearBy(CGMPoint pointA, CGMPoint pointWithinRange, float rangeDistance)
+        public static bool IsNearBy(CgmPoint pointA, CgmPoint pointWithinRange, float rangeDistance)
         {
-            var rect = new CGMRectangle((float)pointA.X - rangeDistance, (float)pointA.Y - rangeDistance, rangeDistance * 2, rangeDistance * 2);
+            var rect = new CgmRectangle((float)pointA.X - rangeDistance, (float)pointA.Y - rangeDistance, rangeDistance * 2, rangeDistance * 2);
 
             return rect.Contains(pointWithinRange);
         }
 
         private class RectanglePoints
         {
-            CGMLine _topLine;
-            CGMLine _bottomLine;
-            CGMPoint _leftLowerCorner;
-            CGMPoint _rightLowerCorner;
+            CgmLine _topLine;
+            CgmLine _bottomLine;
+            CgmPoint _leftLowerCorner;
+            CgmPoint _rightLowerCorner;
 
             public bool IsValid
             {
                 get { return _leftLowerCorner != null && _rightLowerCorner != null && GetIsValid(_topLine.A, _topLine.B, _leftLowerCorner, _rightLowerCorner); }
             }
 
-            public RectanglePoints(CGMLine topLine, CGMLine bottomLine)
+            public RectanglePoints(CgmLine topLine, CgmLine bottomLine)
             {
                 _topLine = topLine;
                 _bottomLine = bottomLine;
             }
 
-            public bool IsUpperLeft(CGMPoint p)
+            public bool IsUpperLeft(CgmPoint p)
             {
                 return _topLine.A.CompareTo(p) == 0;
             }
 
-            public bool IsLowerLeft(CGMPoint p)
+            public bool IsLowerLeft(CgmPoint p)
             {
                 return _bottomLine.A.CompareTo(p) == 0;
             }
 
-            public bool IsUpperRight(CGMPoint p)
+            public bool IsUpperRight(CgmPoint p)
             {
                 return _topLine.B.CompareTo(p) == 0;
             }
 
-            public bool IsLowerRight(CGMPoint p)
+            public bool IsLowerRight(CgmPoint p)
             {
                 return _bottomLine.B.CompareTo(p) == 0;
             }
 
-            public void SetLowerLeft(CGMPoint p)
+            public void SetLowerLeft(CgmPoint p)
             {
                 _leftLowerCorner = p;
             }
 
-            public void SetLowerRight(CGMPoint p)
+            public void SetLowerRight(CgmPoint p)
             {
                 _rightLowerCorner = p;
             }
 
-            private static bool GetIsValid(CGMPoint leftUpperCorner, CGMPoint rightUpperCorner, CGMPoint leftLowerCorner, CGMPoint rightLowerCorner)
+            private static bool GetIsValid(CgmPoint leftUpperCorner, CgmPoint rightUpperCorner, CgmPoint leftLowerCorner, CgmPoint rightLowerCorner)
             {
                 if (leftUpperCorner.Y != rightUpperCorner.Y)
                     return false;
@@ -240,9 +240,9 @@ namespace codessentials.CGM.Classes
                 return true;
             }
 
-            public CGMRectangle ToRectangle()
+            public CgmRectangle ToRectangle()
             {
-                return CGMRectangle.FromPoints(_topLine.A, _topLine.B, _leftLowerCorner, _rightLowerCorner);
+                return CgmRectangle.FromPoints(_topLine.A, _topLine.B, _leftLowerCorner, _rightLowerCorner);
             }
         }
     }

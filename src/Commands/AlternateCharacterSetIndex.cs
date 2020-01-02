@@ -5,13 +5,13 @@
     /// </remarks>
     public class AlternateCharacterSetIndex : GenericIndexCommand
     {
-        public AlternateCharacterSetIndex(CGMFile container)
+        public AlternateCharacterSetIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 20, container), "altcharsetindex")
         {
 
         }
 
-        public AlternateCharacterSetIndex(CGMFile container, int index)
+        public AlternateCharacterSetIndex(CgmFile container, int index)
             : this(container)
         {
             Index = index;

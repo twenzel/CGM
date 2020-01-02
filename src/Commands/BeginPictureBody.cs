@@ -5,7 +5,7 @@
     /// </remarks>
     public class BeginPictureBody : Command
     {
-        public BeginPictureBody(CGMFile container)
+        public BeginPictureBody(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 4, container))
         {
 

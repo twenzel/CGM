@@ -7,11 +7,11 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class EllipseElement : Command
     {
-        public CGMPoint Center { get; set; }
-        public CGMPoint FirstConjugateDiameterEndPoint { get; set; }
-        public CGMPoint SecondConjugateDiameterEndPoint { get; set; }
+        public CgmPoint Center { get; set; }
+        public CgmPoint FirstConjugateDiameterEndPoint { get; set; }
+        public CgmPoint SecondConjugateDiameterEndPoint { get; set; }
 
-        public EllipseElement(CGMFile container)
+        public EllipseElement(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 17, container))
         {
 
@@ -23,13 +23,13 @@ namespace codessentials.CGM.Commands
 
         }
 
-        public EllipseElement(CGMFile container, CGMPoint center, CGMPoint first, CGMPoint second)
+        public EllipseElement(CgmFile container, CgmPoint center, CgmPoint first, CgmPoint second)
             : this(container)
         {
             SetValues(center, first, second);
         }
 
-        protected void SetValues(CGMPoint center, CGMPoint first, CGMPoint second)
+        protected void SetValues(CgmPoint center, CgmPoint first, CgmPoint second)
         {
             Center = center;
             FirstConjugateDiameterEndPoint = first;

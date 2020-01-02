@@ -7,17 +7,17 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class CircularArc3Point : Command
     {
-        public CGMPoint P1 { get; set; }
-        public CGMPoint P2 { get; set; }
-        public CGMPoint P3 { get; set; }
+        public CgmPoint P1 { get; set; }
+        public CgmPoint P2 { get; set; }
+        public CgmPoint P3 { get; set; }
 
-        public CircularArc3Point(CGMFile container)
+        public CircularArc3Point(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 13, container))
         {
 
         }
 
-        public CircularArc3Point(CGMFile container, CGMPoint p1, CGMPoint p2, CGMPoint p3)
+        public CircularArc3Point(CgmFile container, CgmPoint p1, CgmPoint p2, CgmPoint p3)
             : this(container)
         {
             P1 = p1;

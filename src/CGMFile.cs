@@ -9,7 +9,7 @@ namespace codessentials.CGM
     /// <summary>
     /// Base class for CGM files
     /// </summary>
-    public abstract class CGMFile
+    public abstract class CgmFile
     {
         protected List<Command> _commands = new List<Command>();
         protected List<Message> _messages = new List<Message>();
@@ -17,10 +17,10 @@ namespace codessentials.CGM
         private readonly Dictionary<string, bool> _foundFigureItems = new Dictionary<string, bool>();
         private readonly Dictionary<string, bool> _foundConsumableNumbers = new Dictionary<string, bool>();
         private List<TextCommand> _figureItems = null;
-        private List<CGMRectangle> _rectangles = null;
+        private List<CgmRectangle> _rectangles = null;
         private List<TextCommand> _torqueTextCandidates = null;
 
-        protected CGMFile()
+        protected CgmFile()
         {
             ResetMetaDefinitions();
         }
@@ -30,9 +30,9 @@ namespace codessentials.CGM
         /// </summary>
         /// <param name="filename">Path to the CGM file.</param>
         /// <returns></returns>
-        public static BinaryCGMFile ReadBinary(string filename)
+        public static BinaryCgmFile ReadBinary(string filename)
         {
-            return new BinaryCGMFile(filename);
+            return new BinaryCgmFile(filename);
         }
 
         /// <summary>
@@ -41,16 +41,16 @@ namespace codessentials.CGM
         /// <param name="data">The stream containing binary CGM data.</param>
         /// <param name="name">Name of the CGM.</param>
         /// <returns></returns>
-        public static BinaryCGMFile ReadBinary(System.IO.Stream data, string name = "stream")
+        public static BinaryCgmFile ReadBinary(System.IO.Stream data, string name = "stream")
         {
-            return new BinaryCGMFile(data, name);
+            return new BinaryCgmFile(data, name);
         }
 
         /// <summary>
         /// Copies the current meta information
         /// </summary>
         /// <param name="file">The cgm file to copy from</param>
-        public void ApplyValues(CGMFile file)
+        public void ApplyValues(CgmFile file)
         {
             Name = file.Name;
 
@@ -453,7 +453,7 @@ namespace codessentials.CGM
         /// Gets all found rectangles.
         /// </summary>
         /// <returns></returns>
-        public List<CGMRectangle> GetRectangles()
+        public List<CgmRectangle> GetRectangles()
         {
             if (_rectangles == null)
                 _rectangles = GeometryRecognitionEngine.GetRectangles(this);

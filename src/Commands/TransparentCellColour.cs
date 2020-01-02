@@ -8,15 +8,15 @@ namespace codessentials.CGM.Commands
     public class TransparentCellColour : Command
     {
         public bool Indicator { get; set; }
-        public CGMColor Color { get; set; }
+        public CgmColor Color { get; set; }
 
-        public TransparentCellColour(CGMFile container)
+        public TransparentCellColour(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 20, container))
         {
 
         }
 
-        public TransparentCellColour(CGMFile container, bool indicator, CGMColor color)
+        public TransparentCellColour(CgmFile container, bool indicator, CgmColor color)
             : this(container)
         {
             Indicator = indicator;

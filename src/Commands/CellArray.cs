@@ -11,23 +11,23 @@ namespace codessentials.CGM.Commands
         public int RepresentationFlag { get; private set; }
         public int Nx { get; private set; }
         public int Ny { get; private set; }
-        public CGMPoint P { get; private set; }
-        public CGMPoint Q { get; private set; }
-        public CGMPoint R { get; private set; }
+        public CgmPoint P { get; private set; }
+        public CgmPoint Q { get; private set; }
+        public CgmPoint R { get; private set; }
         public int LocalColorPrecision { get; private set; }
 
         /// <summary>
         /// either the colors are filled or the colorIndexes depending on the color selection mode
         /// </summary>
-        public CGMColor[] Colors { get; private set; }
+        public CgmColor[] Colors { get; private set; }
 
-        public CellArray(CGMFile container)
+        public CellArray(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 9, container))
         {
 
         }
 
-        public CellArray(CGMFile container, int repesentationFlag, int nx, int ny, CGMPoint p, CGMPoint q, CGMPoint r, int localColorPrecision, CGMColor[] colors)
+        public CellArray(CgmFile container, int repesentationFlag, int nx, int ny, CgmPoint p, CgmPoint q, CgmPoint r, int localColorPrecision, CgmColor[] colors)
             : this(container)
         {
             RepresentationFlag = repesentationFlag;
@@ -135,7 +135,7 @@ namespace codessentials.CGM.Commands
 
         private void ReadColorsInPackedListMode(int localColorPrecision, IBinaryReader reader)
         {
-            Colors = new CGMColor[Nx * Ny];
+            Colors = new CgmColor[Nx * Ny];
 
             // packed list mode
             var i = 0;
@@ -153,7 +153,7 @@ namespace codessentials.CGM.Commands
         private void ReadColorsInRunLengthListMode(int localColorPrecision, IBinaryReader reader)
         {
             var nColor = Nx * Ny;
-            Colors = new CGMColor[nColor];
+            Colors = new CgmColor[nColor];
 
             // run length list mode
             var c = 0;

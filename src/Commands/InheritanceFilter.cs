@@ -99,13 +99,13 @@
         public Filter[] Values { get; set; }
         public int Setting { get; set; }
 
-        public InheritanceFilter(CGMFile container)
+        public InheritanceFilter(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 2, container))
         {
 
         }
 
-        public InheritanceFilter(CGMFile container, Filter[] values, int setting)
+        public InheritanceFilter(CgmFile container, Filter[] values, int setting)
             : this(container)
         {
             Values = values;

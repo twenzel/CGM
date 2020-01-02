@@ -5,7 +5,7 @@
     /// </summary>
     public class NewRegion : Command
     {
-        public NewRegion(CGMFile container)
+        public NewRegion(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 10, container))
         {
 

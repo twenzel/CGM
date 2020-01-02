@@ -7,13 +7,13 @@
     {
         public double Width { get; set; }
 
-        public MarkerSize(CGMFile container)
+        public MarkerSize(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 7, container))
         {
 
         }
 
-        public MarkerSize(CGMFile container, double width)
+        public MarkerSize(CgmFile container, double width)
             : this(container)
         {
             Width = width;

@@ -17,13 +17,13 @@ namespace codessentials.CGM.Commands
 
         public Type Value { get; private set; }
 
-        public CharacterCodingAnnouncer(CGMFile container)
+        public CharacterCodingAnnouncer(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 15, container))
         {
 
         }
 
-        public CharacterCodingAnnouncer(CGMFile container, Type type)
+        public CharacterCodingAnnouncer(CgmFile container, Type type)
             : this(container)
         {
             Value = type;

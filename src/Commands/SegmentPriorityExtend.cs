@@ -8,13 +8,13 @@
         public int Min { get; set; }
         public int Max { get; set; }
 
-        public SegmentPriorityExtend(CGMFile container)
+        public SegmentPriorityExtend(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 18, container))
         {
 
         }
 
-        public SegmentPriorityExtend(CGMFile container, int min, int max)
+        public SegmentPriorityExtend(CgmFile container, int min, int max)
             : this(container)
         {
             Min = min;

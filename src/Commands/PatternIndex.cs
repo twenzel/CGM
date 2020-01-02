@@ -5,12 +5,12 @@
     /// </summary>
     public class PatternIndex : GenericIndexCommand
     {
-        public PatternIndex(CGMFile container)
+        public PatternIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 25, container), "PATINDEX")
         {
         }
 
-        public PatternIndex(CGMFile container, int index)
+        public PatternIndex(CgmFile container, int index)
             : this(container)
         {
             SetValue(index);

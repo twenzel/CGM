@@ -7,16 +7,16 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class VDCExtent : Command
     {
-        public CGMPoint LowerLeftCorner { get; set; }
-        public CGMPoint UpperRightCorner { get; set; }
+        public CgmPoint LowerLeftCorner { get; set; }
+        public CgmPoint UpperRightCorner { get; set; }
 
-        public VDCExtent(CGMFile container)
+        public VDCExtent(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 6, container))
         {
 
         }
 
-        public VDCExtent(CGMFile container, CGMPoint lowerLeft, CGMPoint upperRight)
+        public VDCExtent(CgmFile container, CgmPoint lowerLeft, CgmPoint upperRight)
             : this(container)
         {
             LowerLeftCorner = lowerLeft;

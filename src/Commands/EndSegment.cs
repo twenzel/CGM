@@ -5,7 +5,7 @@
     /// </remarks>
     public class EndSegment : Command
     {
-        public EndSegment(CGMFile container)
+        public EndSegment(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 7, container))
         {
 

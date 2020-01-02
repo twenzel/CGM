@@ -9,16 +9,16 @@ namespace codessentials.CGM.Commands
     public class GeneralizedDrawingPrimitive : Command
     {
         public int Identifier { get; set; }
-        public List<CGMPoint> Points { get; set; } = new List<CGMPoint>();
+        public List<CgmPoint> Points { get; set; } = new List<CgmPoint>();
         public string DataRecord { get; set; }
 
-        public GeneralizedDrawingPrimitive(CGMFile container)
+        public GeneralizedDrawingPrimitive(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 10, container))
         {
 
         }
 
-        public GeneralizedDrawingPrimitive(CGMFile container, int id, CGMPoint[] points, string data)
+        public GeneralizedDrawingPrimitive(CgmFile container, int id, CgmPoint[] points, string data)
             : this(container)
         {
             Identifier = id;

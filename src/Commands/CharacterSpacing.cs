@@ -4,13 +4,13 @@
     {
         public double Space { get; private set; }
 
-        public CharacterSpacing(CGMFile container)
+        public CharacterSpacing(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 13, container))
         {
 
         }
 
-        public CharacterSpacing(CGMFile container, double space)
+        public CharacterSpacing(CgmFile container, double space)
             : this(container)
         {
             Space = space;

@@ -7,13 +7,13 @@
     {
         public double Offset { get; set; }
 
-        public EdgeTypeInitialOffset(CGMFile container)
+        public EdgeTypeInitialOffset(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 47, container))
         {
 
         }
 
-        public EdgeTypeInitialOffset(CGMFile container, double offset)
+        public EdgeTypeInitialOffset(CgmFile container, double offset)
             : this(container)
         {
             Offset = offset;

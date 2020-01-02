@@ -13,13 +13,13 @@ namespace codessentials.CGM.Commands
         public double SecondComponentScale { get; private set; }
         public double ThirdComponentScale { get; private set; }
 
-        public ColourValueExtent(CGMFile container)
+        public ColourValueExtent(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 10, container))
         {
 
         }
 
-        public ColourValueExtent(CGMFile container, int[] minimumColorValueRGB, int[] maximumColorValueRGB, double firstComponentScale, double second, double third)
+        public ColourValueExtent(CgmFile container, int[] minimumColorValueRGB, int[] maximumColorValueRGB, double firstComponentScale, double second, double third)
             : this(container)
         {
             MinimumColorValueRGB = minimumColorValueRGB;

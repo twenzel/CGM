@@ -43,13 +43,13 @@ namespace codessentials.CGM.Commands
 
         public List<ASFInfo> Infos { get; } = new List<ASFInfo>();
 
-        public AspectSourceFlags(CGMFile container)
+        public AspectSourceFlags(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 35, container))
         {
 
         }
 
-        public AspectSourceFlags(CGMFile container, ASFInfo[] infos)
+        public AspectSourceFlags(CgmFile container, ASFInfo[] infos)
             : this(container)
         {
             Infos.AddRange(infos);

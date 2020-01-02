@@ -13,13 +13,13 @@
         public double TranslationX { get; set; }
         public double TranslationY { get; set; }
 
-        public SegmentTransformation(CGMFile container)
+        public SegmentTransformation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 4, container))
         {
 
         }
 
-        public SegmentTransformation(CGMFile container, int id, double scaleX, double rotationX, double rotationY, double scaleY, double translationX, double translationY)
+        public SegmentTransformation(CgmFile container, int id, double scaleX, double rotationX, double rotationY, double scaleY, double translationX, double translationY)
             : this(container)
         {
             Identifier = id;

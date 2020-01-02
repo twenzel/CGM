@@ -5,7 +5,7 @@
     /// </remarks>
     public class EndTileArray : Command
     {
-        public EndTileArray(CGMFile container)
+        public EndTileArray(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 20, container))
         {
 

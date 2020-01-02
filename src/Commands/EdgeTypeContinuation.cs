@@ -7,12 +7,12 @@
     {
         public int Mode { get; set; }
 
-        public EdgeTypeContinuation(CGMFile container)
+        public EdgeTypeContinuation(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 46, container))
         {
         }
 
-        public EdgeTypeContinuation(CGMFile container, int mode)
+        public EdgeTypeContinuation(CgmFile container, int mode)
             : this(container)
         {
             Mode = mode;

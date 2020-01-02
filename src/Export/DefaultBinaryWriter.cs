@@ -12,7 +12,7 @@ namespace codessentials.CGM.Export
     {
         private Stream _stream;
         private WriterBucket _bucket = new WriterBucket();
-        private readonly CGMFile _cgm;
+        private readonly CgmFile _cgm;
         private readonly List<Message> _messages = new List<Message>();
         private Command _currentCommand;
         private int _positionInCurrentArgument = 0;
@@ -20,7 +20,7 @@ namespace codessentials.CGM.Export
 
         public IEnumerable<Message> Messages => _messages;
 
-        public DefaultBinaryWriter(Stream stream, CGMFile cgm)
+        public DefaultBinaryWriter(Stream stream, CgmFile cgm)
         {
             _stream = stream;
             _cgm = cgm;
@@ -125,7 +125,7 @@ namespace codessentials.CGM.Export
             _bucket.Add(data);
         }
 
-        public void WriteColor(CGMColor color, int localColorPrecision = -1)
+        public void WriteColor(CgmColor color, int localColorPrecision = -1)
         {
             if (_cgm.ColourSelectionMode == ColourSelectionMode.Type.DIRECT)
                 WriteDirectColor(color.Color);
@@ -133,7 +133,7 @@ namespace codessentials.CGM.Export
                 WriteColorIndex(color.ColorIndex, localColorPrecision);
         }
 
-        public void WritePoint(CGMPoint point)
+        public void WritePoint(CgmPoint point)
         {
             WriteVdc(point.X);
             WriteVdc(point.Y);

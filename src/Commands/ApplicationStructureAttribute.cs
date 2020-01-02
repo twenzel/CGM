@@ -10,13 +10,13 @@ namespace codessentials.CGM.Commands
         public string AttributeType { get; private set; }
         public StructuredDataRecord Data { get; private set; }
 
-        public ApplicationStructureAttribute(CGMFile container)
+        public ApplicationStructureAttribute(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ApplicationStructureDescriptorElements, 1, container))
         {
            
         }
 
-        public ApplicationStructureAttribute(CGMFile container, string attributeType, StructuredDataRecord sdr)
+        public ApplicationStructureAttribute(CgmFile container, string attributeType, StructuredDataRecord sdr)
             :this(container)
         {
             AttributeType = attributeType;

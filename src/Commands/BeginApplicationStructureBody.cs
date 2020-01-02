@@ -5,7 +5,7 @@
     /// </remarks>
     public class BeginApplicationStructureBody : Command
     {
-        public BeginApplicationStructureBody(CGMFile container)
+        public BeginApplicationStructureBody(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 22, container))
         {
 

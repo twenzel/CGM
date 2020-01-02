@@ -9,13 +9,13 @@ namespace codessentials.CGM.Commands
     {
         public ClosureType Type { get; private set; }
 
-        public CircularArc3PointClose(CGMFile container)
+        public CircularArc3PointClose(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 14, container))
         {
 
         }
 
-        public CircularArc3PointClose(CGMFile container, CGMPoint p1, CGMPoint p2, CGMPoint p3, ClosureType closureType)
+        public CircularArc3PointClose(CgmFile container, CgmPoint p1, CgmPoint p2, CgmPoint p3, ClosureType closureType)
             : this(container)
         {
             P1 = p1;

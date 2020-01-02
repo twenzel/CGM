@@ -9,15 +9,15 @@ namespace codessentials.CGM.Commands
     public class PolySymbol : Command
     {
         public int Index { get; set; }
-        public List<CGMPoint> Points { get; set; } = new List<CGMPoint>();
+        public List<CgmPoint> Points { get; set; } = new List<CgmPoint>();
 
-        public PolySymbol(CGMFile container)
+        public PolySymbol(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 27, container))
         {
 
         }
 
-        public PolySymbol(CGMFile container, int index, CGMPoint[] points)
+        public PolySymbol(CgmFile container, int index, CgmPoint[] points)
             : this(container)
         {
             Index = index;

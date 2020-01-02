@@ -14,13 +14,13 @@ namespace codessentials.CGM.Commands
         public int GlyphSource { get; set; }
         public StructuredDataRecord CodeAssocs { get; set; }
 
-        public GlyphMapping(CGMFile container)
+        public GlyphMapping(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 22, container))
         {
 
         }
 
-        public GlyphMapping(CGMFile container, int characterSetIndex, CharacterSetList.Type type, string sequenceTail, int octetsPerCode, int glyphSource, StructuredDataRecord codeAssocs)
+        public GlyphMapping(CgmFile container, int characterSetIndex, CharacterSetList.Type type, string sequenceTail, int octetsPerCode, int glyphSource, StructuredDataRecord codeAssocs)
             : this(container)
         {
             CharacterSetIndex = characterSetIndex;

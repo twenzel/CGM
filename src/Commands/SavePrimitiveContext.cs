@@ -7,13 +7,13 @@
     {
         public int Name { get; set; }
 
-        public SavePrimitiveContext(CGMFile container)
+        public SavePrimitiveContext(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 11, container))
         {
 
         }
 
-        public SavePrimitiveContext(CGMFile container, int name)
+        public SavePrimitiveContext(CgmFile container, int name)
             : this(container)
         {
             Name = name;

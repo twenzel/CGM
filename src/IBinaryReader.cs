@@ -19,8 +19,8 @@ namespace codessentials.CGM
         int ReadInt();
         string ReadFixedString();
         StructuredDataRecord ReadSDR();
-        CGMColor ReadColor();
-        CGMColor ReadColor(int localColorPrecision);
+        CgmColor ReadColor();
+        CgmColor ReadColor(int localColorPrecision);
         double ReadVdc();
         int ReadName();
         Color ReadDirectColor();
@@ -28,7 +28,7 @@ namespace codessentials.CGM
         Command ReadEmbeddedCommand();
         double ReadReal();
         string ReadFixedStringWithFallback(int length);
-        CGMPoint ReadPoint();
+        CgmPoint ReadPoint();
         byte ReadByte();
         void AlignOnWord();
         int ReadColorIndex();

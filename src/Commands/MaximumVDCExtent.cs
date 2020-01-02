@@ -7,16 +7,16 @@ namespace codessentials.CGM.Commands
     /// </remarks>
     public class MaximumVDCExtent : Command
     {
-        public CGMPoint FirstCorner { get; set; }
-        public CGMPoint SecondCorner { get; set; }
+        public CgmPoint FirstCorner { get; set; }
+        public CgmPoint SecondCorner { get; set; }
 
-        public MaximumVDCExtent(CGMFile container)
+        public MaximumVDCExtent(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 17, container))
         {
 
         }
 
-        public MaximumVDCExtent(CGMFile container, CGMPoint first, CGMPoint second)
+        public MaximumVDCExtent(CgmFile container, CgmPoint first, CgmPoint second)
             : this(container)
         {
             FirstCorner = first;

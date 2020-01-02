@@ -12,14 +12,14 @@ namespace codessentials.CGM.Commands
         /// <summary>
         /// The position at which the string should be displayed
         /// </summary>
-        public CGMPoint Position { get; protected set; }
+        public CgmPoint Position { get; protected set; }
 
         protected TextCommand(CommandConstructorArguments args)
             : base(args)
         {
         }
 
-        protected void SetValues(string data, CGMPoint position)
+        protected void SetValues(string data, CgmPoint position)
         {
             Text = data;
             Position = position;

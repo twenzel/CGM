@@ -9,13 +9,13 @@
 
         public Type Mode { get; set; }
 
-        public ColourSelectionMode(CGMFile container)
+        public ColourSelectionMode(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 2, container))
         {
 
         }
 
-        public ColourSelectionMode(CGMFile container, Type mode)
+        public ColourSelectionMode(CgmFile container, Type mode)
             : this(container)
         {
             Mode = mode;

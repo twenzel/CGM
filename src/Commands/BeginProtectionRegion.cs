@@ -7,13 +7,13 @@
     {
         public int RegionIndex { get; private set; }
 
-        public BeginProtectionRegion(CGMFile container)
+        public BeginProtectionRegion(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 13, container))
         {
 
         }
 
-        public BeginProtectionRegion(CGMFile container, int index)
+        public BeginProtectionRegion(CgmFile container, int index)
             : this(container)
         {
             RegionIndex = index;

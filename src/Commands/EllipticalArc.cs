@@ -12,7 +12,7 @@ namespace codessentials.CGM.Commands
         public double EndVectorDeltaX { get; set; }
         public double EndVectorDeltaY { get; set; }
 
-        public EllipticalArc(CGMFile container)
+        public EllipticalArc(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 18, container))
         {
 
@@ -24,13 +24,13 @@ namespace codessentials.CGM.Commands
 
         }
 
-        public EllipticalArc(CGMFile container, double startX, double startY, double endX, double endY, CGMPoint center, CGMPoint first, CGMPoint second)
+        public EllipticalArc(CgmFile container, double startX, double startY, double endX, double endY, CgmPoint center, CgmPoint first, CgmPoint second)
             : this(container)
         {
             SetValues(startX, startY, endX, endY, center, first, second);
         }
 
-        protected void SetValues(double startX, double startY, double endX, double endY, CGMPoint center, CGMPoint first, CGMPoint second)
+        protected void SetValues(double startX, double startY, double endX, double endY, CgmPoint center, CgmPoint first, CgmPoint second)
         {
             SetValues(center, first, second);
             StartVectorDeltaX = startX;

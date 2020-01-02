@@ -4,7 +4,7 @@ namespace codessentials.CGM.Elements
 {
     public static class AttributeElements
     {
-        public static Command CreateCommand(int elementId, int elementClass, CGMFile container)
+        public static Command CreateCommand(int elementId, int elementClass, CgmFile container)
         {
             return ((AttributeElement)elementId) switch
             {

@@ -7,19 +7,19 @@ namespace codessentials.CGM
     /// <summary>
     /// Represents a CGM file in CleanText mode
     /// </summary>
-    public class ClearTextCGMFile : CGMFile
+    public class ClearTextCgmFile : CgmFile
     {
         /// <summary>
         /// The original file name.
         /// </summary>
         public string FileName { get; }
 
-        public ClearTextCGMFile()
+        public ClearTextCgmFile()
         {
             ResetMetaDefinitions();
         }
 
-        public ClearTextCGMFile(BinaryCGMFile binaryfile)
+        public ClearTextCgmFile(BinaryCgmFile binaryfile)
         {
             FileName = binaryfile.FileName;
             ApplyValues(binaryfile);

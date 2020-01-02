@@ -5,12 +5,12 @@
     /// </summary>
     public class EdgeBundleIndex : GenericIndexCommand
     {
-        public EdgeBundleIndex(CGMFile container)
+        public EdgeBundleIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 26, container), "EDGEINDEX")
         {
         }
 
-        public EdgeBundleIndex(CGMFile container, int index)
+        public EdgeBundleIndex(CgmFile container, int index)
             : this(container)
         {
             Index = index;

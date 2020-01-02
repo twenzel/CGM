@@ -9,13 +9,13 @@ namespace codessentials.CGM.Commands
     {
         public List<string> Names { get; set; } = new List<string>();
 
-        public SymbolLibraryList(CGMFile container)
+        public SymbolLibraryList(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 23, container))
         {
 
         }
 
-        public SymbolLibraryList(CGMFile container, string[] names)
+        public SymbolLibraryList(CgmFile container, string[] names)
             : this(container)
         {
             Names.AddRange(names);

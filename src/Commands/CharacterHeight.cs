@@ -4,13 +4,13 @@
     {
         public double Height { get; private set; }
 
-        public CharacterHeight(CGMFile container)
+        public CharacterHeight(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 15, container))
         {
 
         }
 
-        public CharacterHeight(CGMFile container, double height)
+        public CharacterHeight(CgmFile container, double height)
             : this(container)
         {
             Height = height;

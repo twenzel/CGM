@@ -6,19 +6,19 @@ namespace codessentials.CGM.Classes
     /// <summary>
     /// Represents a color parameter type
     /// </summary>
-    public sealed class CGMColor : IEquatable<CGMColor>
+    public sealed class CgmColor : IEquatable<CgmColor>
     {
         public Color Color { get; set; } = Color.Empty;
         public int ColorIndex { get; set; } = -1;
 
-        public bool Equals(CGMColor other)
+        public bool Equals(CgmColor other)
         {
             return ColorIndex == other.ColorIndex && Color.ToArgb() == other.Color.ToArgb();
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is CGMColor color)
+            if (obj is CgmColor color)
                 return Equals(color);
             else
                 return false;

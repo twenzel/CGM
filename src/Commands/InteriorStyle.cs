@@ -15,13 +15,13 @@
 
         public Style Value { get; set; }
 
-        public InteriorStyle(CGMFile container)
+        public InteriorStyle(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 22, container))
         {
 
         }
 
-        public InteriorStyle(CGMFile container, Style style)
+        public InteriorStyle(CgmFile container, Style style)
             : this(container)
         {
             Value = style;

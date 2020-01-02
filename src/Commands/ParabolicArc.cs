@@ -7,17 +7,17 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class ParabolicArc : Command
     {
-        public CGMPoint IntersectionPoint { get; set; }
-        public CGMPoint Start { get; set; }
-        public CGMPoint End { get; set; }
+        public CgmPoint IntersectionPoint { get; set; }
+        public CgmPoint Start { get; set; }
+        public CgmPoint End { get; set; }
 
-        public ParabolicArc(CGMFile container)
+        public ParabolicArc(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 23, container))
         {
 
         }
 
-        public ParabolicArc(CGMFile container, CGMPoint intersectionPoint, CGMPoint start, CGMPoint end)
+        public ParabolicArc(CgmFile container, CgmPoint intersectionPoint, CgmPoint start, CgmPoint end)
             : this(container)
         {
             IntersectionPoint = intersectionPoint;

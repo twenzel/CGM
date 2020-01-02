@@ -13,13 +13,13 @@
 
         public Type Value { get; private set; } = Type.Integer;
 
-        public VDCType(CGMFile container)
+        public VDCType(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 3, container))
         {
 
         }
 
-        public VDCType(CGMFile container, Type type)
+        public VDCType(CgmFile container, Type type)
             : this(container)
         {
             Value = type;

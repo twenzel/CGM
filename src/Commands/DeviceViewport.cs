@@ -10,13 +10,13 @@ namespace codessentials.CGM.Commands
         public ViewportPoint FirstCorner { get; set; }
         public ViewportPoint SecondCorner { get; set; }
 
-        public DeviceViewport(CGMFile container)
+        public DeviceViewport(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 8, container))
         {
 
         }
 
-        public DeviceViewport(CGMFile container, ViewportPoint firstCorner, ViewportPoint secondCorder)
+        public DeviceViewport(CgmFile container, ViewportPoint firstCorner, ViewportPoint secondCorder)
             : this(container)
         {
             FirstCorner = firstCorner;

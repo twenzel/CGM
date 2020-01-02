@@ -5,12 +5,12 @@
     /// </summary>
     public class FillBundleIndex : GenericIndexCommand
     {
-        public FillBundleIndex(CGMFile container)
+        public FillBundleIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 21, container), "FILLINDEX")
         {
         }
 
-        public FillBundleIndex(CGMFile container, int index)
+        public FillBundleIndex(CgmFile container, int index)
             : this(container)
         {
             SetValue(index);

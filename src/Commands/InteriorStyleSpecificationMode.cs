@@ -7,13 +7,13 @@
     {
         public SpecificationMode Mode { get; set; }
 
-        public InteriorStyleSpecificationMode(CGMFile container)
+        public InteriorStyleSpecificationMode(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 16, container))
         {
 
         }
 
-        public InteriorStyleSpecificationMode(CGMFile container, SpecificationMode mode)
+        public InteriorStyleSpecificationMode(CgmFile container, SpecificationMode mode)
             : this(container)
         {
             Mode = mode;

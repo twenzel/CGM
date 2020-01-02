@@ -9,12 +9,12 @@ namespace codessentials.CGM.Commands
     public class NonUniformBSpline : Command
     {
         public int SplineOrder { get; set; }
-        public List<CGMPoint> Points { get; set; } = new List<CGMPoint>();
+        public List<CgmPoint> Points { get; set; } = new List<CgmPoint>();
         public List<double> Knots { get; set; } = new List<double>();
         public double StartValue { get; set; }
         public double EndValue { get; set; }
 
-        public NonUniformBSpline(CGMFile container)
+        public NonUniformBSpline(CgmFile container)
             : this(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 24, container))
         {
 
@@ -26,13 +26,13 @@ namespace codessentials.CGM.Commands
 
         }
 
-        public NonUniformBSpline(CGMFile container, int splineOrder, IEnumerable<CGMPoint> points, IEnumerable<double> knots, double start, double end)
+        public NonUniformBSpline(CgmFile container, int splineOrder, IEnumerable<CgmPoint> points, IEnumerable<double> knots, double start, double end)
             : this(container)
         {
             SetValues(splineOrder, points, knots, start, end);
         }
 
-        protected void SetValues(int splineOrder, IEnumerable<CGMPoint> points, IEnumerable<double> knots, double start, double end)
+        protected void SetValues(int splineOrder, IEnumerable<CgmPoint> points, IEnumerable<double> knots, double start, double end)
         {
             SplineOrder = splineOrder;
             Points.AddRange(points);

@@ -7,13 +7,13 @@
     {
         public int Id { get; private set; }
 
-        public BeginSegment(CGMFile container)
+        public BeginSegment(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 6, container))
         {
 
         }
 
-        public BeginSegment(CGMFile container, int id)
+        public BeginSegment(CgmFile container, int id)
             : this(container)
         {
             Id = id;

@@ -7,13 +7,13 @@
     {
         public int Identifier { get; set; }
 
-        public PickIdentifier(CGMFile container)
+        public PickIdentifier(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 36, container))
         {
 
         }
 
-        public PickIdentifier(CGMFile container, int id)
+        public PickIdentifier(CgmFile container, int id)
             : this(container)
         {
             Identifier = id;

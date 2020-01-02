@@ -7,13 +7,13 @@
     {
         public string FileName { get; private set; }
 
-        public BeginMetafile(CGMFile container)
+        public BeginMetafile(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 1, container))
         {
 
         }
 
-        public BeginMetafile(CGMFile container, string fileName)
+        public BeginMetafile(CgmFile container, string fileName)
             : this(container)
         {
             FileName = fileName;

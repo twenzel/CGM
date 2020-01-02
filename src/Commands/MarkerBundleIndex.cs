@@ -5,12 +5,12 @@
     /// </summary>
     public class MarkerBundleIndex : GenericIndexCommand
     {
-        public MarkerBundleIndex(CGMFile container)
+        public MarkerBundleIndex(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 5, container), "MARKERINDEX")
         {
         }
 
-        public MarkerBundleIndex(CGMFile container, int index)
+        public MarkerBundleIndex(CgmFile container, int index)
             : this(container)
         {
             SetValue(index);

@@ -5,7 +5,7 @@
     /// </remarks>
     public class EndProtectionRegion : Command
     {
-        public EndProtectionRegion(CGMFile container)
+        public EndProtectionRegion(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 14, container))
         {
 

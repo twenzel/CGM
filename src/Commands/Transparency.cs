@@ -7,13 +7,13 @@
     {
         public bool Flag { get; set; }
 
-        public Transparency(CGMFile container)
+        public Transparency(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 4, container))
         {
 
         }
 
-        public Transparency(CGMFile container, bool flag)
+        public Transparency(CgmFile container, bool flag)
             : this(container)
         {
             Flag = flag;
