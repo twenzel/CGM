@@ -83,7 +83,7 @@ namespace codessentials.CGM
             RestrictedTextType = CGM.Commands.RestrictedTextType.Type.BASIC;
             VDCIntegerPrecision = 16;
             VDCRealPrecision = Precision.Fixed_32;
-            VDCType = CGM.Commands.VDCType.Type.Integer;
+            VDCType = CGM.Commands.VdcType.Type.Integer;
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace codessentials.CGM
         /// <summary>
         /// Gets or sets the current reading VDC Type
         /// </summary>
-        public VDCType.Type VDCType { get; set; }
+        public VdcType.Type VDCType { get; set; }
 
         /// <summary>
         /// The read CGM commands

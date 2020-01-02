@@ -5,15 +5,15 @@ namespace codessentials.CGM.Commands
     /// <remarks>
     /// Class=3, ElementId=2
     /// </remarks>
-    public class VDCRealPrecision : RealPrecisionBase
+    public class VdcRealPrecision : RealPrecisionBase
     {
-        public VDCRealPrecision(CgmFile container)
+        public VdcRealPrecision(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 2, container))
         {
 
         }
 
-        public VDCRealPrecision(CgmFile container, Precision precision)
+        public VdcRealPrecision(CgmFile container, Precision precision)
             : this(container)
         {
             SetValue(precision);

@@ -75,7 +75,7 @@ namespace codessentials.CGM.Commands
 
         protected string WriteVDC(double value)
         {
-            if (_container.VDCType == VDCType.Type.Real)
+            if (_container.VDCType == VdcType.Type.Real)
                 return WriteDouble(value);
             else
                 return WriteInt(Convert.ToInt32(value));

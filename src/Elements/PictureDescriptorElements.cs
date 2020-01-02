@@ -13,7 +13,7 @@ namespace codessentials.CGM.Elements
                 PictureDescriptorElement.LINE_WIDTH_SPECIFICATION_MODE => new LineWidthSpecificationMode(container),
                 PictureDescriptorElement.MARKER_SIZE_SPECIFICATION_MODE => new MarkerSizeSpecificationMode(container),
                 PictureDescriptorElement.EDGE_WIDTH_SPECIFICATION_MODE => new EdgeWidthSpecificationMode(container),
-                PictureDescriptorElement.VDC_EXTENT => new VDCExtent(container),
+                PictureDescriptorElement.VDC_EXTENT => new VdcExtent(container),
                 PictureDescriptorElement.BACKGROUND_COLOUR => new BackgroundColour(container),
                 PictureDescriptorElement.DEVICE_VIEWPORT => new DeviceViewport(container),
                 PictureDescriptorElement.DEVICE_VIEWPORT_SPECIFICATION_MODE => new DeviceViewportSpecificationMode(container),

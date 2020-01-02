@@ -81,7 +81,7 @@ namespace codessentials.CGM.Tests
             writer.SetElementList("DRAWINGPLUS");
             writer.SetFontList(new[] { "Arial", "Arial Bold" });
             writer.SetCharacterSetList(new[] { new KeyValuePair<CharacterSetList.Type, string>(CharacterSetList.Type._94_CHAR_G_SET, "B"), new KeyValuePair<CharacterSetList.Type, string>(CharacterSetList.Type._96_CHAR_G_SET, "A"), new KeyValuePair<CharacterSetList.Type, string>(CharacterSetList.Type.COMPLETE_CODE, "I"), new KeyValuePair<CharacterSetList.Type, string>(CharacterSetList.Type.COMPLETE_CODE, "L") });
-            writer.SetVDCType(VDCType.Type.Real);
+            writer.SetVDCType(VdcType.Type.Real);
             writer.Finish();
 
             var binaryFile = new BinaryCgmFile(new MemoryStream(writer.GetContent()));

@@ -51,9 +51,9 @@ namespace codessentials.CGM
             AddCommand(new CharacterSetList(_cgm, items));
         }
 
-        public void SetVDCType(VDCType.Type type)
+        public void SetVDCType(VdcType.Type type)
         {
-            AddCommand(new VDCType(_cgm, type));
+            AddCommand(new VdcType(_cgm, type));
         }
 
         public void Finish()

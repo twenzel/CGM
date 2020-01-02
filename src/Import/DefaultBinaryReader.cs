@@ -638,7 +638,7 @@ namespace codessentials.CGM.Import
 
         public double ReadVdc()
         {
-            if (_cgm.VDCType == VDCType.Type.Real)
+            if (_cgm.VDCType == VdcType.Type.Real)
             {
                 var realPrecision = _cgm.VDCRealPrecision;
                 if (realPrecision == Precision.Fixed_32)
@@ -674,13 +674,13 @@ namespace codessentials.CGM.Import
 
         protected int SizeOfVdc()
         {
-            if (_cgm.VDCType == VDCType.Type.Integer)
+            if (_cgm.VDCType == VdcType.Type.Integer)
             {
                 var precision = _cgm.VDCIntegerPrecision;
                 return (precision / 8);
             }
 
-            if (_cgm.VDCType == VDCType.Type.Real)
+            if (_cgm.VDCType == VdcType.Type.Real)
             {
                 var precision = _cgm.VDCRealPrecision;
                 if (precision == Precision.Fixed_32)

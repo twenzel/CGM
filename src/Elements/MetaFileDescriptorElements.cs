@@ -10,7 +10,7 @@ namespace codessentials.CGM.Elements
             {
                 MetaFileDescriptorElement.METAFILE_VERSION => new MetafileVersion(container),
                 MetaFileDescriptorElement.METAFILE_DESCRIPTION => new MetafileDescription(container),
-                MetaFileDescriptorElement.VDC_TYPE => new VDCType(container),
+                MetaFileDescriptorElement.VDC_TYPE => new VdcType(container),
                 MetaFileDescriptorElement.INTEGER_PRECISION => new IntegerPrecision(container),
                 MetaFileDescriptorElement.REAL_PRECISION => new RealPrecision(container),
                 MetaFileDescriptorElement.INDEX_PRECISION => new IndexPrecision(container),
@@ -24,7 +24,7 @@ namespace codessentials.CGM.Elements
                 MetaFileDescriptorElement.CHARACTER_SET_LIST => new CharacterSetList(container),
                 MetaFileDescriptorElement.CHARACTER_CODING_ANNOUNCER => new CharacterCodingAnnouncer(container),
                 MetaFileDescriptorElement.NAME_PRECISION => new NamePrecision(container),
-                MetaFileDescriptorElement.MAXIMUM_VDC_EXTENT => new MaximumVDCExtent(container),
+                MetaFileDescriptorElement.MAXIMUM_VDC_EXTENT => new MaximumVdcExtent(container),
                 MetaFileDescriptorElement.SEGMENT_PRIORITY_EXTENT => new SegmentPriorityExtend(container),
                 MetaFileDescriptorElement.COLOUR_MODEL => new ColourModel(container),
                 MetaFileDescriptorElement.COLOUR_CALIBRATION => new ColourCalibration(container),

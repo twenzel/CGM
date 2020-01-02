@@ -634,7 +634,7 @@ namespace codessentials.CGM.Export
 
         public void WriteVdc(double data)
         {
-            if (_cgm.VDCType == VDCType.Type.Real)
+            if (_cgm.VDCType == VdcType.Type.Real)
             {
                 var realPrecision = _cgm.VDCRealPrecision;
                 if (realPrecision == Precision.Fixed_32)

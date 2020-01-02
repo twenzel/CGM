@@ -8,8 +8,8 @@ namespace codessentials.CGM.Elements
         {
             return ((ControlElement)elementId) switch
             {
-                ControlElement.VDC_INTEGER_PRECISION => new VDCIntegerPrecision(container),
-                ControlElement.VDC_REAL_PRECISION => new VDCRealPrecision(container),
+                ControlElement.VDC_INTEGER_PRECISION => new VdcIntegerPrecision(container),
+                ControlElement.VDC_REAL_PRECISION => new VdcRealPrecision(container),
                 ControlElement.AUXILIARY_COLOUR => new AuxiliaryColour(container),
                 ControlElement.TRANSPARENCY => new Transparency(container),
                 ControlElement.CLIP_RECTANGLE => new ClipRectangle(container),

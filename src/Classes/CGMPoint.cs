@@ -81,7 +81,7 @@ namespace codessentials.CGM.Classes
     /// Comparer to sort CGMPoints to the leftest upper corner
     /// </summary>
     /// <seealso cref="System.Collections.Generic.IComparer{codessentials.CGM.Classes.CgmPoint}" />
-    public class CGMPointComparer : IComparer<CgmPoint>
+    public class CgmPointComparer : IComparer<CgmPoint>
     {
         public int Compare(CgmPoint x, CgmPoint y)
         {

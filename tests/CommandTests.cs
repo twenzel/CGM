@@ -72,9 +72,9 @@ namespace codessentials.CGM.Tests
         [Test]
         public void AspectSourceFlags_Write_Binary()
         {
-            var info = new AspectSourceFlags.ASFInfo() { Type = AspectSourceFlags.ASFType.edgecolour, Value = AspectSourceFlags.ASFValue.BUNDLED };
-            var info2 = new AspectSourceFlags.ASFInfo() { Type = AspectSourceFlags.ASFType.hatchindex, Value = AspectSourceFlags.ASFValue.INDIV };
-            var info3 = new AspectSourceFlags.ASFInfo() { Type = AspectSourceFlags.ASFType.textcolour, Value = AspectSourceFlags.ASFValue.BUNDLED };
+            var info = new AspectSourceFlags.AspectSourceFlagsInfo() { Type = AspectSourceFlags.ASFType.edgecolour, Value = AspectSourceFlags.ASFValue.BUNDLED };
+            var info2 = new AspectSourceFlags.AspectSourceFlagsInfo() { Type = AspectSourceFlags.ASFType.hatchindex, Value = AspectSourceFlags.ASFValue.INDIV };
+            var info3 = new AspectSourceFlags.AspectSourceFlagsInfo() { Type = AspectSourceFlags.ASFType.textcolour, Value = AspectSourceFlags.ASFValue.BUNDLED };
 
             TestCommand(cgm => new AspectSourceFlags(cgm, new[] { info }),
                 cmd => cmd.Infos[0].Type == info.Type && cmd.Infos[0].Value == info.Value);
@@ -226,10 +226,10 @@ namespace codessentials.CGM.Tests
 
             TestCommand(cgm =>
             {
-                cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
-                cgm.Commands.Add(new VDCRealPrecision(cgm, Precision.Floating_32));
+                cgm.Commands.Add(new VdcType(cgm, VdcType.Type.Real));
+                cgm.Commands.Add(new VdcRealPrecision(cgm, Precision.Floating_32));
                 cgm.Commands.Add(new RealPrecision(cgm, Precision.Floating_32));
-                cgm.VDCType = VDCType.Type.Real;
+                cgm.VDCType = VdcType.Type.Real;
                 cgm.VDCRealPrecision = Precision.Floating_32;
                 cgm.RealPrecision = Precision.Floating_32;
 
@@ -321,10 +321,10 @@ namespace codessentials.CGM.Tests
         {
             TestCommand(cgm =>
             {
-                cgm.Commands.Add(new VDCRealPrecision(cgm, Precision.Fixed_32));
+                cgm.Commands.Add(new VdcRealPrecision(cgm, Precision.Fixed_32));
                 cgm.VDCRealPrecision = Precision.Fixed_32;
-                cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
-                cgm.VDCType = VDCType.Type.Real;
+                cgm.Commands.Add(new VdcType(cgm, VdcType.Type.Real));
+                cgm.VDCType = VdcType.Type.Real;
                 return new CharacterHeight(cgm, 12.2);
             }, cmd => cmd.Height.Should().Be(12.199996948242188));
 
@@ -336,10 +336,10 @@ namespace codessentials.CGM.Tests
         {
             TestCommand(cgm =>
             {
-                cgm.Commands.Add(new VDCRealPrecision(cgm, Precision.Fixed_32));
+                cgm.Commands.Add(new VdcRealPrecision(cgm, Precision.Fixed_32));
                 cgm.VDCRealPrecision = Precision.Fixed_32;
-                cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
-                cgm.VDCType = VDCType.Type.Real;
+                cgm.Commands.Add(new VdcType(cgm, VdcType.Type.Real));
+                cgm.VDCType = VdcType.Type.Real;
                 return new CharacterOrientation(cgm, 12.2, 1, 5.5, 4);
             }, cmd =>
             {
@@ -1322,7 +1322,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void MaximumVDCExtent_Write_Binary()
         {
-            TestCommand(cgm => new MaximumVDCExtent(cgm, Point, Point2), cmd =>
+            TestCommand(cgm => new MaximumVdcExtent(cgm, Point, Point2), cmd =>
             {
                 cmd.FirstCorner.Should().Be(Point);
                 cmd.SecondCorner.Should().Be(Point2);
@@ -1963,7 +1963,7 @@ namespace codessentials.CGM.Tests
         [Test]
         public void VDCExtent_Write_Binary()
         {
-            TestCommand(cgm => new VDCExtent(cgm, Point, Point2), cmd =>
+            TestCommand(cgm => new VdcExtent(cgm, Point, Point2), cmd =>
             {
                 cmd.LowerLeftCorner.Should().Be(Point);
                 cmd.UpperRightCorner.Should().Be(Point2);
@@ -1977,8 +1977,8 @@ namespace codessentials.CGM.Tests
 
             TestCommand(cgm =>
             {
-                cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
-                return new VDCExtent(cgm, negativePoint, Point2);
+                cgm.Commands.Add(new VdcType(cgm, VdcType.Type.Real));
+                return new VdcExtent(cgm, negativePoint, Point2);
             }, cmd =>
             {
                 cmd.LowerLeftCorner.Should().Be(negativePoint);
@@ -1993,8 +1993,8 @@ namespace codessentials.CGM.Tests
 
             TestCommand(cgm =>
             {
-                cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
-                return new VDCExtent(cgm, negativePoint, Point2);
+                cgm.Commands.Add(new VdcType(cgm, VdcType.Type.Real));
+                return new VdcExtent(cgm, negativePoint, Point2);
             }, cmd =>
             {
                 cmd.LowerLeftCorner.Should().Be(negativePoint);
@@ -2009,8 +2009,8 @@ namespace codessentials.CGM.Tests
 
             TestCommand(cgm =>
             {
-                cgm.Commands.Add(new VDCType(cgm, VDCType.Type.Real));
-                return new VDCExtent(cgm, negativePoint, Point2);
+                cgm.Commands.Add(new VdcType(cgm, VdcType.Type.Real));
+                return new VdcExtent(cgm, negativePoint, Point2);
             }, cmd =>
             {
                 cmd.LowerLeftCorner.Should().Be(negativePoint);
@@ -2021,24 +2021,24 @@ namespace codessentials.CGM.Tests
         [Test]
         public void VDCIntegerPrecision_Write_Binary()
         {
-            TestCommand(cgm => new VDCIntegerPrecision(cgm, 16), cmd => cmd.Precision.Should().Be(16));
-            TestCommand(cgm => new VDCIntegerPrecision(cgm, 24), cmd => cmd.Precision.Should().Be(24));
+            TestCommand(cgm => new VdcIntegerPrecision(cgm, 16), cmd => cmd.Precision.Should().Be(16));
+            TestCommand(cgm => new VdcIntegerPrecision(cgm, 24), cmd => cmd.Precision.Should().Be(24));
         }
 
         [Test]
         public void VDCRealPrecision_Write_Binary()
         {
-            TestCommand(cgm => new VDCRealPrecision(cgm, Precision.Fixed_32), cmd => cmd.Value == Precision.Fixed_32);
-            TestCommand(cgm => new VDCRealPrecision(cgm, Precision.Fixed_64), cmd => cmd.Value == Precision.Fixed_64);
-            TestCommand(cgm => new VDCRealPrecision(cgm, Precision.Floating_32), cmd => cmd.Value == Precision.Floating_32);
-            TestCommand(cgm => new VDCRealPrecision(cgm, Precision.Floating_64), cmd => cmd.Value == Precision.Floating_64);
+            TestCommand(cgm => new VdcRealPrecision(cgm, Precision.Fixed_32), cmd => cmd.Value == Precision.Fixed_32);
+            TestCommand(cgm => new VdcRealPrecision(cgm, Precision.Fixed_64), cmd => cmd.Value == Precision.Fixed_64);
+            TestCommand(cgm => new VdcRealPrecision(cgm, Precision.Floating_32), cmd => cmd.Value == Precision.Floating_32);
+            TestCommand(cgm => new VdcRealPrecision(cgm, Precision.Floating_64), cmd => cmd.Value == Precision.Floating_64);
         }
 
         [Test]
         public void VDCType_Write_Binary()
         {
-            TestCommand(cgm => new VDCType(cgm, VDCType.Type.Integer), cmd => cmd.Value == VDCType.Type.Integer);
-            TestCommand(cgm => new VDCType(cgm, VDCType.Type.Real), cmd => cmd.Value == VDCType.Type.Real);
+            TestCommand(cgm => new VdcType(cgm, VdcType.Type.Integer), cmd => cmd.Value == VdcType.Type.Integer);
+            TestCommand(cgm => new VdcType(cgm, VdcType.Type.Real), cmd => cmd.Value == VdcType.Type.Real);
         }
 
         [TestCase(Precision.Fixed_32, 5, 5)]
