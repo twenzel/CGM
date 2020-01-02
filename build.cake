@@ -26,7 +26,6 @@ var sonarProjectKey = "twenzel_CGM";
 var sonarUrl = "https://sonarcloud.io";
 var sonarOrganization = "twenzel";
 var isLocalBuild = string.IsNullOrEmpty(EnvironmentVariable("GITHUB_REPOSITORY"));
-var isMasterBranch = false;
 var isPullRequest = !string.IsNullOrEmpty(EnvironmentVariable("GITHUB_HEAD_REF"));
 var gitHubEvent = EnvironmentVariable("GITHUB_EVENT_NAME");
 var isReleaseCreation = string.Equals(gitHubEvent, "release");
@@ -85,8 +84,6 @@ Task("Version")
 		Information("CommitsSinceVersionSource:\t\t" + versionInfo.CommitsSinceVersionSource);
 		Information("CommitsSinceVersionSourcePadded:\t" + versionInfo.CommitsSinceVersionSourcePadded);
 		Information("CommitDate:\t\t\t\t" + versionInfo.CommitDate);
-
-		isMasterBranch =  StringComparer.OrdinalIgnoreCase.Equals("master", versionInfo.BranchName);
 	});
 
 Task("Build")
@@ -174,7 +171,7 @@ Task("Pack")
 	});
 	
 Task("Publish")	
-	.WithCriteria(isReleaseCreation && isMasterBranch)
+	.WithCriteria(isReleaseCreation)
 	.IsDependentOn("Pack")	
 	.Description("Pushes the created NuGet packages to nuget.org")  
 	.Does(() => {
