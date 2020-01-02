@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace codessentials.CGM.Commands
 {
@@ -10,7 +9,7 @@ namespace codessentials.CGM.Commands
     {
         public enum Type
         {
-            UI8 =0,
+            UI8 = 0,
             UI16,
             UI32
         }
@@ -25,14 +24,14 @@ namespace codessentials.CGM.Commands
         public Type Value { get; set; }
         public List<PDInfo> Infos { get; set; } = new List<PDInfo>();
 
-        public PictureDirectory(CGMFile container) 
+        public PictureDirectory(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 24, container))
         {
-            
+
         }
 
         public PictureDirectory(CGMFile container, Type type, IEnumerable<PDInfo> infos)
-            :this(container)
+            : this(container)
         {
             Value = type;
             Infos.AddRange(infos);
@@ -44,13 +43,15 @@ namespace codessentials.CGM.Commands
 
             while (reader.CurrentArg < reader.Arguments.Length)
             {
-                var info = new PDInfo();
-                info.Identifier = reader.ReadFixedString();
-                info.Location = reader.ReadInt();
-                info.Directory = reader.ReadInt();
+                var info = new PDInfo
+                {
+                    Identifier = reader.ReadFixedString(),
+                    Location = reader.ReadInt(),
+                    Directory = reader.ReadInt()
+                };
 
                 Infos.Add(info);
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

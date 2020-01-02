@@ -1,9 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM
 {
@@ -11,7 +6,7 @@ namespace codessentials.CGM
     /// Writer interface to write binary values
     /// </summary>
     public interface IBinaryWriter
-    {        
+    {
         void WriteString(string data);
 
         void WriteFixedString(string data);
@@ -55,6 +50,6 @@ namespace codessentials.CGM
 
         void WriteEmbeddedCommand(Commands.Command command);
         void Unsupported(string message);
-        void WriteByte(byte b);
+        void WriteByte(byte data);
     }
 }

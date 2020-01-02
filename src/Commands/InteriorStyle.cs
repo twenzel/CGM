@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class InteriorStyle : Command
     {
@@ -19,14 +15,14 @@ namespace codessentials.CGM.Commands
 
         public Style Value { get; set; }
 
-        public InteriorStyle(CGMFile container) 
+        public InteriorStyle(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 22, container))
         {
-            
+
         }
 
         public InteriorStyle(CGMFile container, Style style)
-            :this(container)
+            : this(container)
         {
             Value = style;
         }

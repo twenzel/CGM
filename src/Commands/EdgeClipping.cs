@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=3, ElementId=9
@@ -11,21 +7,20 @@ namespace codessentials.CGM.Commands
     {
         public ClippingMode Mode { get; set; }
 
-        public EdgeClipping(CGMFile container) 
+        public EdgeClipping(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 9, container))
-        {            
+        {
         }
 
-
         public EdgeClipping(CGMFile container, ClippingMode mode)
-            :this(container)
+            : this(container)
         {
             Mode = mode;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Mode = (ClippingMode)reader.ReadEnum();            
+            Mode = (ClippingMode)reader.ReadEnum();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

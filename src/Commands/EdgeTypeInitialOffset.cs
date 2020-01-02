@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=47
@@ -12,11 +10,11 @@ namespace codessentials.CGM.Commands
         public EdgeTypeInitialOffset(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 47, container))
         {
-           
+
         }
 
         public EdgeTypeInitialOffset(CGMFile container, double offset)
-            :this(container)
+            : this(container)
         {
             Offset = offset;
         }

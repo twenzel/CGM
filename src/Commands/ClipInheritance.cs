@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=8, ElementId=3
@@ -13,35 +11,33 @@ namespace codessentials.CGM.Commands
             INTERSECTION
         }
 
-        private Value _value;
+        public Value Data { get; private set; }
 
         public ClipInheritance(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 3, container))
         {
-           
+
         }
 
         public ClipInheritance(CGMFile container, Value value)
-            :this(container)
+            : this(container)
         {
-            _value = value;
+            Data = value;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _value = (Value)reader.ReadEnum();            
+            Data = (Value)reader.ReadEnum();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteEnum((int)_value);
+            writer.WriteEnum((int)Data);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" CLIPINH {WriteEnum(_value)};");
+            writer.WriteLine($" CLIPINH {WriteEnum(Data)};");
         }
-
-        public Value Data => _value;
     }
 }

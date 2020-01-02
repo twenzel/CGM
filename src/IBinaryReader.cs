@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using codessentials.CGM.Classes;
 using codessentials.CGM.Commands;
 
@@ -14,9 +9,9 @@ namespace codessentials.CGM
     /// </summary>
     public interface IBinaryReader
     {
-        int CurrentArg { get; }        
+        int CurrentArg { get; }
         int ArgumentsCount { get; }
-        byte[] Arguments { get;  }
+        byte[] Arguments { get; }
 
         int ReadEnum();
         string ReadString();
@@ -25,8 +20,8 @@ namespace codessentials.CGM
         string ReadFixedString();
         StructuredDataRecord ReadSDR();
         CGMColor ReadColor();
+        CGMColor ReadColor(int localColorPrecision);
         double ReadVdc();
-        int ReadColorIndex();
         int ReadName();
         Color ReadDirectColor();
         ViewportPoint ReadViewportPoint();
@@ -36,15 +31,15 @@ namespace codessentials.CGM
         CGMPoint ReadPoint();
         byte ReadByte();
         void AlignOnWord();
+        int ReadColorIndex();
         int ReadColorIndex(int localColorPrecision);
         int SizeOfEnum();
         int SizeOfPoint();
-        int ReadUInt(int precision);        
+        int ReadUInt(int precision);
         bool ReadBool();
         double ReadSizeSpecification(SpecificationMode edgeWidthSpecificationMode);
         double ReadFloatingPoint();
         double ReadFloatingPoint32();
-        CGMColor ReadColor(int localColorPrecision = -1);
         int SizeOfInt();
         void Unsupported(string message);
         int SizeOfDirectColor();

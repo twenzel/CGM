@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,14 +12,14 @@ namespace codessentials.CGM.Commands
         public CGMPoint FirstCorner { get; set; }
         public CGMPoint SecondCorner { get; set; }
 
-        public GeometricPatternDefinition(CGMFile container) 
+        public GeometricPatternDefinition(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 19, container))
         {
-            
+
         }
 
         public GeometricPatternDefinition(CGMFile container, int patternIndex, int id, CGMPoint first, CGMPoint second)
-            :this(container)
+            : this(container)
         {
             PatternIndex = patternIndex;
             Identifier = id;
@@ -33,7 +32,7 @@ namespace codessentials.CGM.Commands
             PatternIndex = reader.ReadIndex();
             Identifier = reader.ReadName();
             FirstCorner = reader.ReadPoint();
-            SecondCorner = reader.ReadPoint();            
+            SecondCorner = reader.ReadPoint();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

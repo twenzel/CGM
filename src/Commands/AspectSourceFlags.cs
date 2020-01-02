@@ -41,7 +41,7 @@ namespace codessentials.CGM.Commands
             public ASFValue Value { get; set; }
         }
 
-        private List<ASFInfo> _infos = new List<ASFInfo>();
+        public List<ASFInfo> Infos { get; }
 
         public AspectSourceFlags(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 35, container))
@@ -51,8 +51,8 @@ namespace codessentials.CGM.Commands
 
         public AspectSourceFlags(CGMFile container, ASFInfo[] infos)
             :this(container)
-        {            
-            _infos.AddRange(infos);
+        {
+            Infos.AddRange(infos);
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
@@ -64,13 +64,13 @@ namespace codessentials.CGM.Commands
                     Type = (ASFType)reader.ReadEnum(),
                     Value = (ASFValue)reader.ReadEnum()
                 };
-                _infos.Add(info);
+                Infos.Add(info);
             }            
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {           
-            foreach (var info in _infos)
+            foreach (var info in Infos)
             {
                 writer.WriteEnum((int)info.Type);
                 writer.WriteEnum((int)info.Value);
@@ -81,12 +81,10 @@ namespace codessentials.CGM.Commands
         {
             writer.Write(" ASF");
 
-            foreach (var info in _infos)
+            foreach (var info in Infos)
                 writer.Write($" {WriteEnum(info.Type)} {WriteEnum(info.Value)}");
 
             writer.WriteLine(";");
         }
-
-        public List<ASFInfo> Infos => _infos;
     }
 }

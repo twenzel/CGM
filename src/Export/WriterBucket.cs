@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Export
 {
@@ -36,12 +32,12 @@ namespace codessentials.CGM.Export
             //    this.WriteWord((int)((byte)value[i]) << 8 | (int)((byte)value[i + 1]));
             //}
 
-            
+
         }
 
         public void WriteFloat(float value)
         {
-            byte[] bytes = BitConverter.GetBytes(value);
+            var bytes = BitConverter.GetBytes(value);
             base.Add(bytes[3]);
             base.Add(bytes[2]);
             base.Add(bytes[1]);
@@ -51,7 +47,7 @@ namespace codessentials.CGM.Export
         public void SaveToStream(Stream stream)
         {
             stream.Write(this.ToArray(), 0, base.Count);
-        }       
+        }
     }
 
 }

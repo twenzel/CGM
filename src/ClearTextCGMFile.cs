@@ -1,6 +1,6 @@
-﻿using codessentials.CGM.Export;
-using System.IO;
+﻿using System.IO;
 using System.Text;
+using codessentials.CGM.Export;
 
 namespace codessentials.CGM
 {
@@ -9,8 +9,6 @@ namespace codessentials.CGM
     /// </summary>
     public class ClearTextCGMFile : CGMFile
     {
-        private string _fileName;
-
         public ClearTextCGMFile()
         {
             ResetMetaDefinitions();
@@ -18,7 +16,7 @@ namespace codessentials.CGM
 
         public ClearTextCGMFile(BinaryCGMFile binaryfile)
         {
-            _fileName = binaryfile.FileName;
+            FileName = binaryfile.FileName;
             ApplyValues(binaryfile);
         }
 
@@ -27,7 +25,7 @@ namespace codessentials.CGM
         /// </summary>
         public void WriteFile()
         {
-            WriteFile(_fileName);
+            WriteFile(FileName);
         }
 
         /// <summary>
@@ -75,9 +73,6 @@ namespace codessentials.CGM
         /// <summary>
         /// The original file name.
         /// </summary>
-        public string FileName
-        {
-            get { return _fileName; }
-        }
+        public string FileName { get; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace codessentials.CGM.Commands
 {
@@ -19,11 +18,11 @@ namespace codessentials.CGM.Commands
         public TextScoreType(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 41, container))
         {
-           
+
         }
 
         public TextScoreType(CGMFile container, IEnumerable<TSInfo> infos)
-            :this(container)
+            : this(container)
         {
             Infos.AddRange(infos);
         }
@@ -32,12 +31,14 @@ namespace codessentials.CGM.Commands
         {
             while (reader.CurrentArg < reader.Arguments.Length)
             {
-                var info = new TSInfo();
-                info.Type = reader.ReadIndex();
-                info.Indicator = reader.ReadBool();
+                var info = new TSInfo
+                {
+                    Type = reader.ReadIndex(),
+                    Indicator = reader.ReadBool()
+                };
 
                 Infos.Add(info);
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -52,7 +53,7 @@ namespace codessentials.CGM.Commands
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.Write(" TEXTSCORETYPE");
-            foreach(var info in Infos)
+            foreach (var info in Infos)
             {
                 writer.Write($" {WriteIndex(info.Type)} {WriteBool(info.Indicator)}");
             }

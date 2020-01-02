@@ -1,8 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,14 +9,14 @@ namespace codessentials.CGM.Commands
     {
         public CGMPoint[] Points { get; set; }
 
-        public PolygonElement(CGMFile container) 
+        public PolygonElement(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 7, container))
         {
-            
+
         }
 
         public PolygonElement(CGMFile container, CGMPoint[] points)
-            :this(container)
+            : this(container)
         {
             Points = points;
         }
@@ -28,18 +24,18 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             Assert((reader.Arguments.Length - reader.CurrentArg) % reader.SizeOfPoint() == 0, "Invalid amount of arguments");
-            int n = (reader.Arguments.Length - reader.CurrentArg) / reader.SizeOfPoint();
+            var n = (reader.Arguments.Length - reader.CurrentArg) / reader.SizeOfPoint();
 
             Points = new CGMPoint[n];
 
-            for (int i = 0; i < n; i++)
-                Points[i] = reader.ReadPoint();            
+            for (var i = 0; i < n; i++)
+                Points[i] = reader.ReadPoint();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            foreach(var p in Points)
-                writer.WritePoint(p);            
+            foreach (var p in Points)
+                writer.WritePoint(p);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=46
@@ -11,18 +9,18 @@ namespace codessentials.CGM.Commands
 
         public EdgeTypeContinuation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 46, container))
-        {           
+        {
         }
 
         public EdgeTypeContinuation(CGMFile container, int mode)
-            :this(container)
+            : this(container)
         {
             Mode = mode;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Mode = reader.ReadIndex();            
+            Mode = reader.ReadIndex();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -2,8 +2,8 @@
 
 [![NuGet](https://img.shields.io/nuget/v/codessentials.CGM.svg)](https://nuget.org/packages/codessentials.CGM/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Build Status](https://github.com/twenzel/CGM/workflows/Release/badge.svg)](https://github.com/twenzel/CGM/actions)
-[![Build Status](https://github.com/twenzel/CGM/workflows/Build%20&%20Test/badge.svg)](https://github.com/twenzel/CGM/actions)
+[![Build Status](https://github.com/twenzel/CGM/workflows/Release/badge.svg?branch=master)](https://github.com/twenzel/CGM/actions)
+[![Build Status](https://github.com/twenzel/CGM/workflows/Build%20&%20Test/badge.svg?branch=master)](https://github.com/twenzel/CGM/actions)
 [![Coverage Status](https://codecov.io/gh/twenzel/CGM/branch/master/graph/badge.svg)](https://codecov.io/gh/twenzel/CGM)
 
 This library reads CGM (Computer Graphics Metafile) in binary and clear text format. Read graphics can be modified, analyzed and exported. Creating new graphics is also supported.
@@ -64,7 +64,8 @@ GetRectangles|Gets all found rectangles.
 
 ### Geometry Recognition Engine
 The class `GeometryRecognitionEngine` provides several functions to find rectangles.
+
 Name|Description
 -|-
-GetRectangles|Gets all rectangles of the given file.
-IsNearBy|Determines whether point A is near point b.
+GetRectangles | Gets all rectangles of the given file.
+IsNearBy | Determines whether point A is near point b.

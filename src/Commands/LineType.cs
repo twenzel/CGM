@@ -1,21 +1,17 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using codessentials.CGM.Commands;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=2
     /// </summary>
     public class LineType : DashTypeCommand
     {
-        public LineType(CGMFile container) 
+        public LineType(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 2, container))
         {
         }
 
         public LineType(CGMFile container, DashType type)
-            :this(container)
+            : this(container)
         {
             SetValue(type);
         }

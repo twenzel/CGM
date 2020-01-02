@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=36
@@ -12,18 +10,18 @@ namespace codessentials.CGM.Commands
         public PickIdentifier(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 36, container))
         {
-           
+
         }
 
         public PickIdentifier(CGMFile container, int id)
-            :this(container)
+            : this(container)
         {
             Identifier = id;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Identifier = reader.ReadName();            
+            Identifier = reader.ReadName();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

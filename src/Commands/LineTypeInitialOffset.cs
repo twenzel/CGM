@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=40
@@ -12,18 +10,18 @@ namespace codessentials.CGM.Commands
         public LineTypeInitialOffset(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 40, container))
         {
-           
+
         }
 
         public LineTypeInitialOffset(CGMFile container, double offset)
-            :this(container)
+            : this(container)
         {
             Offset = offset;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Offset = reader.ReadReal();            
+            Offset = reader.ReadReal();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

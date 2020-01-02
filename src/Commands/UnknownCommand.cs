@@ -1,32 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Commands
 {
     public class UnknownCommand : Command
     {
-        public UnknownCommand(int elementId, int elementClass, CGMFile container) 
+        public UnknownCommand(int elementId, int elementClass, CGMFile container)
             : this(container)
         {
             if (elementClass == 0 && elementId == 0)
                 // 0, 0 is NO-OP
                 return;
 
-            // Debug.Assert(false, this.ToString());
             throw new NotSupportedException($"UnknownCommand ({this}).");
-
-            //_messages.Add(new Message(Severity.Unimplemented, _elementClass, _elementId, "unsupported", null));
         }
 
         public UnknownCommand(CGMFile container)
-            :base(new CommandConstructorArguments(ClassCode.ReservedForFutureUse1, 1, container))
+            : base(new CommandConstructorArguments(ClassCode.ReservedForFutureUse1, 1, container))
         {
-           
+
         }
 
         public override void ReadFromBinary(IBinaryReader reader)

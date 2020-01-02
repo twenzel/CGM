@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -15,14 +14,14 @@ namespace codessentials.CGM.Commands
         public double Expansion { get; set; }
         public CGMColor Color { get; set; }
 
-        public TextRepresentation(CGMFile container) 
+        public TextRepresentation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 13, container))
         {
-            
+
         }
 
         public TextRepresentation(CGMFile container, int bundleIndex, int fontIndex, TextPrecisionType precision, double spacing, double expansion, CGMColor color)
-            :this(container)
+            : this(container)
         {
             BundleIndex = bundleIndex;
             FontIndex = fontIndex;
@@ -39,7 +38,7 @@ namespace codessentials.CGM.Commands
             Precision = (TextPrecisionType)reader.ReadEnum();
             Spacing = reader.ReadReal();
             Expansion = reader.ReadReal();
-            Color = reader.ReadColor();            
+            Color = reader.ReadColor();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

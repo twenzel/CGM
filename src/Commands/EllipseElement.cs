@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -14,10 +11,10 @@ namespace codessentials.CGM.Commands
         public CGMPoint FirstConjugateDiameterEndPoint { get; set; }
         public CGMPoint SecondConjugateDiameterEndPoint { get; set; }
 
-        public EllipseElement(CGMFile container) 
+        public EllipseElement(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 17, container))
         {
-           
+
         }
 
         public EllipseElement(CommandConstructorArguments args)
@@ -27,7 +24,7 @@ namespace codessentials.CGM.Commands
         }
 
         public EllipseElement(CGMFile container, CGMPoint center, CGMPoint first, CGMPoint second)
-            :this(container)
+            : this(container)
         {
             SetValues(center, first, second);
         }
@@ -57,8 +54,7 @@ namespace codessentials.CGM.Commands
         {
             writer.Write($" {WritePoint(Center.X, Center.Y)}");
             writer.Write($" {WritePoint(FirstConjugateDiameterEndPoint)}");
-            writer.Write($" {WritePoint(SecondConjugateDiameterEndPoint)}");
-            //writer.WriteLine("");
+            writer.Write($" {WritePoint(SecondConjugateDiameterEndPoint)}");            
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)

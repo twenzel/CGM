@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=8, ElementId=2
@@ -12,8 +8,8 @@ namespace codessentials.CGM.Commands
         public enum Filter
         {
             LINEINDEX,
-                LINETYPE ,
-            LINEWIDTH ,
+            LINETYPE,
+            LINEWIDTH,
             LINECOLR,
             LINECLIPMODE,
             MARKERINDEX,
@@ -64,7 +60,7 @@ namespace codessentials.CGM.Commands
             MARKERSIZEASF,
             MARKERCOLRASF,
             TEXTFONTINDEXASF,
-             TEXTPRECASF,
+            TEXTPRECASF,
             CHAREXPANASF,
             CHARSPACEASF,
             TEXTCOLRASF,
@@ -103,14 +99,14 @@ namespace codessentials.CGM.Commands
         public Filter[] Values { get; set; }
         public int Setting { get; set; }
 
-        public InheritanceFilter(CGMFile container) 
+        public InheritanceFilter(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 2, container))
         {
-           
+
         }
 
         public InheritanceFilter(CGMFile container, Filter[] values, int setting)
-            :this(container)
+            : this(container)
         {
             Values = values;
             Setting = setting;
@@ -118,15 +114,15 @@ namespace codessentials.CGM.Commands
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int n = (reader.Arguments.Length - 1) / reader.SizeOfEnum();
+            var n = (reader.Arguments.Length - 1) / reader.SizeOfEnum();
 
             Values = new Filter[n];
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
             {
                 Values[i] = (Filter)reader.ReadEnum();
             }
 
-            Setting = reader.ReadEnum();            
+            Setting = reader.ReadEnum();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -140,9 +136,9 @@ namespace codessentials.CGM.Commands
         {
             writer.Write($"  INHFILTER");
 
-            foreach(int val in Values)
+            foreach (var val in Values)
             {
-                writer.Write($" {WriteEnum(val)}");
+                writer.Write($" {WriteEnum((int)val)}");
             }
 
             if (Setting == 0)

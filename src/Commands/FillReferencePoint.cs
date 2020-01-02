@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,18 +12,18 @@ namespace codessentials.CGM.Commands
         public FillReferencePoint(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 31, container))
         {
-            
+
         }
 
         public FillReferencePoint(CGMFile container, CGMPoint point)
-            :this(container)
+            : this(container)
         {
             Point = point;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Point = reader.ReadPoint();            
+            Point = reader.ReadPoint();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 
 namespace codessentials.CGM.Commands
 {
@@ -18,7 +14,7 @@ namespace codessentials.CGM.Commands
         public LineAndEdgeTypeDefinition(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 17, container))
         {
-            
+
         }
 
         public LineAndEdgeTypeDefinition(CGMFile container, int lineType, double dashCycleRepeat, int[] elements)
@@ -37,10 +33,10 @@ namespace codessentials.CGM.Commands
             DashCycleRepeatLength = System.Math.Abs(reader.ReadSizeSpecification(_container.LineWidthSpecificationMode));
             DashElements = new int[(reader.Arguments.Length - reader.CurrentArg) / reader.SizeOfInt()];
 
-            for (int i = 0; i < DashElements.Length; i++)
+            for (var i = 0; i < DashElements.Length; i++)
             {
                 DashElements[i] = reader.ReadInt();
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -53,12 +49,12 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("LineAndEdgeTypeDefinition");
             sb.Append(" lineType=").Append(LineType);
             sb.Append(" dashCycleRepeatLength=").Append(DashCycleRepeatLength);
             sb.Append(" [");
-            for (int i = 0; i < DashElements.Length; i++)
+            for (var i = 0; i < DashElements.Length; i++)
             {
                 sb.Append(DashElements[i]).Append(",");
             }

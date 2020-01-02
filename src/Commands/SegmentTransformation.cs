@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=8, ElementId=4
@@ -18,14 +16,14 @@ namespace codessentials.CGM.Commands
         public SegmentTransformation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.SegmentControlandSegmentAttributeElements, 4, container))
         {
-           
+
         }
 
         public SegmentTransformation(CGMFile container, int id, double scaleX, double rotationX, double rotationY, double scaleY, double translationX, double translationY)
-            :this(container)
+            : this(container)
         {
             Identifier = id;
-            ScaleX = scaleX;            
+            ScaleX = scaleX;
             RotationX = rotationX;
             RotationY = rotationY;
             ScaleY = scaleY;
@@ -41,7 +39,7 @@ namespace codessentials.CGM.Commands
             RotationY = reader.ReadReal();
             ScaleY = reader.ReadReal();
             TranslationX = reader.ReadVdc();
-            TranslationY = reader.ReadVdc();            
+            TranslationY = reader.ReadVdc();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace codessentials.CGM.Commands
 {
@@ -15,10 +12,10 @@ namespace codessentials.CGM.Commands
         public double EndVectorDeltaX { get; set; }
         public double EndVectorDeltaY { get; set; }
 
-        public EllipticalArc(CGMFile container) 
+        public EllipticalArc(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 18, container))
         {
-           
+
         }
 
         public EllipticalArc(CommandConstructorArguments args)
@@ -64,7 +61,7 @@ namespace codessentials.CGM.Commands
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.Write("  ELLIPARC");
-            WriteValues(writer);           
+            WriteValues(writer);
             writer.WriteLine(";");
         }
 
@@ -74,6 +71,5 @@ namespace codessentials.CGM.Commands
             writer.Write($" {WritePoint(StartVectorDeltaX, StartVectorDeltaY)}");
             writer.Write($" {WritePoint(EndVectorDeltaX, EndVectorDeltaY)}");
         }
-
     }
 }

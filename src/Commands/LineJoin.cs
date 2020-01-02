@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class LineJoin : JoinCommand
     {
-        public LineJoin(CGMFile container) 
+        public LineJoin(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 38, container))
         {
         }
 
         public LineJoin(CGMFile container, JoinIndicator type)
-            :this(container)
+            : this(container)
         {
             SetValue(type);
         }

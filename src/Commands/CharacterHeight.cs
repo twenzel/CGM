@@ -1,48 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class CharacterHeight : Command
     {
-        private double _characterHeight;
+        public double Height { get; private set; }
 
-        public CharacterHeight(CGMFile container) 
+        public CharacterHeight(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 15, container))
         {
-            
+
         }
 
         public CharacterHeight(CGMFile container, double height)
-            :this(container)
+            : this(container)
         {
-            _characterHeight = height;
+            Height = height;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _characterHeight = reader.ReadVdc();            
+            Height = reader.ReadVdc();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteVdc(_characterHeight);
+            writer.WriteVdc(Height);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($"  charheight {WriteDouble(_characterHeight)};");
+            writer.WriteLine($"  charheight {WriteDouble(Height)};");
         }
 
         public override string ToString()
         {
-            return $"CharacterHeight {_characterHeight}";
-        }
-
-        public double Height
-        {
-            get { return _characterHeight; }
+            return $"CharacterHeight {Height}";
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=1, Element=9
@@ -11,21 +7,21 @@ namespace codessentials.CGM.Commands
     {
         public int Value { get; set; }
 
-        public MaximumColourIndex(CGMFile container) 
+        public MaximumColourIndex(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 9, container))
         {
-            
+
         }
 
         public MaximumColourIndex(CGMFile container, int index)
-            :this(container)
+            : this(container)
         {
             Value = index;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Value = reader.ReadColorIndex();            
+            Value = reader.ReadColorIndex();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

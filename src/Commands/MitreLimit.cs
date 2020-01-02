@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=3, ElementId=19
@@ -11,18 +9,18 @@ namespace codessentials.CGM.Commands
 
         public MitreLimit(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 19, container))
-        {           
+        {
         }
 
         public MitreLimit(CGMFile container, double limit)
-            :this(container)
+            : this(container)
         {
             Limit = limit;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Limit = reader.ReadReal();            
+            Limit = reader.ReadReal();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

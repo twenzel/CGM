@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
-    public abstract class CapCommand: Command
+    public abstract class CapCommand : Command
     {
         public LineCapIndicator LineIndicator { get; set; }
         public DashCapIndicator DashIndicator { get; set; }
 
-        public CapCommand(CommandConstructorArguments arguments) 
+        protected CapCommand(CommandConstructorArguments arguments)
             : base(arguments)
         {
-            
-        }    
-      
+
+        }
+
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int lineIndic = reader.ReadIndex();
+            var lineIndic = reader.ReadIndex();
             switch (lineIndic)
             {
                 case 1:
@@ -45,7 +38,7 @@ namespace codessentials.CGM.Commands
                     break;
             }
 
-            int dashIndic = reader.ReadIndex();
+            var dashIndic = reader.ReadIndex();
             switch (dashIndic)
             {
                 case 1:

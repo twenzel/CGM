@@ -1,58 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=1, Element=8
     /// </remarks>
     public class ColourIndexPrecision : Command
     {
-        private int _precision;       
+        public int Precision { get; private set; }
 
-        public ColourIndexPrecision(CGMFile container) 
+        public ColourIndexPrecision(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 8, container))
         {
-           
+
         }
 
 
         public ColourIndexPrecision(CGMFile container, int precision)
-            :this(container)
+            : this(container)
         {
-            _precision = precision;
+            Precision = precision;
             AssertPrecision();
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _precision = reader.ReadInt();
-            _container.ColourIndexPrecision = _precision;
+            Precision = reader.ReadInt();
+            _container.ColourIndexPrecision = Precision;
 
             AssertPrecision();
         }
 
         private void AssertPrecision()
         {
-            Assert(_precision == 8 || _precision == 16 || _precision == 24 || _precision == 32, "Invalid ColourIndexPrecision");
+            Assert(Precision == 8 || Precision == 16 || Precision == 24 || Precision == 32, "Invalid ColourIndexPrecision");
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteInt(_precision);
-            _container.ColourIndexPrecision = _precision;
+            writer.WriteInt(Precision);
+            _container.ColourIndexPrecision = Precision;
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
-        {            
-            writer.WriteLine($" colrindexprec {WriteValue(_precision)};");
+        {
+            writer.WriteLine($" colrindexprec {WriteValue(Precision)};");
         }
 
         public static string WriteValue(int precision)
         {
-            var val = 0;
+            int val;
 
             if (precision == 8)
                 val = sbyte.MaxValue;
@@ -68,9 +63,7 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            return $"ColourIndexPrecision {_precision}";
-        }
-
-        public int Precision => _precision;
+            return $"ColourIndexPrecision {Precision}";
+        }        
     }
 }

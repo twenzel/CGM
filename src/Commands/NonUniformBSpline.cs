@@ -1,6 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -18,14 +17,14 @@ namespace codessentials.CGM.Commands
         public NonUniformBSpline(CGMFile container)
             : this(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 24, container))
         {
-           
+
         }
 
         public NonUniformBSpline(CommandConstructorArguments args)
            : base(args)
         {
 
-        }      
+        }
 
         public NonUniformBSpline(CGMFile container, int splineOrder, IEnumerable<CGMPoint> points, IEnumerable<double> knots, double start, double end)
             : this(container)
@@ -48,10 +47,10 @@ namespace codessentials.CGM.Commands
 
             var numberOfControlPoints = reader.ReadInt();
 
-            for (int i = 0; i < numberOfControlPoints; i++)
+            for (var i = 0; i < numberOfControlPoints; i++)
                 Points.Add(reader.ReadPoint());
 
-            for (int i = 0; i < numberOfControlPoints + SplineOrder; i++)
+            for (var i = 0; i < numberOfControlPoints + SplineOrder; i++)
                 Knots.Add(reader.ReadReal());
 
             StartValue = reader.ReadReal();

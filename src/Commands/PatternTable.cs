@@ -1,6 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -18,11 +17,11 @@ namespace codessentials.CGM.Commands
         public PatternTable(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 32, container))
         {
-            
+
         }
 
         public PatternTable(CGMFile container, int index, int nx, int ny, int localColorPrecision, IEnumerable<CGMColor> colors)
-            :this(container)
+            : this(container)
         {
             Index = index;
             Nx = nx;
@@ -38,9 +37,9 @@ namespace codessentials.CGM.Commands
             Ny = reader.ReadInt();
             LocalColorPrecision = reader.ReadInt();
 
-            int nColor = Nx * Ny;
-            for (int i = 0; i < nColor; i++)
-                Colors.Add(reader.ReadColor(LocalColorPrecision));            
+            var nColor = Nx * Ny;
+            for (var i = 0; i < nColor; i++)
+                Colors.Add(reader.ReadColor(LocalColorPrecision));
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

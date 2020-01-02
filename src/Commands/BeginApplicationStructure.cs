@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=21
@@ -13,50 +11,46 @@ namespace codessentials.CGM.Commands
             APS = 1
         }
 
-        private string _id;
-        private string _type;
-        private InheritanceFlag _flag;
+        public string Id { get; private set; }
+        public string Type { get; private set; }
+        public InheritanceFlag Flag { get; private set; }
 
-        public BeginApplicationStructure(CGMFile container) 
+        public BeginApplicationStructure(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 21, container))
         {
-           
+
         }
 
         public BeginApplicationStructure(CGMFile container, string id, string type, InheritanceFlag flag)
-            :this(container)
+            : this(container)
         {
-            _id = id;
-            _type = type;
-            _flag = flag;
+            Id = id;
+            Type = type;
+            Flag = flag;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _id = reader.ReadFixedString();
-            _type = reader.ReadFixedString();
-            _flag = (InheritanceFlag)reader.ReadEnum();
+            Id = reader.ReadFixedString();
+            Type = reader.ReadFixedString();
+            Flag = (InheritanceFlag)reader.ReadEnum();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteFixedString(_id);
-            writer.WriteFixedString(_type);
-            writer.WriteEnum((int)_flag);
+            writer.WriteFixedString(Id);
+            writer.WriteFixedString(Type);
+            writer.WriteEnum((int)Flag);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" BEGAPS {WriteString(_id)} {WriteString(_type)} {WriteEnum(_flag)};");
+            writer.WriteLine($" BEGAPS {WriteString(Id)} {WriteString(Type)} {WriteEnum(Flag)};");
         }
 
         public override string ToString()
         {
-            return $"Begin Application Structure {_id}, {_type}";
+            return $"Begin Application Structure {Id}, {Type}";
         }
-
-        public string Id => _id;
-        public string Type => _type;
-        public InheritanceFlag Flag => _flag;
     }
 }

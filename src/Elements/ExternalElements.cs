@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using codessentials.CGM.Commands;
+﻿using codessentials.CGM.Commands;
 
 namespace codessentials.CGM.Elements
 {
@@ -16,11 +10,11 @@ namespace codessentials.CGM.Elements
             {
                 case ExternalElement.MESSAGE:
                     return new MessageCommand(container);
-                case ExternalElement.APPLICATION_DATA: 
+                case ExternalElement.APPLICATION_DATA:
                     return new ApplicationData(container);
                 default:
                     return new UnknownCommand(elementId, elementClass, container);
-            }        
+            }
         }
     }
 }

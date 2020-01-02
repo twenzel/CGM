@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using codessentials.CGM.Commands;
+﻿using codessentials.CGM.Commands;
 
 namespace codessentials.CGM.Elements
 {
@@ -13,10 +6,10 @@ namespace codessentials.CGM.Elements
     {
         public static Command CreateCommand(int elementId, int elementClass, CGMFile container)
         {
-            switch((DelimiterElement)elementId)
+            switch ((DelimiterElement)elementId)
             {
                 case DelimiterElement.NO_OP:
-                    return new NoOp(container);                
+                    return new NoOp(container);
                 case DelimiterElement.BEGIN_METAFILE:
                     return new BeginMetafile(container);
                 case DelimiterElement.END_METAFILE:
@@ -57,7 +50,7 @@ namespace codessentials.CGM.Elements
                     return new BeginApplicationStructureBody(container);
                 case DelimiterElement.END_APPLICATION_STRUCTURE:
                     return new EndApplicationStructure(container);
-                default:                    
+                default:
                     return new UnknownCommand(elementId, elementClass, container);
             }
         }

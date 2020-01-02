@@ -1,22 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class Escape : Command
     {
         public int Identifier { get; set; }
         public string DataRecord { get; set; }
 
-        public Escape(CGMFile container) 
+        public Escape(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.EscapeElement, 0, container))
         {
-            
+
         }
 
         public Escape(CGMFile container, int id, string record)
-            :this(container)
+            : this(container)
         {
             Identifier = id;
             DataRecord = record;

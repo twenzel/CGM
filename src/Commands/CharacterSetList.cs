@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Text;
 
 namespace codessentials.CGM.Commands
@@ -21,18 +18,18 @@ namespace codessentials.CGM.Commands
             COMPLETE_CODE
         }
 
-        private List<KeyValuePair<Type, string>> _characterSets = new List<KeyValuePair<Type, string>>();
+        public List<KeyValuePair<Type, string>> CharacterSets { get; }
 
-        public CharacterSetList(CGMFile container) 
+        public CharacterSetList(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 14, container))
         {
-            
+
         }
 
         public CharacterSetList(CGMFile container, KeyValuePair<Type, string>[] items)
-            :this(container)
+            : this(container)
         {
-            _characterSets.AddRange(items);
+            CharacterSets.AddRange(items);
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
@@ -66,7 +63,7 @@ namespace codessentials.CGM.Commands
                 }
 
                 var characterSetDesignation = reader.ReadFixedString();
-                _characterSets.Add(new KeyValuePair<Type, string>(characterType, characterSetDesignation));
+                CharacterSets.Add(new KeyValuePair<Type, string>(characterType, characterSetDesignation));
 
                 // TODO:ss
                 //if (characterSetDesignation.Length > 2)
@@ -82,12 +79,12 @@ namespace codessentials.CGM.Commands
                 //        }
                 //    }
                 //}
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            foreach (var pair in _characterSets)
+            foreach (var pair in CharacterSets)
             {
                 writer.WriteEnum((int)pair.Key);
                 writer.WriteString(pair.Value);
@@ -98,7 +95,7 @@ namespace codessentials.CGM.Commands
         {
             writer.Write(" charsetlist");
 
-            foreach(var pair in _characterSets)
+            foreach (var pair in CharacterSets)
             {
                 switch (pair.Key)
                 {
@@ -134,14 +131,12 @@ namespace codessentials.CGM.Commands
             var sb = new StringBuilder();
             sb.Append("CharacterSetList ");
 
-            foreach(var pair in _characterSets)
+            foreach (var pair in CharacterSets)
             {
                 sb.Append($"[{pair.Key},{pair.Value}]");
             }
 
             return sb.ToString();
-        }
-
-        public List<KeyValuePair<Type, string>> CharacterSets => _characterSets;
+        }        
     }
 }

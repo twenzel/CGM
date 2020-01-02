@@ -1,6 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
 
 namespace codessentials.CGM.Commands
 {
@@ -9,13 +7,13 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class MarkerColour : ColourCommand
     {
-        public MarkerColour(CGMFile container) 
+        public MarkerColour(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 8, container))
         {
         }
 
         public MarkerColour(CGMFile container, CGMColor color)
-            :this(container)
+            : this(container)
         {
             SetValue(color);
         }

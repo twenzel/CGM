@@ -1,22 +1,16 @@
 ﻿using codessentials.CGM.Commands;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Elements
-{ 
+{
     public static class SegmentControlElements
     {
         public static Command CreateCommand(int elementId, int elementClass, CGMFile container)
         {
             switch ((SegmentControlElement)elementId)
             {
-                case SegmentControlElement.COPY_SEGMENT: 
+                case SegmentControlElement.COPY_SEGMENT:
                     return new CopySegment(container);
-                case SegmentControlElement.INHERITANCE_FILTER: 
+                case SegmentControlElement.INHERITANCE_FILTER:
                     return new InheritanceFilter(container);
                 case SegmentControlElement.CLIP_INHERITANCE:
                     return new ClipInheritance(container);

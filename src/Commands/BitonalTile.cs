@@ -1,9 +1,5 @@
 ﻿using codessentials.CGM.Classes;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Text;
 
 namespace codessentials.CGM.Commands
 {
@@ -12,74 +8,70 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class BitonalTile : TileElement
     {
-        private CGMColor _backgroundColor;
-        private CGMColor _foregroundColor;
+        public CGMColor Backgroundcolor { get; private set; }
+        public CGMColor Foregroundcolor { get; private set; }
 
         public BitonalTile(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 28, container))
         {
-           
+
         }
 
         public BitonalTile(CGMFile container, CompressionType compressionType, int rowPaddingIndicator, CGMColor backgroundcolor, CGMColor foregroundcolor, StructuredDataRecord sdr, MemoryStream image)
-            :this(container)
+            : this(container)
         {
-            _sdr = sdr;
-            _compressionType = compressionType;
-            _rowPaddingIndicator = rowPaddingIndicator;
-            _backgroundColor = backgroundcolor;
-            _foregroundColor = foregroundcolor;
-            _image = image;
+            DataRecord = sdr;
+            CompressionType = compressionType;
+            RowPaddingIndicator = rowPaddingIndicator;
+            Backgroundcolor = backgroundcolor;
+            Foregroundcolor = foregroundcolor;
+            Image = image;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _compressionType = (CompressionType)reader.ReadIndex();
-            _rowPaddingIndicator = reader.ReadInt();
+            CompressionType = (CompressionType)reader.ReadIndex();
+            RowPaddingIndicator = reader.ReadInt();
 
-            _backgroundColor = reader.ReadColor();
-            _foregroundColor = reader.ReadColor();
+            Backgroundcolor = reader.ReadColor();
+            Foregroundcolor = reader.ReadColor();
 
             readSdrAndBitStream(reader);
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteIndex((int)_compressionType);
-            writer.WriteInt(_rowPaddingIndicator);
-            writer.WriteColor(_backgroundColor);
-            writer.WriteColor(_foregroundColor);
+            writer.WriteIndex((int)CompressionType);
+            writer.WriteInt(RowPaddingIndicator);
+            writer.WriteColor(Backgroundcolor);
+            writer.WriteColor(Foregroundcolor);
             WriteSdrAndBitStream(writer);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.Write($" BITONALTILE");
-            writer.Write($" {WriteInt((int)_compressionType)}");
-            writer.Write($" {WriteInt(_rowPaddingIndicator)}");
-            
-            writer.Write($" {WriteColor(_backgroundColor)}");
-            writer.Write($" {WriteColor(_foregroundColor)}");           
+            writer.Write($" {WriteInt((int)CompressionType)}");
+            writer.Write($" {WriteInt(RowPaddingIndicator)}");
 
-            WriteSDR(writer, _sdr);
-            if (_image != null)
-                writer.Write($" {WriteBitStream(_image.ToArray())}");
+            writer.Write($" {WriteColor(Backgroundcolor)}");
+            writer.Write($" {WriteColor(Foregroundcolor)}");
+
+            WriteSDR(writer, DataRecord);
+            if (Image != null)
+                writer.Write($" {WriteBitStream(Image.ToArray())}");
 
             writer.WriteLine(";");
         }
 
-        protected override void readBitmap(IBinaryReader reader)
+        protected override void ReadBitmap(IBinaryReader reader)
         {
             reader.Unsupported("BITMAP for BitonalTile");
         }
 
-        protected override void writeBitmap(IBinaryWriter writer)
+        protected override void WriteBitmap(IBinaryWriter writer)
         {
             writer.Unsupported("BITMAP for BitonalTile");
         }
-
-        public CGMColor Backgroundcolor => _backgroundColor;
-        public CGMColor Foregroundcolor => _foregroundColor;
-
     }
 }

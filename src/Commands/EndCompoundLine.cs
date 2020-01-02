@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=0, ElementId=16
     /// </remarks>
     public class EndCompoundLine : Command
-    {  
+    {
         public EndCompoundLine(CGMFile container)
-            :base(new CommandConstructorArguments(ClassCode.DelimiterElement, 16, container))
+            : base(new CommandConstructorArguments(ClassCode.DelimiterElement, 16, container))
         {
-           
+
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            
+
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            
+
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)

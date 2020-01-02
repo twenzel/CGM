@@ -1,8 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System;
+﻿using System.Drawing;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -15,14 +12,14 @@ namespace codessentials.CGM.Commands
         public CGMPoint FirstCorner { get; set; }
         public CGMPoint SecondCorner { get; set; }
 
-        public RectangleElement(CGMFile container) 
+        public RectangleElement(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 11, container))
         {
-            
+
         }
 
         public RectangleElement(CGMFile container, CGMPoint firstCorner, CGMPoint secondCorner)
-            :this(container)
+            : this(container)
         {
             FirstCorner = firstCorner;
             SecondCorner = secondCorner;
@@ -39,27 +36,27 @@ namespace codessentials.CGM.Commands
 
         private void SetShape()
         {
-            float x1 = (float)FirstCorner.X;
-            float y1 = (float)FirstCorner.Y;
-            float x2 = (float)SecondCorner.X;
-            float y2 = (float)SecondCorner.Y;
+            var x1 = (float)FirstCorner.X;
+            var y1 = (float)FirstCorner.Y;
+            var x2 = (float)SecondCorner.X;
+            var y2 = (float)SecondCorner.Y;
 
             if (x1 > x2)
             {
-                float temp = x1;
+                var temp = x1;
                 x1 = x2;
                 x2 = temp;
             }
 
             if (y1 > y2)
             {
-                float temp = y1;
+                var temp = y1;
                 y1 = y2;
                 y2 = temp;
             }
 
-            float w = x2 - x1;
-            float h = y2 - y1;
+            var w = x2 - x1;
+            var h = y2 - y1;
 
             Shape = new RectangleF(x1, y1, w, h);
         }
@@ -72,7 +69,7 @@ namespace codessentials.CGM.Commands
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($" RECT {WritePoint(FirstCorner)} {WritePoint(SecondCorner)};");          
+            writer.WriteLine($" RECT {WritePoint(FirstCorner)} {WritePoint(SecondCorner)};");
         }
 
         public override string ToString()

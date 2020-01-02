@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     public class EdgeJoin : JoinCommand
     {
-        public EdgeJoin(CGMFile container) 
+        public EdgeJoin(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 45, container))
         {
         }
 
         public EdgeJoin(CGMFile container, JoinIndicator type)
-            :this(container)
+            : this(container)
         {
             SetValue(type);
         }

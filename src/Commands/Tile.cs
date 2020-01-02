@@ -1,7 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -12,26 +10,26 @@ namespace codessentials.CGM.Commands
     {
         public int CellColorPrecision { get; set; }
 
-        public Tile(CGMFile container) 
+        public Tile(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 29, container))
         {
-            
+
         }
 
         public Tile(CGMFile container, CompressionType compressionType, int rowPaddingIndicator, int cellColorPrecision, StructuredDataRecord sdr, MemoryStream image)
-            :this(container)
+            : this(container)
         {
-            _compressionType = compressionType;
-            _rowPaddingIndicator = rowPaddingIndicator;
-            _sdr = sdr;
-            _image = image;
+            CompressionType = compressionType;
+            RowPaddingIndicator = rowPaddingIndicator;
+            DataRecord = sdr;
+            Image = image;
             CellColorPrecision = cellColorPrecision;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _compressionType = (CompressionType)reader.ReadIndex();
-            _rowPaddingIndicator = reader.ReadInt();
+            CompressionType = (CompressionType)reader.ReadIndex();
+            RowPaddingIndicator = reader.ReadInt();
 
             CellColorPrecision = reader.ReadInt();
             if (CellColorPrecision == 0)
@@ -46,7 +44,7 @@ namespace codessentials.CGM.Commands
                 //}
             }
 
-            readSdrAndBitStream(reader);            
+            readSdrAndBitStream(reader);
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -61,8 +59,8 @@ namespace codessentials.CGM.Commands
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.Write($" TILE");
-            writer.Write($" {WriteInt((int)_compressionType)}");
-            writer.Write($" {WriteInt(_rowPaddingIndicator)}");
+            writer.Write($" {WriteInt((int)CompressionType)}");
+            writer.Write($" {WriteInt(RowPaddingIndicator)}");
 
             if (CellColorPrecision == 0)
             {
@@ -79,26 +77,26 @@ namespace codessentials.CGM.Commands
                 writer.Write(WriteInt(CellColorPrecision));
 
 
-            WriteSDR(writer, _sdr);
-            if (_image != null)
-                writer.Write($" {WriteBitStream(_image.ToArray())}");            
+            WriteSDR(writer, DataRecord);
+            if (Image != null)
+                writer.Write($" {WriteBitStream(Image.ToArray())}");
 
             writer.WriteLine(";");
         }
 
-        protected override void readBitmap(IBinaryReader reader)
+        protected override void ReadBitmap(IBinaryReader reader)
         {
             reader.Unsupported("BITMAP for Tile");
         }
 
-        protected override void writeBitmap(IBinaryWriter writer)
+        protected override void WriteBitmap(IBinaryWriter writer)
         {
             writer.Unsupported("BITMAP for Tile");
         }
 
         public override string ToString()
         {
-            return $"Tile [compressionType={_compressionType}, rowPaddingIndicator={_rowPaddingIndicator}]";
+            return $"Tile [compressionType={CompressionType}, rowPaddingIndicator={RowPaddingIndicator}]";
         }
     }
 }

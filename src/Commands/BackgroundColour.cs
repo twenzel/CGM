@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
+﻿using System.Drawing;
 
 namespace codessentials.CGM.Commands
 {
@@ -9,40 +7,41 @@ namespace codessentials.CGM.Commands
     /// </remarks>
     public class BackgroundColour : Command
     {
-        private Color _backgroundColor;
+        /// <summary>
+        /// Gets the background color
+        /// </summary>
+        public Color Color { get; private set; }
 
-        public BackgroundColour(CGMFile container) 
+        public BackgroundColour(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 7, container))
         {
-           
+
         }
 
         public BackgroundColour(CGMFile container, Color color)
-            :this(container)
+            : this(container)
         {
-            _backgroundColor = color;
+            Color = color;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _backgroundColor = reader.ReadDirectColor();            
+            Color = reader.ReadDirectColor();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteDirectColor(_backgroundColor);
+            writer.WriteDirectColor(Color);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($"  backcolr {WriteColor(_backgroundColor, _container.ColourModel)};");
+            writer.WriteLine($"  backcolr {WriteColor(Color, _container.ColourModel)};");
         }
 
         public override string ToString()
         {
-            return $"BackgroundColour {_backgroundColor}";
+            return $"BackgroundColour {Color}";
         }
-
-        public Color Color => _backgroundColor;
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 
 namespace codessentials.CGM.Commands
 {
@@ -36,7 +31,7 @@ namespace codessentials.CGM.Commands
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int mod = reader.ArgumentsCount > 0 ? reader.ReadEnum() : 0;
+            var mod = reader.ArgumentsCount > 0 ? reader.ReadEnum() : 0;
             if (mod == 0)
             {
                 Value = Mode.ABSTRACT;
@@ -68,7 +63,7 @@ namespace codessentials.CGM.Commands
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("ScalingMode mode=").Append(Value);
             if (Value == Mode.METRIC)
             {

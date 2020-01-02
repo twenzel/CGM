@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,51 +7,49 @@ namespace codessentials.CGM.Commands
     /// </remarks>
     public class VDCIntegerPrecision : Command
     {
-        private int _precision;       
+        public int Precision { get; private set; }
 
         public VDCIntegerPrecision(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 1, container))
         {
-           
+
         }
 
         public VDCIntegerPrecision(CGMFile container, int precision)
-            :this(container)
+            : this(container)
         {
-            _precision = precision;
+            Precision = precision;
             AssertPrecision();
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _precision = reader.ReadInt();
-            _container.VDCIntegerPrecision = _precision;
+            Precision = reader.ReadInt();
+            _container.VDCIntegerPrecision = Precision;
 
             AssertPrecision();
         }
 
         private void AssertPrecision()
         {
-            Assert(_precision == 16 || _precision == 24 || _precision == 32, "unsupported VDCINTEGER PRECISION");
+            Assert(Precision == 16 || Precision == 24 || Precision == 32, "unsupported VDCINTEGER PRECISION");
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteInt(_precision);
-            _container.VDCIntegerPrecision = _precision;
+            writer.WriteInt(Precision);
+            _container.VDCIntegerPrecision = Precision;
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            var val = Math.Pow(2, _precision) / 2;
-            writer.WriteLine($" VDCINTEGERPREC -{val}, {val - 1} % {_precision} binary bits %;");
+            var val = Math.Pow(2, Precision) / 2;
+            writer.WriteLine($" VDCINTEGERPREC -{val}, {val - 1} % {Precision} binary bits %;");
         }
 
         public override string ToString()
         {
-            return "VDCIntegerPrecision " + _precision;
+            return "VDCIntegerPrecision " + Precision;
         }
-
-        public int Precision => _precision;    
     }
 }

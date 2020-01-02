@@ -1,6 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -15,11 +14,11 @@ namespace codessentials.CGM.Commands
         public PolySymbol(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 27, container))
         {
-            
+
         }
 
         public PolySymbol(CGMFile container, int index, CGMPoint[] points)
-            :this(container)
+            : this(container)
         {
             Index = index;
             Points.AddRange(points);
@@ -31,13 +30,13 @@ namespace codessentials.CGM.Commands
             while (reader.CurrentArg < reader.Arguments.Length)
             {
                 Points.Add(reader.ReadPoint());
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
             writer.WriteIndex(Index);
-            foreach(var p in Points)
+            foreach (var p in Points)
                 writer.WritePoint(p);
         }
 

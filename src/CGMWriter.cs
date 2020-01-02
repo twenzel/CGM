@@ -1,7 +1,7 @@
-﻿using codessentials.CGM.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using codessentials.CGM.Commands;
 
 namespace codessentials.CGM
 {
@@ -10,7 +10,7 @@ namespace codessentials.CGM
     /// </summary>
     public class CGMWriter
     {
-        private CGMFile _cgm;
+        private readonly CGMFile _cgm;
 
         /// <summary>
         /// Initializes the writer and creates a new binary or clear text file

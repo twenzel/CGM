@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=3, ElementId=4
@@ -11,31 +7,31 @@ namespace codessentials.CGM.Commands
     {
         public bool Flag { get; set; }
 
-        public Transparency(CGMFile container) 
+        public Transparency(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 4, container))
         {
-            
+
         }
 
         public Transparency(CGMFile container, bool flag)
-            :this(container)
+            : this(container)
         {
             Flag = flag;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            Flag = reader.ReadBool();            
+            Flag = reader.ReadBool();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteBool(Flag);            
+            writer.WriteBool(Flag);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
-        {            
-            writer.WriteLine($"  transparency {WriteBool(Flag)};");            
+        {
+            writer.WriteLine($"  transparency {WriteBool(Flag)};");
         }
     }
 }

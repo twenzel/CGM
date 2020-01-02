@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,16 +7,16 @@ namespace codessentials.CGM.Commands
     /// </remarks>
     public class NamePrecision : Command
     {
-        public int Precision { get; set; }     
+        public int Precision { get; set; }
 
         public NamePrecision(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 16, container))
         {
-            
+
         }
 
         public NamePrecision(CGMFile container, int precision)
-            :this(container)
+            : this(container)
         {
             Precision = precision;
             AssertPrecision();
@@ -38,7 +32,7 @@ namespace codessentials.CGM.Commands
             Precision = reader.ReadInt();
             _container.NamePrecision = Precision;
 
-            AssertPrecision();            
+            AssertPrecision();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -56,6 +50,6 @@ namespace codessentials.CGM.Commands
         public override string ToString()
         {
             return "NamePrecision " + Precision;
-        }        
+        }
     }
 }

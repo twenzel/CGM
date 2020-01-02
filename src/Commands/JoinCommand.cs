@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codessentials.CGM.Commands
-{    
+﻿namespace codessentials.CGM.Commands
+{
     public abstract class JoinCommand : Command
     {
         public JoinIndicator Type { get; set; }
@@ -15,8 +8,8 @@ namespace codessentials.CGM.Commands
             : base(args)
         {
 
-            
-        }        
+
+        }
 
         protected void SetValue(JoinIndicator type)
         {
@@ -25,7 +18,7 @@ namespace codessentials.CGM.Commands
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int indexValue = reader.ReadIndex();
+            var indexValue = reader.ReadIndex();
             switch (indexValue)
             {
                 case 1:

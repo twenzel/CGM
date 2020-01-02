@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using codessentials.CGM.Commands;
+﻿using codessentials.CGM.Commands;
 
 namespace codessentials.CGM.Elements
-{    
+{
     public static class PictureDescriptorElements
     {
         public static Command CreateCommand(int elementId, int elementClass, CGMFile container)

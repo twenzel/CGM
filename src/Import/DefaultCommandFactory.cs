@@ -1,14 +1,9 @@
 ﻿using codessentials.CGM.Commands;
 using codessentials.CGM.Elements;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codessentials.CGM.Import
 {
-    public class DefaultCommandFactory: ICommandFactory
+    public class DefaultCommandFactory : ICommandFactory
     {
         /// <summary>
         /// Create a new command instance
@@ -19,7 +14,7 @@ namespace codessentials.CGM.Import
         /// <returns></returns>
         public Command CreateCommand(int elementId, int elementClass, CGMFile container)
         {
-            ClassCode classCode = (ClassCode)elementClass;
+            var classCode = (ClassCode)elementClass;
 
             switch (classCode)
             {

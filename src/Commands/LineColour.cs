@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using codessentials.CGM.Commands;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -10,13 +7,13 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class LineColour : ColourCommand
     {
-        public LineColour(CGMFile container) 
+        public LineColour(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 4, container))
         {
         }
 
         public LineColour(CGMFile container, CGMColor color)
-            :this(container)
+            : this(container)
         {
             SetValue(color);
         }

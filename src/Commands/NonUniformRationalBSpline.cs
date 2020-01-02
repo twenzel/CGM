@@ -1,5 +1,5 @@
-﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -7,13 +7,13 @@ namespace codessentials.CGM.Commands
     /// Class=4, ElementId=25
     /// </summary>
     public class NonUniformRationalBSpline : NonUniformBSpline
-    {        
+    {
         public List<double> Weights { get; set; } = new List<double>();
 
         public NonUniformRationalBSpline(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 25, container))
-        {           
-           
+        {
+
         }
 
         public NonUniformRationalBSpline(CGMFile container, int splineOrder, IEnumerable<CGMPoint> points, IEnumerable<double> knots, double start, double end, IEnumerable<double> weights)
@@ -27,8 +27,8 @@ namespace codessentials.CGM.Commands
         {
             base.ReadFromBinary(reader);
 
-            for (int i = 0; i < Points.Count; i++)
-                Weights.Add(reader.ReadReal());            
+            for (var i = 0; i < Points.Count; i++)
+                Weights.Add(reader.ReadReal());
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

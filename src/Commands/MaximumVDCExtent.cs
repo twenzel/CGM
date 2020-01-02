@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -13,14 +10,14 @@ namespace codessentials.CGM.Commands
         public CGMPoint FirstCorner { get; set; }
         public CGMPoint SecondCorner { get; set; }
 
-        public MaximumVDCExtent(CGMFile container) 
+        public MaximumVDCExtent(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 17, container))
         {
-           
+
         }
 
         public MaximumVDCExtent(CGMFile container, CGMPoint first, CGMPoint second)
-            :this(container)
+            : this(container)
         {
             FirstCorner = first;
             SecondCorner = second;
@@ -29,7 +26,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             FirstCorner = reader.ReadPoint();
-            SecondCorner = reader.ReadPoint();            
+            SecondCorner = reader.ReadPoint();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

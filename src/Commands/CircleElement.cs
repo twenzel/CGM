@@ -1,7 +1,4 @@
 ﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -10,45 +7,42 @@ namespace codessentials.CGM.Commands
     /// </summary>
     public class CircleElement : Command
     {
-        private CGMPoint _center;
-        private double _radius;
+        public CGMPoint Center { get; private set; }
+        public double Radius { get; private set; }
 
-        public CircleElement(CGMFile container) 
+        public CircleElement(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 12, container))
         {
-           
+
         }
 
         public CircleElement(CGMFile container, CGMPoint center, double radius)
-            :this(container)
+            : this(container)
         {
-            _center = center;
-            _radius = radius;
+            Center = center;
+            Radius = radius;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            _center = reader.ReadPoint();
-            _radius = reader.ReadVdc();            
+            Center = reader.ReadPoint();
+            Radius = reader.ReadVdc();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WritePoint(_center);
-            writer.WriteVdc(_radius);
+            writer.WritePoint(Center);
+            writer.WriteVdc(Radius);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
-            writer.WriteLine($"  CIRCLE {WritePoint(_center)} {WriteVDC(_radius)};");
+            writer.WriteLine($"  CIRCLE {WritePoint(Center)} {WriteVDC(Radius)};");
         }
 
         public override string ToString()
         {
-            return $"Circle [{_center.X},{_center.Y}] {_radius}";
+            return $"Circle [{Center.X},{Center.Y}] {Radius}";
         }
-
-        public CGMPoint Center => _center;
-        public double Radius => _radius;
     }
 }

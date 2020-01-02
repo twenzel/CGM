@@ -10,7 +10,7 @@ namespace codessentials.CGM.Commands
         public CircularArcCentreReversed(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 20, container))
         {
-            
+
         }
 
         public CircularArcCentreReversed(CGMFile container, CGMPoint center, double startDeltaX, double startDeltaY, double endDeltaX, double endDeltaY, double radius)
@@ -24,6 +24,6 @@ namespace codessentials.CGM.Commands
             writer.Write("  ARCCTRREV");
             WriteValues(writer);
             writer.WriteLine(" ;");
-        }    
+        }
     }
 }

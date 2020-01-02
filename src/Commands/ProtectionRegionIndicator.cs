@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=3, ElementId=17
@@ -13,11 +11,11 @@ namespace codessentials.CGM.Commands
         public ProtectionRegionIndicator(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.ControlElements, 17, container))
         {
-            
+
         }
 
         public ProtectionRegionIndicator(CGMFile container, int index, int indicator)
-            :this(container)
+            : this(container)
         {
             Index = index;
             Indicator = indicator;
@@ -26,7 +24,7 @@ namespace codessentials.CGM.Commands
         public override void ReadFromBinary(IBinaryReader reader)
         {
             Index = reader.ReadIndex();
-            Indicator = reader.ReadIndex();            
+            Indicator = reader.ReadIndex();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace codessentials.CGM.Commands
 {
@@ -10,14 +9,14 @@ namespace codessentials.CGM.Commands
     {
         public List<string> Names { get; set; } = new List<string>();
 
-        public SymbolLibraryList(CGMFile container) 
+        public SymbolLibraryList(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 23, container))
         {
-           
+
         }
 
         public SymbolLibraryList(CGMFile container, string[] names)
-            :this(container)
+            : this(container)
         {
             Names.AddRange(names);
         }
@@ -30,8 +29,8 @@ namespace codessentials.CGM.Commands
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            foreach(var name in Names)
-                writer.WriteFixedString(name);            
+            foreach (var name in Names)
+                writer.WriteFixedString(name);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
@@ -39,7 +38,7 @@ namespace codessentials.CGM.Commands
             writer.Write(" SYMBOLLIBLIST");
 
             foreach (var s in Names)
-                writer.Write(" "+WriteString(s));
+                writer.Write(" " + WriteString(s));
 
             writer.WriteLine(";");
         }

@@ -1,6 +1,5 @@
 ﻿using codessentials.CGM.Classes;
 using System.Collections.Generic;
-using System;
 
 namespace codessentials.CGM.Commands
 {
@@ -21,11 +20,11 @@ namespace codessentials.CGM.Commands
         public FontProperties(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 21, container))
         {
-           
+
         }
 
         public FontProperties(CGMFile container, FontInfo[] infos)
-            :this(container)
+            : this(container)
         {
             Infos.AddRange(infos);
         }
@@ -34,13 +33,15 @@ namespace codessentials.CGM.Commands
         {
             while (reader.CurrentArg < reader.Arguments.Length)
             {
-                var info = new FontInfo();
-                info.PropertyIndicator = reader.ReadIndex();
-                info.Priority = reader.ReadInt();
-                info.Value = reader.ReadSDR();
+                var info = new FontInfo
+                {
+                    PropertyIndicator = reader.ReadIndex(),
+                    Priority = reader.ReadInt(),
+                    Value = reader.ReadSDR()
+                };
 
                 Infos.Add(info);
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
@@ -51,18 +52,18 @@ namespace codessentials.CGM.Commands
                 writer.WriteInt(info.Priority);
                 writer.WriteSDR(info.Value);
             }
-            
+
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.Write(" FONTPROP");
 
-            foreach(var info in Infos)
+            foreach (var info in Infos)
             {
                 writer.Write($" {WriteIndex(info.PropertyIndicator)} {WriteInt(info.Priority)}");
 
-                WriteSDR(writer, info.Value);                
+                WriteSDR(writer, info.Value);
             }
 
             writer.WriteLine(";");

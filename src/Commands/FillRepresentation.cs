@@ -1,5 +1,4 @@
-﻿using System;
-using codessentials.CGM.Classes;
+﻿using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -7,21 +6,21 @@ namespace codessentials.CGM.Commands
     /// Class=2, Element=14
     /// </remarks>
     public class FillRepresentation : Command
-    {        
+    {
         public int BundleIndex { get; set; }
         public InteriorStyle.Style Style { get; set; }
-        public CGMColor Color { get; set; } 
+        public CGMColor Color { get; set; }
         public int HatchIndex { get; set; }
         public int PatternIndex { get; set; }
 
-        public FillRepresentation(CGMFile container) 
+        public FillRepresentation(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 14, container))
         {
-           
+
         }
 
         public FillRepresentation(CGMFile container, int index, InteriorStyle.Style style, CGMColor color, int hatchIndex, int patternIndex)
-            :this(container)
+            : this(container)
         {
             BundleIndex = index;
             Style = style;
@@ -36,7 +35,7 @@ namespace codessentials.CGM.Commands
             Style = (InteriorStyle.Style)reader.ReadEnum();
             Color = reader.ReadColor();
             HatchIndex = reader.ReadIndex();
-            PatternIndex = reader.ReadIndex();            
+            PatternIndex = reader.ReadIndex();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

@@ -1,9 +1,6 @@
-﻿using codessentials.CGM.Classes;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM.Commands
 {
@@ -19,14 +16,14 @@ namespace codessentials.CGM.Commands
 
         public List<BezierCurve> Curves { get; set; } = new List<BezierCurve>();
 
-        public PolyBezier(CGMFile container) 
+        public PolyBezier(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.GraphicalPrimitiveElements, 26, container))
         {
-            
+
         }
 
         public PolyBezier(CGMFile container, int continuityIndicator, IEnumerable<BezierCurve> curves)
-            :this(container)
+            : this(container)
         {
             ContinuityIndicator = continuityIndicator;
             Curves.AddRange(curves);
@@ -40,16 +37,18 @@ namespace codessentials.CGM.Commands
             {
                 Assert(((reader.Arguments.Length - reader.CurrentArg) / reader.SizeOfPoint()) % 4 == 0, $"invalid PolyBezier args for _continuityIndicator {ContinuityIndicator}");
 
-                int n = ((reader.Arguments.Length - reader.CurrentArg) / reader.SizeOfPoint()) / 4;
+                var n = ((reader.Arguments.Length - reader.CurrentArg) / reader.SizeOfPoint()) / 4;
 
-                int point = 0;
+                var point = 0;
                 while (point < n)
                 {
-                    var curve = new BezierCurve();
-                    curve.Add(reader.ReadPoint());
-                    curve.Add(reader.ReadPoint());
-                    curve.Add(reader.ReadPoint());
-                    curve.Add(reader.ReadPoint());
+                    var curve = new BezierCurve
+                    {
+                        reader.ReadPoint(),
+                        reader.ReadPoint(),
+                        reader.ReadPoint(),
+                        reader.ReadPoint()
+                    };
                     Curves.Add(curve);
                     point++;
                 }
@@ -57,9 +56,9 @@ namespace codessentials.CGM.Commands
             else if (this.ContinuityIndicator == 2)
             {
                 Assert(((reader.Arguments.Length - reader.CurrentArg - 1) / reader.SizeOfPoint()) % 3 == 0, $"invalid PolyBezier args for _continuityIndicator {ContinuityIndicator}");
-                int n = ((reader.Arguments.Length - reader.CurrentArg - 1) / reader.SizeOfPoint()) / 3;
+                var n = ((reader.Arguments.Length - reader.CurrentArg - 1) / reader.SizeOfPoint()) / 3;
 
-                int point = 0;
+                var point = 0;
                 while (point < n)
                 {
                     var curve = new BezierCurve();
@@ -85,10 +84,10 @@ namespace codessentials.CGM.Commands
         public override void WriteAsBinary(IBinaryWriter writer)
         {
             writer.WriteIndex(ContinuityIndicator);
-            foreach(var curve in Curves)
+            foreach (var curve in Curves)
             {
                 foreach (var p in curve)
-                    writer.WritePoint(p);               
+                    writer.WritePoint(p);
             }
         }
 
@@ -103,7 +102,7 @@ namespace codessentials.CGM.Commands
 
             foreach (var curve in Curves)
             {
-                string line = string.Join("", curve.Select(p => $" {WritePoint(p)}"));
+                var line = string.Join("", curve.Select(p => $" {WritePoint(p)}"));
                 writer.Write(line);
             }
 

@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using codessentials.CGM.Commands;
-using codessentials.CGM.Elements;
-using System.Diagnostics;
 using codessentials.CGM.Export;
 using codessentials.CGM.Import;
 
@@ -17,8 +10,6 @@ namespace codessentials.CGM
     /// </summary>
     public class BinaryCGMFile : CGMFile
     {
-        private string _fileName;        
-
         public BinaryCGMFile()
         {
             Name = "new";
@@ -30,8 +21,8 @@ namespace codessentials.CGM
         /// <param name="fileName">Path to the binary CGM file.</param>
         public BinaryCGMFile(string fileName)
         {
-            _fileName = fileName;
-            Name = Path.GetFileName(_fileName);
+            FileName = fileName;
+            Name = Path.GetFileName(fileName);
 
             ReadData(fileName);
         }
@@ -43,11 +34,11 @@ namespace codessentials.CGM
         /// <param name="name">The name of the CGM.</param>
         public BinaryCGMFile(Stream data, string name = "stream")
         {
-            if (data is null)            
-                throw new ArgumentNullException(nameof(data));            
+            if (data is null)
+                throw new ArgumentNullException(nameof(data));
 
             Name = name;
-            ReadData(data);            
+            ReadData(data);
         }
 
         /// <summary>
@@ -55,7 +46,7 @@ namespace codessentials.CGM
         /// </summary>
         public void WriteFile()
         {
-            WriteFile(_fileName);
+            WriteFile(FileName);
         }
 
         /// <summary>
@@ -114,18 +105,15 @@ namespace codessentials.CGM
 
         private void ReadData(string fileName)
         {
-            using (var stream = File.OpenRead(_fileName))
+            using (var stream = File.OpenRead(fileName))
             {
                 ReadData(stream);
             }
-        }                    
+        }
 
         /// <summary>
         /// The binary file name
         /// </summary>
-        public string FileName
-        {
-            get { return _fileName; }
-        }
+        public string FileName { get; }
     }
 }

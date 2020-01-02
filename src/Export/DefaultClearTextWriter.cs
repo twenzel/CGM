@@ -1,49 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using codessentials.CGM.Commands;
 
 namespace codessentials.CGM.Export
 {
     public class DefaultClearTextWriter : IClearTextWriter, IDisposable
     {
-        private StreamWriter _writer;
-        private List<Message> _messages = new List<Message>();
-        private Command _currentCommand;        
+        private readonly StreamWriter _writer;
+        private readonly List<Message> _messages = new List<Message>();
+        private Command _currentCommand;
+        private bool _isDisposed;
 
         private const string LINE_FEED = "\n";
         private const int MAX_CHARS_PER_LINE = 80;
         private int current_chars_per_line;
-        private const char SPACE_CHARACTER = ' ';
-        private const char PLUS_CHARACTER = '+';
-        private const char MINUS_CHARACTER = '-';
-        private const char NUMBER_SIGN = '#';
-        private const char SEMICOLON_CHARACTER = ';';
-        private const char SLASH_CHARACTER = '/';
-        private const char OPEN_PARENTHESIS_CHARACTER = '(';
-        private const char CLOSE_PARENTHESIS_CHARACTER = ')';
-        private const char COMMA_CHARACTER = ',';
-        private const char DECIMAL_POINT_CHARACTER = '.';
-        private const char SINGLE_QUOTE_CHARACTER = '\'';
-        private const char DOUBLE_QUOTE_CHARACTER = '"';
-        private const char UNDERSCORE_CHARACTER = '_';
-        private const char DOLLAR_SIGN_CHARACTER = '$';
-        private const char PERCENT_CHARACTER = '%';
-        private const char LINE_FEED_CHARACTER ='\n';
 
-        public IEnumerable<Message> Messages => _messages;  
+        public IEnumerable<Message> Messages => _messages;
 
         public DefaultClearTextWriter(Stream stream)
         {
             _writer = new StreamWriter(stream, CodePagesEncodingProvider.Instance.GetEncoding(1252));
-        }       
+        }
 
         public void Dispose()
         {
-            _writer.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+                return;
+
+            if (disposing)
+            {
+                _writer.Dispose();
+            }
+
+            _isDisposed = true;
         }
 
         public void WriteLine(string line)
@@ -62,11 +59,11 @@ namespace codessentials.CGM.Export
 
 
         public void Write(string text)
-        {          
+        {
             if (text.Contains(LINE_FEED) && text.Length > 1)
             {
                 var lines = text.Split(new[] { LINE_FEED }, StringSplitOptions.None);
-                for (int i = 0; i < lines.Length -1; i++)
+                for (var i = 0; i < lines.Length - 1; i++)
                 {
                     WriteLine(lines[i]);
                 }
@@ -109,10 +106,10 @@ namespace codessentials.CGM.Export
                                 var currentLine = text.Substring(0, nextSeparatorChar);
                                 text = text.Substring(nextSeparatorChar);
                                 WriteLine(currentLine);
-                            }                            
+                            }
                             else
                             {
-                                _writer.Write(text);                                
+                                _writer.Write(text);
                                 current_chars_per_line = 0;
                                 text = "";
                             }

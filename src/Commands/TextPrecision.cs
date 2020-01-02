@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=11
     /// </summary>
     public class TextPrecision : Command
-    {        
+    {
         public TextPrecisionType Value { get; set; }
 
-        public TextPrecision(CGMFile container) 
+        public TextPrecision(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 11, container))
         {
-            
+
         }
 
         public TextPrecision(CGMFile container, TextPrecisionType value)
-            :this(container)
+            : this(container)
         {
             Value = value;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            int enumValue = reader.ReadEnum();
+            var enumValue = reader.ReadEnum();
             switch (enumValue)
             {
                 case 0:
@@ -46,7 +42,7 @@ namespace codessentials.CGM.Commands
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteEnum((int)Value);            
+            writer.WriteEnum((int)Value);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)

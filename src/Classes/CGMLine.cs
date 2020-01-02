@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codessentials.CGM.Classes
+﻿namespace codessentials.CGM.Classes
 {
     /// <summary>
     /// Describes a line
@@ -18,25 +12,26 @@ namespace codessentials.CGM.Classes
         {
             if (a.X < b.X)
             {
-                this.A = a;
-                this.B = b;
+                A = a;
+                B = b;
             }
             else if (CGMPoint.IsSame(a.X, b.X))
             {
                 if (a.Y < b.Y)
                 {
-                    this.A = a;
-                    this.B = b;
-                } else
+                    A = a;
+                    B = b;
+                }
+                else
                 {
-                    this.A = b;
-                    this.B = a;
+                    A = b;
+                    B = a;
                 }
             }
             else
             {
-                this.A = b;
-                this.B = a;
+                A = b;
+                B = a;
             }
         }
     }

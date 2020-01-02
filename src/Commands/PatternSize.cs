@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace codessentials.CGM.Commands
+﻿namespace codessentials.CGM.Commands
 {
     /// <summary>
     /// Class=5, ElementId=33
@@ -15,11 +13,11 @@ namespace codessentials.CGM.Commands
         public PatternSize(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 33, container))
         {
-            
+
         }
 
         public PatternSize(CGMFile container, double heightX, double heightY, double widthX, double widthY)
-            :this(container)
+            : this(container)
         {
             HeightX = heightX;
             HeightY = heightY;
@@ -32,7 +30,7 @@ namespace codessentials.CGM.Commands
             HeightX = reader.ReadSizeSpecification(_container.InteriorStyleSpecificationMode);
             HeightY = reader.ReadSizeSpecification(_container.InteriorStyleSpecificationMode);
             WidthX = reader.ReadSizeSpecification(_container.InteriorStyleSpecificationMode);
-            WidthY = reader.ReadSizeSpecification(_container.InteriorStyleSpecificationMode);            
+            WidthY = reader.ReadSizeSpecification(_container.InteriorStyleSpecificationMode);
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
