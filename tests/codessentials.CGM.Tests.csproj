@@ -4,6 +4,8 @@
     <AssemblyTitle>codessentials.CGM.Tests</AssemblyTitle>
     <Product>codessentials.CGM.Tests</Product>
     <Copyright>Copyright © 2020</Copyright>
+    <ProjectGuid>{22322112-C9AD-4325-B0FB-975B13ED8EFF}</ProjectGuid>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,8 +19,8 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
   </ItemGroup>
-  
-  <ItemGroup>   
+
+  <ItemGroup>
     <EmbeddedResource Include="Files\1STPRIZE.CGM" />
     <EmbeddedResource Include="Files\2MANSAW.CGM" />
     <EmbeddedResource Include="Files\3-5DISKS.CGM" />
@@ -84,7 +86,7 @@
     <EmbeddedResource Include="Files\sheet1_nav.cgm" />
     <EmbeddedResource Include="Files\techdraw.cgm" />
     <EmbeddedResource Include="Files\tool.cgm" />
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\codessentials.CGM.csproj" />
   </ItemGroup>

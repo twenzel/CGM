@@ -17,7 +17,8 @@
     <RepositoryType>github</RepositoryType>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <LangVersion>latest</LangVersion>  
+    <LangVersion>latest</LangVersion>
+    <ProjectGuid>{56E1F6C9-610E-4FF4-BBCD-43EBD535C4AF}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.1.0.13383">
