@@ -28,6 +28,8 @@ var sonarOrganization = "twenzel";
 var isLocalBuild = string.IsNullOrEmpty(EnvironmentVariable("GITHUB_REPOSITORY"));
 var isMasterBranch = false;
 var isPullRequest = !string.IsNullOrEmpty(EnvironmentVariable("GITHUB_HEAD_REF"));
+var gitHubEvent = EnvironmentVariable("GITHUB_EVENT_NAME");
+var isReleaseCreation = string.Equals(gitHubEvent, "release");
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -39,14 +41,8 @@ Setup(context =>
 	Information($"Package output directory: {packageOutputDir.FullPath}");
 	Information($"Main project path: {project.FullPath}");	
 	Information($"Local build: {isLocalBuild}");
-	Information($"Is pull request: {isPullRequest}");
-
-	var envVars = EnvironmentVariables();
-
-	foreach(var envVar in envVars)
-	{
-		Information($"Key: {envVar.Key}\tValue: \"{envVar.Value}\"");
-	}
+	Information($"Is pull request: {isPullRequest}");	
+	Information($"Is release creation: {isReleaseCreation}");	
 });
 
 Task("Clean")
@@ -178,7 +174,7 @@ Task("Pack")
 	});
 	
 Task("Publish")	
-	.WithCriteria(!isPullRequest && isMasterBranch)
+	.WithCriteria(isReleaseCreation && isMasterBranch)
 	.IsDependentOn("Pack")	
 	.Description("Pushes the created NuGet packages to nuget.org")  
 	.Does(() => {

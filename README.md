@@ -2,8 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/codessentials.CGM.svg)](https://nuget.org/packages/codessentials.CGM/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Build Status](https://github.com/twenzel/CGM/workflows/Release/badge.svg?branch=master)](https://github.com/twenzel/CGM/actions)
-[![Build Status](https://github.com/twenzel/CGM/workflows/Build%20&%20Test/badge.svg?branch=master)](https://github.com/twenzel/CGM/actions)
+[![Build Status](https://github.com/twenzel/CGM/workflows/Build/badge.svg?branch=master)](https://github.com/twenzel/CGM/actions)
 
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=twenzel_CGM&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=twenzel_CGM)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=twenzel_CGM&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=twenzel_CGM)
