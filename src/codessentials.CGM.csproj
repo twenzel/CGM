@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyTitle>codessentials.CGM</AssemblyTitle>
     <Product>codessentials.CGM</Product>
     <Copyright>Copyright © 2020</Copyright> 

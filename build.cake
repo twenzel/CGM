@@ -27,7 +27,7 @@ var sonarUrl = "https://sonarcloud.io";
 var sonarOrganization = "twenzel";
 var isLocalBuild = BuildSystem.IsLocalBuild;
 var isMasterBranch = false;
-var isPullRequest = false;
+var isPullRequest = !string.IsNullOrEmpty(EnvironmentVariable("GITHUB_HEAD_REF"));
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -39,6 +39,7 @@ Setup(context =>
 	Information($"Package output directory: {packageOutputDir.FullPath}");
 	Information($"Main project path: {project.FullPath}");	
 	Information($"Local build: {isLocalBuild}");
+	Information($"Is pull request: {isPullRequest}");
 
 	var envVars = EnvironmentVariables();
 
