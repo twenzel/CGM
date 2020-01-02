@@ -24,4 +24,4 @@ jobs:
         cake-version: 0.35.0
       env: 
         nugetApiKey: ${{ secrets.nugetApiKey }}  
-        CODECOV_TOKEN: ${{ secrets.codeCovToken }}
+        sonarLogin: ${{ secrets.sonarLogin }}
