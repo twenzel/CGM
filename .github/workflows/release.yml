@@ -20,7 +20,7 @@ jobs:
     - name: run cake
       uses: ecampidoglio/cake-action@v1.1.1
       with:
-        target: Publish
+        target: Default
         cake-version: 0.35.0
       env: 
         nugetApiKey: ${{ secrets.nugetApiKey }}  
