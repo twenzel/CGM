@@ -25,7 +25,7 @@ var nugetPublishFeed = "https://api.nuget.org/v3/index.json";
 var sonarProjectKey = "twenzel_CGM";
 var sonarUrl = "https://sonarcloud.io";
 var sonarOrganization = "twenzel";
-var isLocalBuild = BuildSystem.IsLocalBuild;
+var isLocalBuild = string.IsNullOrEmpty(EnvironmentVariable("GITHUB_REPOSITORY"));
 var isMasterBranch = false;
 var isPullRequest = !string.IsNullOrEmpty(EnvironmentVariable("GITHUB_HEAD_REF"));
 
