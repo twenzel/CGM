@@ -128,7 +128,6 @@ namespace codessentials.CGM.Commands
         {
             // remove non-printable elements
             value = new string(value.Where(c => !char.IsControl(c) || c == 13 || c == 10 || c == 9).ToArray());
-            //string result = new string(value.Where(c => char.IsLetterOrDigit(c) || (c >= ' ' && c <= byte.MaxValue)).ToArray());
 
             return $"'{value}'";
         }
