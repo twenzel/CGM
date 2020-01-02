@@ -24,4 +24,5 @@ jobs:
         cake-version: 0.35.0
       env: 
         sonarLogin: ${{ secrets.sonarLogin }}
-        nugetApiKey: ${{ secrets.nugetApiKey }}  
+        nugetApiKey: ${{ secrets.nugetApiKey }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
