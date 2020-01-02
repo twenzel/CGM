@@ -322,14 +322,14 @@ namespace codessentials.CGM.Export
 
         public void WriteEmbeddedCommand(Commands.Command command)
         {
-            using (var stream = new MemoryStream())
+            using var stream = new MemoryStream();
+
+            using (var writer = new DefaultBinaryWriter(stream, _cgm))
             {
-                using (var writer = new DefaultBinaryWriter(stream, _cgm))
-                {
-                    writer.WriteCommand(command);
-                }
-                _bucket.AddRange(stream.ToArray());
+                writer.WriteCommand(command);
             }
+            _bucket.AddRange(stream.ToArray());
+
         }
 
         #region internal write helper
@@ -465,27 +465,27 @@ namespace codessentials.CGM.Export
             }
         }
 
-        public static byte SetBit(byte b, int BitNumber)
+        public static byte SetBit(byte b, int bitNumber)
         {
-            if (BitNumber < 8 && BitNumber > -1)
+            if (bitNumber < 8 && bitNumber > -1)
             {
-                return (byte)(b | (byte)(0x01 << BitNumber));
+                return (byte)(b | (byte)(0x01 << bitNumber));
             }
             else
             {
-                throw new InvalidOperationException($"The value for {nameof(BitNumber)} '{BitNumber}' was not is the valid range! (BitNumber = (min)0 - (max)7)");
+                throw new InvalidOperationException($"The value for {nameof(bitNumber)} '{bitNumber}' was not is the valid range! (BitNumber = (min)0 - (max)7)");
             }
         }
 
-        public static int CheckBitSet(byte b, int BitNumber)
+        public static int CheckBitSet(byte b, int bitNumber)
         {
-            if (BitNumber < 8 && BitNumber > -1)
+            if (bitNumber < 8 && bitNumber > -1)
             {
-                return (b & (1 << BitNumber));
+                return (b & (1 << bitNumber));
             }
             else
             {
-                throw new InvalidOperationException($"The value for {nameof(BitNumber)} '{BitNumber}' was not is the valid range!  (BitNumber = (min)0 - (max)7)");
+                throw new InvalidOperationException($"The value for {nameof(bitNumber)} '{bitNumber}' was not is the valid range!  (BitNumber = (min)0 - (max)7)");
             }
 
         }
@@ -539,7 +539,7 @@ namespace codessentials.CGM.Export
 
             if (model == ColourModel.Model.RGB)
             {
-                var scaled = scaleColorValueRGB(color.R, color.G, color.B);
+                var scaled = ScaleColorValueRGB(color.R, color.G, color.B);
                 WriteUInt(scaled[0], precision);
                 WriteUInt(scaled[1], precision);
                 WriteUInt(scaled[2], precision);
@@ -590,30 +590,30 @@ namespace codessentials.CGM.Export
             WriteUInt(index, localColorPrecision <= 0 ? _cgm.ColourIndexPrecision : localColorPrecision);
         }
 
-        private int[] scaleColorValueRGB(int r, int g, int b)
+        private int[] ScaleColorValueRGB(int r, int g, int b)
         {
             var min = _cgm.ColourValueExtentMinimumColorValueRGB;
             var max = _cgm.ColourValueExtentMaximumColorValueRGB;
 
-            r = clamp(r, min[0], max[0]);
-            g = clamp(g, min[1], max[1]);
-            b = clamp(b, min[2], max[2]);
+            r = Clamp(r, min[0], max[0]);
+            g = Clamp(g, min[1], max[1]);
+            b = Clamp(b, min[2], max[2]);
 
             return new int[] {
-                scale(r, min[0], max[0]),
-                scale(g, min[1], max[1]),
-                scale(b, min[2], max[2])
+                Scale(r, min[0], max[0]),
+                Scale(g, min[1], max[1]),
+                Scale(b, min[2], max[2])
             };
         }
 
-        private int scale(int r, int min, int max)
+        private int Scale(int r, int min, int max)
         {
             // return 255 * (r - min) / (max - min);
 
             return (max + min) * (r + min) / 255;
         }
 
-        private int clamp(int r, int min, int max)
+        private int Clamp(int r, int min, int max)
         {
             return Math.Max(Math.Min(r, max), min);
         }

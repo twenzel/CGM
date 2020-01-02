@@ -1,13 +1,14 @@
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=nuget.commandline&version=5.3.0"
-#tool "nuget:?package=Codecov&version=1.9.0"
+#tool "nuget:?package=MSBuild.SonarQube.Runner.Tool&version=4.6.0"
 
 #addin "nuget:?package=Cake.Coverlet&version=2.3.4"
-#addin "nuget:?package=Cake.Codecov&version=0.7.0"
+#addin "nuget:?package=Cake.Sonar&version=1.1.22"
 
 var target = Argument("target", "Default");
 var nugetApiKey = Argument("nugetApiKey", EnvironmentVariable("nugetApiKey"));
 var configuration = Argument("configuration", "Release");
+var sonarLogin = Argument("sonarLogin", EnvironmentVariable("sonarLogin"));
 
 //////////////////////////////////////////////////////////////////////
 //    Build Variables
@@ -17,10 +18,16 @@ var project = File("./src/codessentials.CGM.csproj").Path.MakeAbsolute(Context.E
 var outputDir = Directory("./buildArtifacts/").Path.MakeAbsolute(Context.Environment);
 var packageOutputDir = Directory("./buildArtifacts/Package").Path.MakeAbsolute(Context.Environment);
 var outputDirNuget = outputDir+"NuGet/";
-var testResultsPath = outputDir.CombineWithFilePath("TestResults.xml");
+var testResultsPath = outputDir.CombineWithFilePath("TestResults.xml").ToString();
 var codeCoverageResultFile = "CodeCoverageResults.xml";
+var codeCoverageResultPath = outputDir.CombineWithFilePath(codeCoverageResultFile).ToString();
 var nugetPublishFeed = "https://api.nuget.org/v3/index.json";
-
+var sonarProjectKey = "twenzel_CGM";
+var sonarUrl = "https://sonarcloud.io";
+var sonarOrganization = "twenzel";
+var isLocalBuild = BuildSystem.IsLocalBuild;
+var isMasterBranch = false;
+var isPullRequest = false;
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -31,6 +38,14 @@ Setup(context =>
 	Information($"Output directory: {outputDir.FullPath}");
 	Information($"Package output directory: {packageOutputDir.FullPath}");
 	Information($"Main project path: {project.FullPath}");	
+	Information($"Local build: {isLocalBuild}");
+
+	var envVars = EnvironmentVariables();
+
+	foreach(var envVar in envVars)
+	{
+		Information($"Key: {envVar.Key}\tValue: \"{envVar.Value}\"");
+	}
 });
 
 Task("Clean")
@@ -73,6 +88,8 @@ Task("Version")
 		Information("CommitsSinceVersionSource:\t\t" + versionInfo.CommitsSinceVersionSource);
 		Information("CommitsSinceVersionSourcePadded:\t" + versionInfo.CommitsSinceVersionSourcePadded);
 		Information("CommitDate:\t\t\t\t" + versionInfo.CommitDate);
+
+		isMasterBranch =  StringComparer.OrdinalIgnoreCase.Equals("master", versionInfo.BranchName);
 	});
 
 Task("Build")
@@ -114,15 +131,28 @@ Task("Test")
         };
 	
 		DotNetCoreTest("./tests/codessentials.CGM.Tests.csproj", settings, coveletSettings);	
+	});
 
-		var codecovSettings = new CodecovSettings{
-			Branch = versionInfo.BranchName,
-			Build = versionInfo.FullSemVer,
-			Commit = versionInfo.Sha,	
-			Files = new List<string>(new[]{outputDir.CombineWithFilePath(codeCoverageResultFile).ToString()})	
-		};
-		
-		Codecov(codecovSettings);
+Task("SonarBegin")
+	.WithCriteria(!isLocalBuild)
+	.Does(() => {
+		SonarBegin(new SonarBeginSettings {
+			Key = sonarProjectKey,
+			Url = sonarUrl,
+			Organization = sonarOrganization,
+			Login = sonarLogin,
+			UseCoreClr = true,
+			VsTestReportsPath = testResultsPath,
+			OpenCoverReportsPath = codeCoverageResultPath
+		});
+	});
+
+Task("SonarEnd")
+	.WithCriteria(!isLocalBuild)
+	.Does(() => {
+		SonarEnd(new SonarEndSettings {
+			Login = sonarLogin
+		});
 	});
 
 
@@ -147,6 +177,7 @@ Task("Pack")
 	});
 	
 Task("Publish")	
+	.WithCriteria(!isPullRequest && isMasterBranch)
 	.IsDependentOn("Pack")	
 	.Description("Pushes the created NuGet packages to nuget.org")  
 	.Does(() => {
@@ -159,9 +190,13 @@ Task("Publish")
 			Source = nugetPublishFeed,
 			ApiKey = nugetApiKey
 		});	
-	});
-	
+	});	
+
 Task("Default")
-	.IsDependentOn("Test");
+	.IsDependentOn("SonarBegin")
+	.IsDependentOn("Test")	
+	.IsDependentOn("SonarEnd")
+	.IsDependentOn("Pack")
+	.IsDependentOn("Publish");
 
 RunTarget(target);

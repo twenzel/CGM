@@ -395,9 +395,9 @@ namespace codessentials.CGM.Import
             }
             else
             {
-                // this is a long form command
-                var done = true;
                 var a = 0;
+                // this is a long form command
+                bool done;
                 do
                 {
                     argumentsCount = ReadInt16Direct(reader);
@@ -409,7 +409,7 @@ namespace codessentials.CGM.Import
                         // data is partitioned and it's not the last partition
                         done = false;
                         // clear bit 15
-                        argumentsCount = argumentsCount & ~(1 << 15);
+                        argumentsCount &= ~(1 << 15);
                     }
                     else
                     {

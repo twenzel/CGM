@@ -4,7 +4,13 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Build Status](https://github.com/twenzel/CGM/workflows/Release/badge.svg?branch=master)](https://github.com/twenzel/CGM/actions)
 [![Build Status](https://github.com/twenzel/CGM/workflows/Build%20&%20Test/badge.svg?branch=master)](https://github.com/twenzel/CGM/actions)
-[![Coverage Status](https://codecov.io/gh/twenzel/CGM/branch/master/graph/badge.svg)](https://codecov.io/gh/twenzel/CGM)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=twenzel_CGM&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=twenzel_CGM)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=twenzel_CGM&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=twenzel_CGM)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=twenzel_CGM&metric=security_rating)](https://sonarcloud.io/dashboard?id=twenzel_CGM)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=twenzel_CGM&metric=bugs)](https://sonarcloud.io/dashboard?id=twenzel_CGM)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=twenzel_CGM&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=twenzel_CGM)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=twenzel_CGM&metric=coverage)](https://sonarcloud.io/dashboard?id=twenzel_CGM)
 
 This library reads CGM (Computer Graphics Metafile) in binary and clear text format. Read graphics can be modified, analyzed and exported. Creating new graphics is also supported.
 It implements the `ISO/IEC 8632-3:1999` and `ISO/IEC 8632-4:1999` specification.

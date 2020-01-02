@@ -21,16 +21,16 @@ namespace codessentials.CGM.Commands
         }
 
         public DataTypeSelector TypeSelector { get; private set; }
-        public List<ApplicationStructureInfo> Infos { get; }
+        public List<ApplicationStructureInfo> Infos { get; } = new List<ApplicationStructureInfo>();
 
-        public ApplicationStructureDirectory(CGMFile container) 
+        public ApplicationStructureDirectory(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.PictureDescriptorElements, 20, container))
         {
-            
+
         }
 
         public ApplicationStructureDirectory(CGMFile container, DataTypeSelector typeSelector, ApplicationStructureInfo[] infos)
-            :this(container)
+            : this(container)
         {
             TypeSelector = typeSelector;
             Infos.AddRange(infos);
@@ -49,13 +49,13 @@ namespace codessentials.CGM.Commands
                 };
 
                 Infos.Add(info);
-            }            
+            }
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
             writer.WriteEnum((int)TypeSelector);
-            foreach(var info in Infos)
+            foreach (var info in Infos)
             {
                 writer.WriteFixedString(info.Identifier);
                 writer.WriteInt(info.Location);

@@ -52,7 +52,7 @@ namespace codessentials.CGM.Classes
             }
         }
 
-        public List<Member> Members { get; }
+        public List<Member> Members { get; } = new List<Member>();
 
         public void Add(StructuredDataType type, int count, List<object> data)
         {

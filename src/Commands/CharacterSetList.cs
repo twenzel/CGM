@@ -18,7 +18,7 @@ namespace codessentials.CGM.Commands
             COMPLETE_CODE
         }
 
-        public List<KeyValuePair<Type, string>> CharacterSets { get; }
+        public List<KeyValuePair<Type, string>> CharacterSets { get; } = new List<KeyValuePair<Type, string>>();
 
         public CharacterSetList(CGMFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 14, container))
@@ -122,8 +122,6 @@ namespace codessentials.CGM.Commands
             }
 
             writer.WriteLine(";");
-
-            // writer.WriteLine($" fontlist '{string.Join("', '", _fontNames)}';");
         }
 
         public override string ToString()
@@ -137,6 +135,6 @@ namespace codessentials.CGM.Commands
             }
 
             return sb.ToString();
-        }        
+        }
     }
 }

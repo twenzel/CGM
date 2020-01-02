@@ -84,13 +84,11 @@ namespace codessentials.CGM.Export
                         while (current_chars_per_line + text.Length > MAX_CHARS_PER_LINE && text.Length > 0)
                         {
                             var nextSeparatorChar = text.LastIndexOf(" ", MAX_CHARS_PER_LINE - current_chars_per_line);
-                            if (nextSeparatorChar > 0 && text.Length > nextSeparatorChar)
-                            {
-                                // if this is the separator between command and content (like "mfdesc 'abc'")
-                                // then ignore this and put out the whole line at once
-                                if (text[nextSeparatorChar + 1] == '\'')
-                                    nextSeparatorChar = -1;
-                            }
+
+                            // if this is the separator between command and content (like "mfdesc 'abc'")
+                            // then ignore this and put out the whole line at once
+                            if (nextSeparatorChar > 0 && text.Length > nextSeparatorChar && text[nextSeparatorChar + 1] == '\'')
+                                nextSeparatorChar = -1;
 
                             if (nextSeparatorChar == -1)
                                 nextSeparatorChar = text.LastIndexOf(LINE_FEED, MAX_CHARS_PER_LINE - current_chars_per_line);

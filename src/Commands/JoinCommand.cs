@@ -4,7 +4,7 @@
     {
         public JoinIndicator Type { get; set; }
 
-        public JoinCommand(CommandConstructorArguments args)
+        protected JoinCommand(CommandConstructorArguments args)
             : base(args)
         {
 
@@ -19,24 +19,14 @@
         public override void ReadFromBinary(IBinaryReader reader)
         {
             var indexValue = reader.ReadIndex();
-            switch (indexValue)
+            Type = indexValue switch
             {
-                case 1:
-                    Type = JoinIndicator.UNSPECIFIED;
-                    break;
-                case 2:
-                    Type = JoinIndicator.MITRE;
-                    break;
-                case 3:
-                    Type = JoinIndicator.ROUND;
-                    break;
-                case 4:
-                    Type = JoinIndicator.BEVEL;
-                    break;
-                default:
-                    Type = JoinIndicator.UNSPECIFIED;
-                    break;
-            }
+                1 => JoinIndicator.UNSPECIFIED,
+                2 => JoinIndicator.MITRE,
+                3 => JoinIndicator.ROUND,
+                4 => JoinIndicator.BEVEL,
+                _ => JoinIndicator.UNSPECIFIED,
+            };
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)

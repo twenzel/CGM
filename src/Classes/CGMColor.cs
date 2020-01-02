@@ -6,7 +6,7 @@ namespace codessentials.CGM.Classes
     /// <summary>
     /// Represents a color parameter type
     /// </summary>
-    public class CGMColor : IEquatable<CGMColor>
+    public sealed class CGMColor : IEquatable<CGMColor>
     {
         public Color Color { get; set; } = Color.Empty;
         public int ColorIndex { get; set; } = -1;
