@@ -17,6 +17,7 @@ namespace codessentials.CGM
         string ReadString();
         int ReadIndex();
         int ReadInt();
+        int ReadArgumentEnd();
         string ReadFixedString();
         StructuredDataRecord ReadSDR();
         CgmColor ReadColor();

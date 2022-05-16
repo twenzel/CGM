@@ -38,6 +38,7 @@ namespace codessentials.CGM.Commands
                         break;
                     default:
                         reader.Unsupported("unsupported compression type " + CompressionType);
+                        reader.ReadArgumentEnd();
                         break;
                 }
             }
