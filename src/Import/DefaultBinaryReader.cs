@@ -327,13 +327,16 @@ namespace codessentials.CGM.Import
             catch (NotSupportedException ex)
             {
                 _messages.Add(new Message(Severity.Unsupported, (ClassCode)elementClass, elementId, ex.Message, _currentCommand.ToString()));
+                ReadArgumentEnd();
             }
             catch (NotImplementedException ex)
             {
                 _messages.Add(new Message(Severity.Unimplemented, (ClassCode)elementClass, elementId, ex.Message, _currentCommand.ToString()));
+                ReadArgumentEnd();
             }
             catch (Exception ex)
             {
+                ReadArgumentEnd();
                 if (ex.Source == "FluentAssertions")
                     throw;
 
