@@ -1,9 +1,8 @@
-#tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
-#tool "nuget:?package=nuget.commandline&version=5.3.0"
-#tool "nuget:?package=MSBuild.SonarQube.Runner.Tool&version=4.6.0"
+#tool "dotnet:?package=GitVersion.Tool&version=5.8.1"
+#tool "nuget:?package=NuGet.CommandLine&version=6.1.0"
+#tool "nuget:?package=dotnet-sonarscanner&version=5.5.3"
 
-#addin "nuget:?package=Cake.Coverlet&version=2.3.4"
-#addin "nuget:?package=Cake.Sonar&version=1.1.22"
+#addin "nuget:?package=Cake.Sonar&version=1.1.30"
 
 var target = Argument("target", "Default");
 var nugetApiKey = Argument("nugetApiKey", EnvironmentVariable("nugetApiKey"));
@@ -17,10 +16,10 @@ var solution = "./codessentials.CGM.sln";
 var project = File("./src/codessentials.CGM.csproj").Path.MakeAbsolute(Context.Environment);
 var outputDir = Directory("./buildArtifacts/").Path.MakeAbsolute(Context.Environment);
 var packageOutputDir = Directory("./buildArtifacts/Package").Path.MakeAbsolute(Context.Environment);
-var outputDirNuget = outputDir+"NuGet/";
-var testResultsPath = outputDir.CombineWithFilePath("TestResults.xml").ToString();
-var codeCoverageResultFile = "CodeCoverageResults.xml";
-var codeCoverageResultPath = outputDir.CombineWithFilePath(codeCoverageResultFile).ToString();
+var outputDirNuget = outputDir.Combine("NuGet");
+var outputDirTests = outputDir.Combine("Tests");
+var codeCoverageResultFilePath = MakeAbsolute(outputDirTests).Combine("**/").CombineWithFilePath("coverage.opencover.xml");
+var testResultsPath = MakeAbsolute(outputDirTests).CombineWithFilePath("*.trx");
 var nugetPublishFeed = "https://api.nuget.org/v3/index.json";
 var sonarProjectKey = "twenzel_CGM";
 var sonarUrl = "https://sonarcloud.io";
@@ -91,40 +90,39 @@ Task("Build")
 	.IsDependentOn("Version")
 	.Does(() => {				
 
-		var settings = new DotNetCoreBuildSettings {
+		var settings = new DotNetBuildSettings {
 			Configuration = configuration,
 			OutputDirectory = outputDir		 
-		};
-	 
-		settings.MSBuildSettings = new DotNetCoreMSBuildSettings()
-		 .WithProperty("PackageVersion", versionInfo.NuGetVersionV2)
-		 .WithProperty("Version", versionInfo.AssemblySemVer)
-		 .WithProperty("InformationalVersion", versionInfo.InformationalVersion)
+		};	 		
+
+		settings.MSBuildSettings = new DotNetMSBuildSettings()
+		{
+			PackageVersion = versionInfo.NuGetVersionV2,
+			AssemblyVersion = versionInfo.AssemblySemVer,
+			Version = versionInfo.AssemblySemVer,
+			InformationalVersion = versionInfo.InformationalVersion
+		}
 		 .WithProperty("PackageOutputPath", packageOutputDir.FullPath)
 		 .WithProperty("SourceLinkCreate", "true");
 	 
 		// creates also the NuGet packages
-		DotNetCoreBuild(project.FullPath, settings);	
+		DotNetBuild(project.FullPath, settings);	
 	});
 
 Task("Test")
 	.IsDependentOn("Build")
 	.Does(() =>
-	{
-		var settings = new DotNetCoreTestSettings {
+	{		
+		var settings = new DotNetTestSettings
+		{
 			Configuration = configuration,
-			Logger = "trx;logfilename=" + testResultsPath
+			Loggers = new[] {"trx;"},
+			ResultsDirectory = outputDirTests,
+			Collectors = new[] {"XPlat Code Coverage"},
+			ArgumentCustomization = a => a.Append("-- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover")
 		};
 
-		var coveletSettings = new CoverletSettings
-        {
-            CollectCoverage = true,
-            CoverletOutputFormat = CoverletOutputFormat.opencover,
-            CoverletOutputDirectory = outputDir,
-            CoverletOutputName = codeCoverageResultFile,
-        };
-	
-		DotNetCoreTest("./tests/codessentials.CGM.Tests.csproj", settings, coveletSettings);	
+		DotNetTest("./tests/codessentials.CGM.Tests.csproj", settings);	
 	});
 
 Task("SonarBegin")
@@ -136,8 +134,8 @@ Task("SonarBegin")
 			Organization = sonarOrganization,
 			Login = sonarLogin,
 			UseCoreClr = true,
-			VsTestReportsPath = testResultsPath,
-			OpenCoverReportsPath = codeCoverageResultPath
+			VsTestReportsPath = testResultsPath.ToString(),
+			OpenCoverReportsPath = codeCoverageResultFilePath.ToString()
 		});
 	});
 
@@ -155,19 +153,18 @@ Task("Pack")
 	.IsDependentOn("Version")
 	.Does(() => {
 		
-		var settings = new DotNetCorePackSettings
+		var settings = new DotNetPackSettings
 		{			
 			Configuration = configuration,
 			OutputDirectory = outputDirNuget,
 			NoBuild = true	
 		};
 
-		settings.MSBuildSettings = new DotNetCoreMSBuildSettings()
-			.WithProperty("PackageVersion", versionInfo.NuGetVersionV2)
-			.WithProperty("SourceLinkCreate", "true");
-	 
-		 
-		DotNetCorePack(project.FullPath, settings);			
+		settings.MSBuildSettings = new DotNetMSBuildSettings() {
+				PackageVersion = versionInfo.NuGetVersionV2
+		}.WithProperty("SourceLinkCreate", "true");
+	 		 
+		DotNetPack(project.FullPath, settings);			
 	});
 	
 Task("Publish")	
