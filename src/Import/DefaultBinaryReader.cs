@@ -327,13 +327,16 @@ namespace codessentials.CGM.Import
             catch (NotSupportedException ex)
             {
                 _messages.Add(new Message(Severity.Unsupported, (ClassCode)elementClass, elementId, ex.Message, _currentCommand.ToString()));
+                ReadArgumentEnd();
             }
             catch (NotImplementedException ex)
             {
                 _messages.Add(new Message(Severity.Unimplemented, (ClassCode)elementClass, elementId, ex.Message, _currentCommand.ToString()));
+                ReadArgumentEnd();
             }
             catch (Exception ex)
             {
+                ReadArgumentEnd();
                 if (ex.Source == "FluentAssertions")
                     throw;
 
@@ -508,6 +511,11 @@ namespace codessentials.CGM.Import
             return (_arguments[CurrentArg++] << 24) + (_arguments[CurrentArg++] << 16) + (_arguments[CurrentArg++] << 8) + _arguments[CurrentArg++];
         }
 
+        public int ReadArgumentEnd()
+        {
+            CurrentArg = ArgumentsCount;
+            return ArgumentsCount;
+        }
         public int SizeOfInt()
         {
             var precision = _cgm.IntegerPrecision;
@@ -1097,6 +1105,5 @@ MODE                            HATCH STYLE DEFINITION          duty cycle lengt
                 CurrentArg++;
             }
         }
-
     }
 }
