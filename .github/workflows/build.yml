@@ -12,17 +12,23 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.100
-    - name: run cake
-      uses: ecampidoglio/cake-action@v1.1.1
-      with:
-        target: Default
-        cake-version: 0.35.0
-      env: 
-        sonarLogin: ${{ secrets.sonarLogin }}
-        nugetApiKey: ${{ secrets.nugetApiKey }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      - name: Get the sources
+        uses: actions/checkout@v2
+
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow
+
+      - name: Install .NET Core SDK 3.1.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Run Cake script
+        uses: cake-build/cake-action@v1
+        with:
+          target: Default
+          cake-version: tool-manifest
+        env: 
+          sonarLogin: ${{ secrets.sonarLogin }}
+          nugetApiKey: ${{ secrets.nugetApiKey }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
