@@ -173,8 +173,16 @@ Task("Publish")
 	.Description("Pushes the created NuGet packages to nuget.org")  
 	.Does(() => {
 	
+		Information($"Upload packages from {outputDirNuget.FullPath}");
+
 		// Get the paths to the packages.
-		var packages = GetFiles(outputDirNuget + "*.nupkg");
+		var packages = GetFiles(outputDirNuget.CombineWithFilePath("*.nupkg").ToString());
+
+		if (packages.Count == 0)
+		{
+			Error("No packages found to upload");
+			return;
+		}
 
 		// Push the package.
 		NuGetPush(packages, new NuGetPushSettings {
