@@ -37,8 +37,8 @@ namespace codessentials.CGM.Commands
 
             for (var i = 0; i < n; i++)
             {
-                var edgeOutFlag = (EdgeFlag)reader.ReadEnum();
                 var p = reader.ReadPoint();
+                var edgeOutFlag = (EdgeFlag)reader.ReadEnum();
                 Set.Add(new KeyValuePair<EdgeFlag, CgmPoint>(edgeOutFlag, p));
             }
         }
@@ -47,8 +47,8 @@ namespace codessentials.CGM.Commands
         {
             foreach (var pair in Set)
             {
-                writer.WriteEnum((int)pair.Key);
                 writer.WritePoint(pair.Value);
+                writer.WriteEnum((int)pair.Key);
             }
         }
 
