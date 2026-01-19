@@ -87,6 +87,7 @@ namespace codessentials.CGM.Commands
         protected override void ReadBitmap(IBinaryReader reader)
         {
             reader.Unsupported("BITMAP for Tile");
+            reader.ReadArgumentEnd();
         }
 
         protected override void WriteBitmap(IBinaryWriter writer)
