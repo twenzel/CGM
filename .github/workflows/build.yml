@@ -15,7 +15,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Set up JDK 11
+      - name: Set up JDK 
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
@@ -27,7 +27,7 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
 
-      - name: Install .NET Core SDK 8.0.x
+      - name: Install .NET Core SDKs
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
@@ -36,7 +36,7 @@ jobs:
             10.0.x
 
       - name: Run Cake script
-        run: dotnet run build.cs --verbosity=diagnostic --target=Default
+        run: dotnet run build.cs -- --verbosity=Verbose --target=Default
         env: 
           sonarLogin: ${{ secrets.SONARLOGIN }}
           nugetApiKey: ${{ secrets.NUGETAPIKEY }}
