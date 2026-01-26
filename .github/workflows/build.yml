@@ -38,6 +38,6 @@ jobs:
       - name: Run Cake script
         run: dotnet run build.cs --verbosity=diagnostic --target=Default
         env: 
-          sonarLogin: ${{ secrets.sonarLogin }}
-          nugetApiKey: ${{ secrets.nugetApiKey }}
+          sonarLogin: ${{ secrets.SONARLOGIN }}
+          nugetApiKey: ${{ secrets.NUGETAPIKEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
