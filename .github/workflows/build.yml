@@ -12,14 +12,9 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Set up JDK 
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: 17
 
       - name: Get the sources
         uses: actions/checkout@v4
@@ -31,7 +26,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            8.0.x
             9.0.x
             10.0.x
 

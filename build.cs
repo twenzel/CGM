@@ -3,7 +3,7 @@
 #:package Cake.Sonar@5.0.0
 
 InstallTools(
-    "dotnet:?package=GitVersion.Tool&version=6.5.0",
+    "dotnet:?package=GitVersion.Tool&version=6.5.1",
     "dotnet:?package=dotnet-sonarscanner&version=11.0.0"
 );
 
@@ -141,8 +141,7 @@ Task("SonarBegin")
 			UseCoreClr = true,
 			VsTestReportsPath = testResultsPath.ToString(),
 			OpenCoverReportsPath = codeCoverageResultFilePath.ToString(),
-            ArgumentCustomization = args => args.Append("/d:sonar.scanner.skipJreProvisioning=true")
-            .Append("/d:sonar.scanner.scanAll=false") // disable Multi-Language analysis
+            ArgumentCustomization = args => args.Append("/d:sonar.scanner.scanAll=false") // disable Multi-Language analysis
         });
 	});
 

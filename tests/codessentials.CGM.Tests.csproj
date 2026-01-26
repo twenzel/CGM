@@ -3,7 +3,7 @@
     <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <AssemblyTitle>codessentials.CGM.Tests</AssemblyTitle>
     <Product>codessentials.CGM.Tests</Product>
-    <Copyright>Copyright © 2020</Copyright>
+    <Copyright>Copyright © 2026</Copyright>
     <ProjectGuid>{22322112-C9AD-4325-B0FB-975B13ED8EFF}</ProjectGuid>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -15,7 +15,7 @@
     </PackageReference>
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="NUnit" Version="4.4.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="6.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
   </ItemGroup>

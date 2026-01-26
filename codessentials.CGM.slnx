@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/codessentials.CGM.csproj" />
+  <Project Path="tests/codessentials.CGM.Tests.csproj" />
+</Solution>
