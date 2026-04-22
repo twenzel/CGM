@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using codessentials.CGM.Commands;
 using codessentials.CGM.Export;
 using codessentials.CGM.Import;
@@ -71,6 +72,16 @@ namespace codessentials.CGM.Tests
             Test(w => w.WriteString("test"), r => _reader.ReadString().ShouldBe("test"));
         }
 
+        [Test]
+        public void String_InvalidUtf8_FallsBackToWindows1252()
+        {
+            var cp1252Bytes = new byte[] { 0xE4, 0xF6, 0xFC, 0xDF };
+            var expected = (CodePagesEncodingProvider.Instance.GetEncoding(1252)
+                ?? Encoding.GetEncoding("ISO-8859-1")).GetString(cp1252Bytes);
+
+            Test( w => {w.WriteByte((byte)cp1252Bytes.Length);
+                    foreach (var b in cp1252Bytes)
+                        w.WriteByte(b); }, r => _reader.ReadString().ShouldBe(expected));}
         [Test]
         public void String_Long()
         {
