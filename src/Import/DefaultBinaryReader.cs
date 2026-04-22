@@ -468,8 +468,7 @@ namespace codessentials.CGM.Import
             try { return new UTF8Encoding(false, true).GetString(bytes); }
             catch (DecoderFallbackException)
             {
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                return Encoding.GetEncoding(1252).GetString(bytes);
+                return (CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.GetEncoding("ISO-8859-1")).GetString(bytes);
             }
         }
 
