@@ -454,19 +454,22 @@ namespace codessentials.CGM.Import
 
         protected string ReadString(int length)
         {
+            var bytes = new byte[length];
             try
             {
-                var bytes = new byte[length];
                 for (var i = 0; i < length; i++)
-                {
                     bytes[i] = ReadByte();
-                }
-
-                return Encoding.UTF8.GetString(bytes);
             }
-            catch (Exception)
+            catch
             {
-                return new string(' ', length); // return empty spaces instead of garbled chars
+                return new string(' ', length);
+            }
+
+            try { return new UTF8Encoding(false, true).GetString(bytes); }
+            catch (DecoderFallbackException)
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                return Encoding.GetEncoding(1252).GetString(bytes);
             }
         }
 
