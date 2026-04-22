@@ -30,6 +30,7 @@ var isLocalBuild = string.IsNullOrEmpty(EnvironmentVariable("GITHUB_REPOSITORY")
 var isPullRequest = !string.IsNullOrEmpty(EnvironmentVariable("GITHUB_HEAD_REF"));
 var gitHubEvent = EnvironmentVariable("GITHUB_EVENT_NAME");
 var isReleaseCreation = string.Equals(gitHubEvent, "release");
+var hasSonarToken = !string.IsNullOrEmpty(sonarLogin);
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -131,7 +132,7 @@ Task("Test")
 	});
 
 Task("SonarBegin")
-	.WithCriteria(!isLocalBuild)
+	.WithCriteria(!isLocalBuild && hasSonarToken)
 	.Does(() => {
 		SonarBegin(new SonarBeginSettings {
 			Key = sonarProjectKey,
@@ -146,7 +147,7 @@ Task("SonarBegin")
 	});
 
 Task("SonarEnd")
-	.WithCriteria(!isLocalBuild)
+	.WithCriteria(!isLocalBuild && hasSonarToken)
 	.Does(() => {
 		SonarEnd(new SonarEndSettings {
             Token = sonarLogin
