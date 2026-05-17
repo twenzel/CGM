@@ -23,6 +23,10 @@ namespace codessentials.CGM.Import
         internal static readonly double Two_Ex_16 = Math.Pow(2, 16);
         internal static readonly double Two_Ex_32 = Math.Pow(2, 32);
 
+        private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
+        private static readonly Encoding FallbackEncoding =
+            CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.GetEncoding("ISO-8859-1");
+
         public int CurrentArg { get; private set; } = 0;
         public byte[] Arguments => _arguments;
 
@@ -454,19 +458,21 @@ namespace codessentials.CGM.Import
 
         protected string ReadString(int length)
         {
+            var bytes = new byte[length];
             try
             {
-                var bytes = new byte[length];
                 for (var i = 0; i < length; i++)
-                {
                     bytes[i] = ReadByte();
-                }
-
-                return Encoding.UTF8.GetString(bytes);
             }
-            catch (Exception)
+            catch
             {
-                return new string(' ', length); // return empty spaces instead of garbled chars
+                return new string(' ', length);
+            }
+
+            try { return StrictUtf8.GetString(bytes); }
+            catch (DecoderFallbackException)
+            {
+                return FallbackEncoding.GetString(bytes);
             }
         }
 
