@@ -195,14 +195,84 @@ namespace codessentials.CGM.Import
                                 data.Add(ReadSDR());
                                 break;
 
-                            case StructuredDataRecord.StructuredDataType.S:
-                            case StructuredDataRecord.StructuredDataType.SF:
-                                var str = ReadString();
-                                // [SDR] STRING='{str}'
-                                data.Add(str);
+                            case StructuredDataRecord.StructuredDataType.CI:
+                                data.Add(ReadColorIndex());
                                 break;
 
-                            // leave others unchanged...
+                            case StructuredDataRecord.StructuredDataType.CD:
+                                data.Add(ReadDirectColor());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.N:
+                                data.Add(ReadName());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.E:
+                                data.Add(ReadEnum());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.I:
+                                data.Add(ReadInt());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.RESERVED:
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.IF8:
+                                data.Add(ReadSignedInt8());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.IF16:
+                                data.Add(ReadSignedInt16());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.IF32:
+                                data.Add(ReadSignedInt32());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.IX:
+                                data.Add(ReadIndex());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.R:
+                                data.Add(ReadReal());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.S:
+                            case StructuredDataRecord.StructuredDataType.SF:
+                                data.Add(ReadString());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.VC:
+                                data.Add(ReadVc());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.VDC:
+                                data.Add(ReadVdc());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.CCO:
+                                data.Add(ReadDirectColor());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.UI8:
+                                data.Add(ReadUInt8());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.UI32:
+                                data.Add(ReadUInt32());
+                                break;
+
+                            case StructuredDataRecord.StructuredDataType.BS:
+                                throw new NotImplementedException("ReadSDR- bit stream");
+
+                            case StructuredDataRecord.StructuredDataType.CL:
+                                throw new NotImplementedException("ReadSDR - color list");
+
+                            case StructuredDataRecord.StructuredDataType.UI16:
+                                data.Add(ReadUInt16());
+                                break;
+
                             default:
                                 throw new NotSupportedException("ReadSDR()-unsupported dataTypeIndex " + dataType);
                         }
