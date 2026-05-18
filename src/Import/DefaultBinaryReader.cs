@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using codessentials.CGM.Classes;
 using codessentials.CGM.Commands;
-using codessentials.CGM.Enums;
 
 namespace codessentials.CGM.Import
 {
@@ -136,12 +135,12 @@ namespace codessentials.CGM.Import
 
         public StructuredDataRecord ReadSDR()
         {
-            Console.WriteLine($"[SDR] ENTER at Arg={CurrentArg}");
+            // [SDR] ENTER at Arg={CurrentArg}
 
             var ret = new StructuredDataRecord();
             var sdrLength = GetStringCount();
 
-            Console.WriteLine($"[SDR] Length={sdrLength}, StartArg={CurrentArg}");
+            // [SDR] Length={sdrLength}, StartArg={CurrentArg}
 
             var startPos = CurrentArg;
             while (CurrentArg < (startPos + sdrLength))
@@ -149,7 +148,7 @@ namespace codessentials.CGM.Import
                 // ✅ Prevent overread BEFORE attempting header read
                 if (CurrentArg + 1 >= startPos + sdrLength)
                 {
-                    Console.WriteLine($"[SDR] STOP - not enough bytes for header at Arg={CurrentArg}");
+                    // [SDR] STOP - not enough bytes for header at Arg={CurrentArg}
                     break;
                 }
 
@@ -157,11 +156,11 @@ namespace codessentials.CGM.Import
                 var remaining = (startPos + sdrLength) - CurrentArg;
                 if (remaining < 2) // minimum read is Int16 for type
                 {
-                    Console.WriteLine($"[SDR] STOP - insufficient remaining bytes: {remaining}");
+                    // [SDR] STOP - insufficient remaining bytes: {remaining}
                     break;
                 }
 
-                Console.WriteLine($"[SDR] Member START at Arg={CurrentArg}");
+                // [SDR] Member START at Arg={CurrentArg}
 
                 StructuredDataRecord.StructuredDataType dataType;
                 int dataCount;
@@ -169,16 +168,16 @@ namespace codessentials.CGM.Import
                 try
                 {
                     var dataTypeRaw = ReadIndex();
-                    Console.WriteLine($"[SDR] dataTypeRaw={dataTypeRaw}");
+                    // [SDR] dataTypeRaw={dataTypeRaw}
 
                     dataType = (StructuredDataRecord.StructuredDataType)dataTypeRaw;
 
                     dataCount = ReadInt();
-                    Console.WriteLine($"[SDR] dataType={dataType}, dataCount={dataCount}, Arg={CurrentArg}");
+                    // [SDR] dataType={dataType}, dataCount={dataCount}, Arg={CurrentArg}
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"🔥 [SDR] FAILED reading header at Arg={CurrentArg}: {ex}");
+                    // 🔥 [SDR] FAILED reading header at Arg={CurrentArg}: {ex}
                     throw;
                 }
 
@@ -188,7 +187,7 @@ namespace codessentials.CGM.Import
                 {
                     try
                     {
-                        Console.WriteLine($"[SDR] Reading item {i + 1}/{dataCount} type={dataType} Arg={CurrentArg}");
+                        // [SDR] Reading item {i + 1}/{dataCount} type={dataType} Arg={CurrentArg}
 
                         switch (dataType)
                         {
@@ -199,7 +198,7 @@ namespace codessentials.CGM.Import
                             case StructuredDataRecord.StructuredDataType.S:
                             case StructuredDataRecord.StructuredDataType.SF:
                                 var str = ReadString();
-                                Console.WriteLine($"[SDR] STRING='{str}'");
+                                // [SDR] STRING='{str}'
                                 data.Add(str);
                                 break;
 
@@ -210,7 +209,7 @@ namespace codessentials.CGM.Import
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"[SDR] BREAK on parse failure at Arg={CurrentArg}: {ex.Message}");
+                        // [SDR] BREAK on parse failure at Arg={CurrentArg}: {ex.Message}
                         return ret;
                     }
                 }
@@ -350,7 +349,7 @@ namespace codessentials.CGM.Import
             {
                 ReadArgumentEnd();
 
-                Console.WriteLine($"🔥 COMMAND FAILED: {_currentCommand.GetType().Name} - {ex}");
+                // 🔥 COMMAND FAILED: {_currentCommand.GetType().Name} - {ex}
 
                 if (ex.Source == "FluentAssertions")
                     throw;
