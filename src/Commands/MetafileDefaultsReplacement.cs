@@ -1,11 +1,14 @@
-﻿namespace codessentials.CGM.Commands
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace codessentials.CGM.Commands
 {
     /// <remarks>
     /// Class=1, Element=12
     /// </remarks>
     public class MetafileDefaultsReplacement : Command
     {
-        public Command EmbeddedCommand { get; set; }
+        public List<Command> EmbeddedCommands { get; set; } = new List<Command>();
 
         public MetafileDefaultsReplacement(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.MetafileDescriptorElements, 12, container))
@@ -13,32 +16,32 @@
 
         }
 
-        public MetafileDefaultsReplacement(CgmFile container, Command command)
+        public MetafileDefaultsReplacement(CgmFile container, List<Command> commands)
             : this(container)
         {
-            EmbeddedCommand = command;
+            EmbeddedCommands = commands;
         }
 
         public override void ReadFromBinary(IBinaryReader reader)
         {
-            EmbeddedCommand = reader.ReadEmbeddedCommand();
+            EmbeddedCommands = reader.ReadEmbeddedCommands();
         }
 
         public override void WriteAsBinary(IBinaryWriter writer)
         {
-            writer.WriteEmbeddedCommand(EmbeddedCommand);
+            writer.WriteEmbeddedCommands(EmbeddedCommands);
         }
 
         public override void WriteAsClearText(IClearTextWriter writer)
         {
             writer.WriteLine($" BEGMFDEFAULTS;");
-            EmbeddedCommand.WriteAsClearText(writer);
+            EmbeddedCommands.ForEach(e => e.WriteAsClearText(writer));
             writer.WriteLine($"  ENDMFDEFAULTS ;");
         }
 
         public override string ToString()
         {
-            return "MetafileDefaultsReplacement " + EmbeddedCommand.ToString();
+            return "MetafileDefaultsReplacement " + string.Join(" ", EmbeddedCommands.Select(e => e.ToString()));
         }
     }
 }

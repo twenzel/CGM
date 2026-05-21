@@ -1,4 +1,5 @@
-﻿using codessentials.CGM.Classes;
+﻿using System.Collections.Generic;
+using codessentials.CGM.Classes;
 
 namespace codessentials.CGM
 {
@@ -48,6 +49,7 @@ namespace codessentials.CGM
 
         void WriteSizeSpecification(double data, SpecificationMode specificationMode);
 
+        void WriteEmbeddedCommands(List<Commands.Command> commands);
         void WriteEmbeddedCommand(Commands.Command command);
         void Unsupported(string message);
         void WriteByte(byte data);
