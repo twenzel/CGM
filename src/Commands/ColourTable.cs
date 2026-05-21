@@ -6,6 +6,7 @@ namespace codessentials.CGM.Commands
     {
         public int StartIndex { get; private set; }
         public Color[] Colors { get; private set; }
+        public static Dictionary<int, Color> ColorTable { get; private set; } = new Dictionary<int, Color>();
 
         public ColourTable(CgmFile container)
             : base(new CommandConstructorArguments(ClassCode.AttributeElements, 34, container))
@@ -32,6 +33,16 @@ namespace codessentials.CGM.Commands
             for (var i = 0; i < n; i++)
             {
                 Colors[i] = reader.ReadDirectColor();
+
+                var colorTableIndex = StartIndex + i;
+                if (ColorTable.ContainsKey(colorTableIndex))
+                {
+                    ColorTable[colorTableIndex] = Colors[i];
+                }
+                else
+                {
+                    ColorTable.Add(colorTableIndex, Colors[i]);
+                }
             }
 
             // don't ensure here -> see above
@@ -65,7 +76,7 @@ namespace codessentials.CGM.Commands
 
         public Color GetColor(int index)
         {
-            return Colors[index + StartIndex];
+            return ColorTable[index];
         }
     }
 }
