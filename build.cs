@@ -1,10 +1,10 @@
-﻿#:sdk Cake.Sdk@6.1.1
+﻿#:sdk Cake.Sdk@6.3.0
 
-#:package Cake.Sonar@5.0.0
+#:package Cake.Sonar@6.0.1
 
 InstallTools(
-    "dotnet:?package=GitVersion.Tool&version=6.7.0",
-    "dotnet:?package=dotnet-sonarscanner&version=11.2.1"
+    "dotnet:?package=GitVersion.Tool&version=6.8.1",
+    "dotnet:?package=dotnet-sonarscanner&version=12.0.0"
 );
 
 var target = Argument("target", "Default");
