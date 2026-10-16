@@ -320,6 +320,18 @@ namespace codessentials.CGM.Export
                 _messages.Add(new Message(Severity.Unsupported, 0, 0, message, ""));
         }
 
+        public void WriteEmbeddedCommands(List<Commands.Command> commands)
+        {
+            using var stream = new MemoryStream();
+
+            using (var writer = new DefaultBinaryWriter(stream, _cgm))
+            {
+                commands.ForEach(command => writer.WriteCommand(command));
+            }
+            _bucket.AddRange(stream.ToArray());
+
+        }
+
         public void WriteEmbeddedCommand(Commands.Command command)
         {
             using var stream = new MemoryStream();

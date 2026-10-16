@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using codessentials.CGM.Classes;
 using codessentials.CGM.Commands;
 
@@ -26,6 +27,7 @@ namespace codessentials.CGM
         int ReadName();
         Color ReadDirectColor();
         ViewportPoint ReadViewportPoint();
+        List<Command> ReadEmbeddedCommands();
         Command ReadEmbeddedCommand();
         double ReadReal();
         string ReadFixedStringWithFallback(int length);

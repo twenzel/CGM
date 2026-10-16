@@ -312,6 +312,18 @@ namespace codessentials.CGM.Import
             }
         }
 
+        public List<Command> ReadEmbeddedCommands()
+        {
+            var result = new List<Command>();
+
+            while (CurrentArg < _arguments.Length)
+            {
+                result.Add(ReadEmbeddedCommand());
+            }
+
+            return result;
+        }
+
         public Command ReadEmbeddedCommand()
         {
             var k = ReadUInt16();
@@ -360,6 +372,8 @@ namespace codessentials.CGM.Import
             {
                 _messages.Add(new Message(Severity.Fatal, (ClassCode)elementClass, elementId, ex.Message, _currentCommand.ToString()));
             }
+
+            EnsureAllArgumentsWereRead();
 
             var result = _currentCommand;
             _currentCommand = oldCommand;
