@@ -383,6 +383,18 @@ namespace codessentials.CGM.Import
             int k;
             try
             {
+                var stream = _reader.BaseStream;
+
+                if (stream.Position >= stream.Length)
+                {
+                    return null;
+                }
+
+                if ((stream.Length - stream.Position) < 2)
+                {
+                    return null;
+                }
+
                 k = _reader.ReadByte();
                 k = (k << 8) | _reader.ReadByte();
             }
