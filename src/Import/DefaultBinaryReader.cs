@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -381,10 +380,6 @@ namespace codessentials.CGM.Import
         private Command ReadCommand()
         {
 
-            Debug.WriteLineIf(Debugger.IsAttached,
-                $"ReadCommand StreamPos={_reader.BaseStream.Position} " +
-                $"Length={_reader.BaseStream.Length}");
-
             int k;
             try
             {
@@ -405,10 +400,6 @@ namespace codessentials.CGM.Import
             }
             catch (EndOfStreamException)
             {
-                Debug.WriteLineIf(Debugger.IsAttached,
-                    $"EOF at StreamPos={_reader.BaseStream.Position} " +
-                    $"Length={_reader.BaseStream.Length}");
-
                 return null;
             }
 
@@ -425,15 +416,6 @@ namespace codessentials.CGM.Import
             _arguments = null;
             CurrentArg = 0;
             ReadArguments(argumentCount, _reader);
-
-            var commandOffset = _reader.BaseStream.Position - 2;
-
-            Debug.WriteLineIf(Debugger.IsAttached,
-                $"CGM CMD @{commandOffset} " +
-                $"Class={elementClass} " +
-                $"Id={elementId} " +
-                $"ArgCount={argumentCount}");
-
             try
             {
                 _currentCommand.ReadFromBinary(this);
@@ -451,11 +433,6 @@ namespace codessentials.CGM.Import
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(Debugger.IsAttached,
-                        $"FAILED CMD @{commandOffset} " +
-                    $"{_currentCommand?.GetType().Name} " +
-                    $"{ex}");
-
                 ReadArgumentEnd();
 
                 // 🔥 COMMAND FAILED: {_currentCommand.GetType().Name} - {ex}
@@ -514,15 +491,7 @@ namespace codessentials.CGM.Import
 
             do
             {
-                var remaining =
-                    reader.BaseStream.Length -
-                    reader.BaseStream.Position;
-
                 argumentsCount = ReadInt16Direct(reader);
-
-                Debug.WriteLineIf(Debugger.IsAttached,
-                        $"Need={argumentsCount}, Remaining={remaining}");
-
                 if (argumentsCount == -1)
                     break;
 
@@ -553,10 +522,6 @@ namespace codessentials.CGM.Import
                 // align on a word if necessary
                 if (argumentsCount % 2 == 1)
                     reader.ReadByte();
-
-                Debug.WriteLineIf(Debugger.IsAttached,
-                    $"LongForm: pos={reader.BaseStream.Position} " +
-                        $"segmentLength={argumentsCount}");
             }
             while (!done);
         }
