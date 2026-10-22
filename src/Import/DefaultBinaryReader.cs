@@ -485,43 +485,41 @@ namespace codessentials.CGM.Import
 
         private void ReadLongFormCommandArguments(BinaryReader reader)
         {
-            int argumentsCount;
-            var a = 0;
             bool done;
 
             do
             {
-                argumentsCount = ReadInt16Direct(reader);
-                if (argumentsCount == -1)
-                    break;
+                var argumentsCount = ReadInt16Direct(reader);
 
-                if ((argumentsCount & (1 << 15)) != 0)
-                {
-                    // data is partitioned and it's not the last partition
-                    done = false;
-                    // clear bit 15
-                    argumentsCount &= ~(1 << 15);
-                }
-                else
-                {
-                    done = true;
-                }
+                // partitioned data is done if it's the last partition
+                done = (argumentsCount & (1 << 15)) == 0;
 
-                if (_arguments == null)
-                    _arguments = new byte[argumentsCount];
+                // clear bit 15
+                argumentsCount &= ~(1 << 15);
 
-                else
-                {
-                    // resize the args array
-                    Array.Resize(ref _arguments, _arguments.Length + argumentsCount);
-                }
+                // append the partition to the args array (Array.Resize allocates when null)
+                var offset = _arguments?.Length ?? 0;
+                Array.Resize(ref _arguments, offset + argumentsCount);
 
-                for (var i = 0; i < argumentsCount; i++)
-                    _arguments[a++] = reader.ReadByte();
+                var bytes = reader.ReadBytes(argumentsCount);
+                if (bytes.Length != argumentsCount)
+                    throw new EndOfStreamException("Unexpected end of stream while reading a partitioned command argument.");
+
+                Buffer.BlockCopy(bytes, 0, _arguments, offset, argumentsCount);
 
                 // align on a word if necessary
                 if (argumentsCount % 2 == 1)
-                    reader.ReadByte();
+                {
+                    try
+                    {
+                        reader.ReadByte();
+                    }
+                    catch (EndOfStreamException)
+                    {
+                        // we've reached the end of the data input. Since we're only
+                        // skipping data here, the exception can be ignored.
+                    }
+                }
             }
             while (!done);
         }
